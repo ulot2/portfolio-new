@@ -40,19 +40,11 @@ export const About = () => {
 
               <div className="about-text">
                 <p className="about-paragraph">
-                  Hello! I'm Toluwalope, a passionate frontend developer with
-                  over 3 years of experience creating beautiful, functional, and
-                  user-centered digital experiences. I specialize in modern web
-                  technologies and have a keen eye for design and user
-                  experience.
+                 {" Hello! I'm Toluwalope, a passionate frontend developer with over 3 years of experience creating beautiful, functional, and user-centered digital experiences. I specialize in modern web technologies and have a keen eye for design and user experience."}
                 </p>
 
                 <p className="about-paragraph">
-                  When I'm not coding, you can find me exploring new
-                  technologies, contributing to open-source projects, or sharing
-                  knowledge with the developer community. I believe in writing
-                  clean, maintainable code and creating solutions that make a
-                  real impact.
+                  {"When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I believe in writing clean, maintainable code and creating solutions that make a real impact."}
                 </p>
 
                 <div className="about-tags">
