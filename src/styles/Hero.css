@@ -1,0 +1,111 @@
+.hero-section {
+    background-color: #fafbfc;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    position: relative;
+  width: 12rem;
+  height: 12rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 100%;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(13, 148, 136, 0.2),  
+    transparent
+  );
+}
+
+
+.hero-text {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 3rem;
+}
+
+.hero-subtitle {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.hero-cta-button {
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #3B82F6, #2563EB);
+  background-size: 200% 100%;
+  background-position: left;  
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-position 0.3s ease, transform 0.3s ease;
+}
+
+.hero-cta-button:hover {
+  background-position: right;
+  transform: scale(1.05);
+}
+
+.hero-cta-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.bounce-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.arrow-icon {
+    color: #4c4747;
+    cursor: pointer;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@media (max-width: 767px) {
+    .hero-text {
+    font-size: 2rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+}
+
+.arrow-icon {
+    margin-top: 2rem;
+}
+}
