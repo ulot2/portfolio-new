@@ -29,3 +29,11 @@ body {
   margin-right: auto;
   border-radius: 3rem;
 }
+
+.section-description {
+
+  font-size: 1.125rem;
+  color: #4b5563;
+  max-width: 42rem;
+  margin: 1rem auto;
+}
