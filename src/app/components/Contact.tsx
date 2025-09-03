@@ -103,7 +103,7 @@ export const Contact = () => {
                     href="mailto:tolu.nuell@gmail.com"
                     className="contact-info-link email-link"
                   >
-                    tolu.nuell@gmail.com
+                    {"tolu.nuell@gmail.com"}
                   </Link>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export const Contact = () => {
                     href="https://www.linkedin.com/in/toluwalope-adegoke-b441b9380"
                     className="contact-info-link linkedin-link"
                   >
-                    linkedin.com/in/toluwlape-adegoke
+                    {"linkedin.com/in/toluwlape-adegoke"}
                   </Link>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export const Contact = () => {
                     href="https://github.com/ulot2"
                     className="contact-info-link github-link"
                   >
-                    github.com/ulot2
+                    {"github.com/ulot2"}
                   </Link>
                 </div>
               </div>
@@ -139,8 +139,7 @@ export const Contact = () => {
             <div className="contact-quick-response-card">
               <h4 className="contact-quick-response-title">Quick Response</h4>
               <p className="contact-quick-response-text">
-                I typically respond to emails within 24 hours. For urgent
-                matters, feel free to reach out on LinkedIn.
+                {"I typically respond to emails within 24 hours. For urgent matters, feel free to reach out on LinkedIn."}
               </p>
               <div className="contact-quick-response-buttons">
                 <button
