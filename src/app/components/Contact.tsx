@@ -18,8 +18,7 @@ export const Contact = () => {
           <h2 className="section-heading">Get in Touch</h2>
           <div className="section-divider"></div>
           <p className="section-description">
-            I'm always interested in new opportunities and exciting projects.
-            Let's connect and create something amazing together!
+            {"I'm always interested in new opportunities and exciting projects. Let's connect and create something amazing together!"}
           </p>
         </motion.div>
         <div className="contact-flex">
@@ -28,6 +27,7 @@ export const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
+            className="contact-form-container"
           >
             <div className="contact-form-card">
               <h3 className="contact-form-title">Send a message</h3>
@@ -39,6 +39,7 @@ export const Contact = () => {
                     id="name"
                     name="name"
                     placeholder="your full name"
+                    className="contact-form-input"
                     required
                   />
                 </div>
@@ -49,6 +50,7 @@ export const Contact = () => {
                     id="email"
                     name="email"
                     placeholder="your.email@example.com"
+                    className="contact-form-input"
                     required
                   />
                 </div>
@@ -58,6 +60,7 @@ export const Contact = () => {
                     id="message"
                     name="message"
                     placeholder="Tell me about your project or just say hi!"
+                    className="contact-form-textarea"
                     required
                   ></textarea>
                 </div>
