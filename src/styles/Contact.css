@@ -1,0 +1,30 @@
+#contact {
+    background-color: #fafbfc;
+}
+
+.contact-flex {
+     display: flex;
+  gap: 2%;
+  flex-wrap: wrap;
+}
+
+.contact-form-card {
+    /* width: 32%;
+  height: 32%; */
+  padding: 2rem;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
+
+}
+
+.contact-form-title
+
+
+.contact-info-container {
+    /* width: 32%;
+  height: 32%; */
+}
