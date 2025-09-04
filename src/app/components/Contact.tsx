@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import "@/styles/Contact.css";
 import { FiSend } from "react-icons/fi";
@@ -7,9 +7,49 @@ import { LuGithub } from "react-icons/lu";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuLinkedin } from "react-icons/lu";
 import { FaXTwitter } from "react-icons/fa6";
+import { IoIosCheckmark, IoIosClose } from "react-icons/io";
 import Link from "next/link";
+import emailjs from "emailjs-com";
+import { p } from "framer-motion/client";
 
 export const Contact = () => {
+  const form = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+
+    if (form.current) {
+      emailjs
+        .sendForm(
+          "service_f9ydw08", // replace with your EmailJS Service ID
+          "template_bhf3euk", // replace with your EmailJS Template ID
+          form.current,
+          "K5gsQAgTkfK2jkwqH" // replace with your EmailJS Public Key
+        )
+        .then(() => {
+          setLoading(false);
+          setStatus("success");
+          if (form.current) {
+            form.current.reset();
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          setStatus("error");
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (status) {
+      const timer = setTimeout(() => setStatus(null), 3000); // hide after 3s
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
   return (
     <section className="general-box" id="contact">
       <div className="general-container">
@@ -38,7 +78,7 @@ export const Contact = () => {
           >
             <div className="contact-form-card">
               <h3 className="contact-form-title">Send a message</h3>
-              <form action="">
+              <form ref={form} onSubmit={sendEmail}>
                 <div className="contact-form-group">
                   <label htmlFor="name" className="contact-form-label">
                     Full Name
@@ -78,10 +118,29 @@ export const Contact = () => {
                   ></textarea>
                 </div>
                 <button type="submit" className="contact-submit-button">
-                  <FiSend className="contact-form-button-icon" />
-                  Send Message
+                  {loading ? (
+                    <p>Sending<span className="blink">...</span></p>
+                  ) : (
+                    <>
+                      <FiSend className="contact-form-button-icon" />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </form>
+              {/* Status Messages */}
+              {status === "success" && (
+                <p className="sent-success">
+                  <IoIosCheckmark className="check-icon" />
+                  Your message has been sent successfully!
+                </p>
+              )}
+              {status === "error" && (
+                <p className="sent-error">
+                  <IoIosClose className="check-icon" />
+                  Oops! Something went wrong. Please try again.
+                </p>
+              )}
             </div>
           </motion.div>
           <motion.div
@@ -139,7 +198,9 @@ export const Contact = () => {
             <div className="contact-quick-response-card">
               <h4 className="contact-quick-response-title">Quick Response</h4>
               <p className="contact-quick-response-text">
-                {"I typically respond to emails within 24 hours. For urgent matters, feel free to reach out on LinkedIn."}
+                {
+                  "I typically respond to emails within 24 hours. For urgent matters, feel free to reach out on LinkedIn."
+                }
               </p>
               <div className="contact-quick-response-buttons">
                 <button

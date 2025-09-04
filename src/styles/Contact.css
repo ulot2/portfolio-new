@@ -110,6 +110,35 @@
   transform: scale(1.05);
 }
 
+.sent-success {
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.sent-error {
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.check-icon {
+  margin-right: 0.2rem;
+  font-size: 2rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+
 .contact-info-container {
   width: 80%;
 }
@@ -244,7 +273,7 @@
     #1e293b
   );
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
   border-radius: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   color: #f1f5f9; /* light text for readability */
@@ -252,7 +281,6 @@
 
 .dark-theme .contact-quick-response-card:hover {
   transform: scale(1.03) translateY(-5px);
-  box-shadow: 0 25px 35px rgba(0, 0, 0, 0.8);
   background: linear-gradient(
     to right,
     #334155,

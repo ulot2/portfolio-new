@@ -4,6 +4,16 @@
   margin: 0;
 }
 
+body,
+.nav,
+#projects,
+#contact,
+#skills,
+.hero-section,
+#about {
+  transition: background 0.5s, color 0.5s;
+}
+
 body {
   font-family: var(--font-plex-mono), monospace;
 }
@@ -35,7 +45,6 @@ body.dark-theme {
 }
 
 .section-description {
-
   font-size: 1.125rem;
   color: #4b5563;
   max-width: 42rem;
