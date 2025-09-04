@@ -1,3 +1,7 @@
+.dark-theme #skills {
+    background-color: #0f172a;
+}
+
 .skills-container {
   display: flex;
   flex-wrap: wrap;
@@ -20,6 +24,11 @@
   transition: all 0.3s ease;
   cursor: pointer;
   margin-bottom: 2rem;
+}
+
+.dark-theme .skill-card {
+  background-color: #0f172a;
+  border: 1px solid #192438;
 }
 
 .skill-card:hover {
@@ -60,6 +69,10 @@
   color: #1f2937;
 }
 
+.dark-theme .text-gray-800 {
+  color: #e2e8f0;
+}
+
 .text-teal-600 {
-  color: #0f766e;;
+  color: #0f766e;
 }

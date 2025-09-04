@@ -1,3 +1,7 @@
+.dark-theme #about {
+  background-color: #0f172a;
+}
+
 .section-title {
   text-align: center;
 }
@@ -19,6 +23,11 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-radius: 1rem;
+}
+
+.dark-theme .about-card {
+  background-color: #0f172a;
+  border: 1px solid #192438;
 }
 
 .about-content {
@@ -43,6 +52,10 @@
 .about-paragraph {
     font-size: 1rem;
     line-height: 1.75;
+}
+
+.dark-theme .about-paragraph {
+    color: #e2e8f0;
 }
 
 .about-paragraph:first-of-type {

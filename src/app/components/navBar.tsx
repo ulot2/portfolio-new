@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import "@/styles/NavBar.css";
 import { IoIosMenu } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
+import { ThemeToggle } from "../ui/ThemeToggle";
+import { div } from "framer-motion/client";
 
 const navItems = [
   { name: "About", href: "about" },
@@ -115,91 +117,99 @@ export const NavBar = () => {
   }, [isMenuOpen]);
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`nav ${isScrolled ? "nav-scrolled" : "nav-transparent"}`}
-    >
-      <div className="nav-container">
-        <div className="nav-content">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="nav-logo"
-            onClick={handleLogoClick}
-          >
-            TA
-          </motion.div>
-          <div className="nav-desktop">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.name}
-                onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`nav-item ${
-                  activeSection === item.href
-                    ? "nav-item-active"
-                    : "nav-item-inactive"
-                }`}
-                // className="nav-item"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {item.name}
-              </motion.button>
-            ))}
-          </div>
-
-          {/* mobile menu toggle */}
-          <motion.button
-            className="nav-mobile-toggle"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle navigation menu"
-            aria-expanded={isMenuOpen}
-          >
-            <div className="nav-mobile-icon">
-              <IoIosMenu
-                className={`icon ${
-                  isMenuOpen ? "menu-hidden" : "menu-visible"
-                }`}
-              />
-              <IoCloseOutline
-                className={`icon ${
-                  isMenuOpen ? "close-visible" : "close-hidden"
-                }`}
-              />
-            </div>
-          </motion.button>
-          
-          {/* Mobile menu dropdown */}
-          <motion.div 
-            className={`nav-mobile-menu ${isMenuOpen ? "open" : "closed"}`}
-            initial={false}
-            animate={isMenuOpen ? "open" : "closed"}
-            variants={{
-              open: { opacity: 1, maxHeight: 300, y: 0 },
-              closed: { opacity: 0, maxHeight: 0, y: -10 }
-            }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <div className="nav-mobile-content">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.href}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className={`nav-mobile-link ${
-                    activeSection === item.href ? "active" : ""
-                  }`}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                >
-                  {item.name}
-                </motion.button>
+    <>
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className={`nav ${isScrolled ? "nav-scrolled" : "nav-transparent"}`}
+      >
+        <div className="nav-container">
+          <div className="nav-content">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="nav-logo"
+              onClick={handleLogoClick}
+            >
+              TA
+            </motion.div>
+            <div className="nav-desktop">
+              {navItems.map((item) => (
+                <div key={item.name}>
+                  <motion.button
+                    onClick={(e) => handleSmoothScroll(e, item.href)}
+                    className={`nav-item ${
+                      activeSection === item.href
+                        ? "nav-item-active"
+                        : "nav-item-inactive"
+                    }`}
+                    // className="nav-item"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.name}
+                  </motion.button>
+                </div>
               ))}
+              <ThemeToggle />
             </div>
-          </motion.div>
+
+            {/* mobile menu toggle */}
+            <motion.button
+              className="nav-mobile-toggle"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+            >
+              <div className="nav-mobile-icon">
+                <IoIosMenu
+                  className={`icon ${
+                    isMenuOpen ? "menu-hidden" : "menu-visible"
+                  }`}
+                />
+                <IoCloseOutline
+                  className={`icon ${
+                    isMenuOpen ? "close-visible" : "close-hidden"
+                  }`}
+                />
+              </div>
+            </motion.button>
+
+            {/* Mobile menu dropdown */}
+            <motion.div
+              className={`nav-mobile-menu ${isMenuOpen ? "open" : "closed"}`}
+              initial={false}
+              animate={isMenuOpen ? "open" : "closed"}
+              variants={{
+                open: { opacity: 1, maxHeight: 300, y: 0 },
+                closed: { opacity: 0, maxHeight: 0, y: -10 },
+              }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="nav-mobile-content">
+                {navItems.map((item, index) => (
+                  <motion.button
+                    key={item.href}
+                    onClick={(e) => handleSmoothScroll(e, item.href)}
+                    className={`nav-mobile-link ${
+                      activeSection === item.href ? "active" : ""
+                    }`}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                  >
+                    {item.name}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
+      </motion.nav>
+      {/* Mobile-only theme toggle (fixed bottom-right via ThemeToggle.css) */}
+      <div className="theme-toggle-mobile-wrapper">
+        <ThemeToggle />
       </div>
-    </motion.nav>
+    </>
   );
 };

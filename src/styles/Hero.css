@@ -6,6 +6,11 @@
     justify-content: center;
 }
 
+.dark-theme .hero-section {
+      background: linear-gradient(135deg, #10182b, #1c2639);
+
+}
+
 .hero-image {
     position: relative;
   width: 12rem;
@@ -45,15 +50,18 @@
     color: rgba(0, 0, 0, 0.6);
 }
 
+.dark-theme .hero-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .hero-cta-button {
   text-align: center;
   padding: 0.75rem 1.5rem;
   font-size: 1.25rem;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(90deg, #3B82F6, #2563EB);
-  background-size: 200% 100%;
-  background-position: left;  
+  background-color: #14ac9d;
+   
   border: none;
   border-radius: 0.375rem;
   cursor: pointer;
@@ -61,8 +69,8 @@
 }
 
 .hero-cta-button:hover {
-  background-position: right;
   transform: scale(1.05);
+  background-color: #0d9488;
 }
 
 .hero-cta-container {
@@ -78,6 +86,10 @@
 .arrow-icon {
     color: #4c4747;
     cursor: pointer;
+}
+
+.dark-theme .arrow-icon {
+    color: #fff;
 }
 
 @keyframes bounce {
