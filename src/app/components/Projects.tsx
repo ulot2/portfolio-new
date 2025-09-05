@@ -23,7 +23,7 @@ const projects: Project[] = [
     title: "Portfolio",
     description:
       "A modern and responsive portfolio website that showcases projects, skills, and contact info. Built with Next.js and styled using CSS.",
-    image: "/images/project.png",
+    image: "/images/portfolio-image.png",
     technologies: ["Next.js", "CSS", "Framer Motion"],
     liveUrl: "https://tolu-a.vercel.app/",
     githubUrl: "https://github.com/ulot2/portfolio-new.git",
@@ -94,8 +94,7 @@ export const Projects = () => {
           <h2 className="section-heading">Featured Projects</h2>
           <div className="section-divider"></div>
           <p className="section-description">
-            Here are some of my recent projects that showcase my skills and
-            passion for creating exceptional digital experiences.
+            {"Here are some of my recent projects that highlight what I’ve been learning and building."}
           </p>
         </motion.div>
         <motion.div

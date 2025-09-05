@@ -17,10 +17,10 @@ export const Hero = () => {
         >
           <div className="hero-image">
             <Image
-              src="/images/img1.jpeg"
+              src="/images/port-img.jpg"
               alt="Hero Image"
-              width={192}
-              height={192}
+              width={196}
+              height={200}
               objectFit="cover"
             />
             <div className="gradient-overlay"></div>
