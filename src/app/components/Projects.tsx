@@ -75,7 +75,7 @@ const projects: Project[] = [
       "A weather application that provides real-time updates and detailed forecasts, helping users stay informed about current conditions with ease.",
     image: "/images/weather.png",
     technologies: ["React", "CSS", "OpenWeather API"],
-    liveUrl: "https://weather-app-ulot2.vercel.app/",
+    liveUrl: "https://weather-app-tolu.vercel.app/",
     githubUrl: "https://github.com/ulot2/weather-app.git",
   },
 ];

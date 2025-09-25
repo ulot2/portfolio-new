@@ -25,10 +25,10 @@ export const Contact = () => {
     if (form.current) {
       emailjs
         .sendForm(
-          "service_f9ydw08", // replace with your EmailJS Service ID
-          "template_bhf3euk", // replace with your EmailJS Template ID
+          "service_f9ydw08", 
+          "template_bhf3euk", 
           form.current,
-          "K5gsQAgTkfK2jkwqH" // replace with your EmailJS Public Key
+          "K5gsQAgTkfK2jkwqH" 
         )
         .then(() => {
           setLoading(false);
@@ -46,7 +46,7 @@ export const Contact = () => {
 
   useEffect(() => {
     if (status) {
-      const timer = setTimeout(() => setStatus(null), 3000); // hide after 3s
+      const timer = setTimeout(() => setStatus(null), 3000);
       return () => clearTimeout(timer);
     }
   }, [status]);
