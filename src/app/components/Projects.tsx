@@ -65,7 +65,7 @@ const projects: Project[] = [
       "A nonprofit website for The B2 Foundation dedicated to reducing litter, promoting recycling, and inspiring community efforts toward a cleaner environment.",
     image: "/images/b2-foundation.png",
     technologies: ["React", "CSS"],
-    liveUrl: "https://the-b2-foundation-iwak.vercel.app/",
+    liveUrl: "https://the-b2-foundation.vercel.app/",
     githubUrl: "https://github.com/ulot2/the-b2-foundation.git",
   },
   {
