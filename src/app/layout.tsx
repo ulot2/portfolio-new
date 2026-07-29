@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Cormorant_Garamond } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "./components/CustomCursor";
 
-const plexMono = IBM_Plex_Mono({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+  display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Toluwalope Adegoke — Frontend Developer",
+  title: "Toluwalope Adegoke — Software Engineer",
   description:
     "Frontend developer building modern, thoughtful web experiences. Explore my portfolio of projects, skills, and get in touch.",
 };
@@ -29,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${plexMono.variable} ${cormorant.variable}`}>
+      <body className={`${jakarta.variable} ${jetbrainsMono.variable}`}>
         <CustomCursor />
         {children}
       </body>

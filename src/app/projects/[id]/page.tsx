@@ -10,8 +10,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ProjectDetail({ params }: { params: { id: string } }) {
-  const projectId = parseInt(params.id, 10);
+export default async function ProjectDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const projectId = parseInt(id, 10);
   const projectIndex = projects.findIndex((p) => p.id === projectId);
 
   if (projectIndex === -1) {
