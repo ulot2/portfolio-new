@@ -1234,41 +1234,55 @@ p {
    RESPONSIVE & MOBILE OPTIMIZATIONS
    ═══════════════════════════════════════════════ */
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   :root {
     --side-padding: 1.15rem;
   }
 
   .hero {
-    padding: 5.5rem 0 3rem;
+    padding: 5rem 0 3rem;
     min-height: auto;
   }
 
   .hero-title {
-    font-size: clamp(1.85rem, 7.5vw, 2.5rem);
+    font-size: clamp(1.75rem, 7.5vw, 2.75rem);
     line-height: 1.15;
     margin-bottom: 0.5rem;
+    width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .hero-tagline {
-    font-size: 1.05rem;
-    margin-bottom: 1rem;
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .availability {
     padding: 0.35rem 0.8rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+    max-width: 100%;
   }
 
   .hero-building-tag {
     margin-top: 1.25rem;
-    font-size: 0.95rem;
+    font-size: 0.925rem;
+    line-height: 1.6;
     gap: 0.35rem 0.5rem;
+    max-width: 100%;
   }
 
   .building-label {
     font-size: 0.7rem;
   }
+
+  .stack-marquee-wrapper {
+    margin-top: 1.75rem;
+    padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 640px) {
 
   .projects-page {
     padding: 4.5rem 0 3rem;

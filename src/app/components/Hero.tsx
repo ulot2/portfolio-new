@@ -24,6 +24,7 @@ const MagneticWrapper = ({
 }: MagneticWrapperProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = React.useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -33,7 +34,19 @@ const MagneticWrapper = ({
   const springY = useSpring(y, { stiffness: 220, damping: 22 });
 
   useEffect(() => {
-    if (shouldReduceMotion) return;
+    const checkMobile = () => {
+      setIsMobile(
+        typeof window !== "undefined" &&
+          window.matchMedia("(pointer: coarse), (max-width: 768px)").matches
+      );
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (shouldReduceMotion || isMobile) return;
 
     const element = ref.current;
     if (!element) return;
@@ -69,9 +82,9 @@ const MagneticWrapper = ({
       window.removeEventListener("mousemove", handleMouseMove);
       element.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [maxDistance, strength, shouldReduceMotion, x, y]);
+  }, [maxDistance, strength, shouldReduceMotion, isMobile, x, y]);
 
-  if (shouldReduceMotion) {
+  if (shouldReduceMotion || isMobile) {
     return <div className={className} style={style}>{children}</div>;
   }
 

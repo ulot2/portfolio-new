@@ -186,7 +186,8 @@ export default function DynamicWeight(props: DynamicWeightProps) {
       className={className}
       style={{
         position: "relative",
-        display: "inline-block",
+        display: "block",
+        maxWidth: "100%",
         cursor: "pointer",
         ...style,
       }}
