@@ -50,6 +50,9 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 body {
@@ -62,6 +65,8 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* ═══════════════════════════════════════════════
@@ -393,14 +398,22 @@ p {
 
 /* Redesigned Building Focus Block */
 .hero-building-tag {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 1.75rem;
   width: 100%;
   max-width: min(68ch, 100%);
-  font-size: 1.05rem;
-  line-height: 1.6;
-  margin-top: 1.75rem;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.building-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 .building-label {
@@ -414,7 +427,6 @@ p {
   align-items: center;
   gap: 0.4rem;
   user-select: none;
-  margin-right: 0.35rem;
 }
 
 .building-label::after {
@@ -432,7 +444,6 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  margin-right: 0.35rem;
   transition:
     color var(--transition-fast),
     border-color var(--transition-fast);
@@ -454,9 +465,13 @@ p {
 .building-desc {
   color: var(--muted);
   font-size: 0.975rem;
-  display: inline;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   word-break: break-word;
   overflow-wrap: break-word;
+  box-sizing: border-box;
 }
 
 .hero-link {
@@ -505,21 +520,22 @@ p {
   width: 100%;
   max-width: min(68ch, 100%);
   overflow: hidden;
+  contain: paint;
   margin-top: 2rem;
   padding: 0.75rem 0;
   box-sizing: border-box;
   -webkit-mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 12%,
-    black 88%,
+    transparent 0px,
+    black 24px,
+    black calc(100% - 24px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 12%,
-    black 88%,
+    transparent 0px,
+    black 24px,
+    black calc(100% - 24px),
     transparent 100%
   );
   user-select: none;

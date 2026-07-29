@@ -159,31 +159,33 @@ export const Hero = () => {
           </div>
         </MagneticWrapper>
 
-        {/* Currently Building block - responsive inline block sentence */}
+        {/* Currently Building block with separate description line */}
         <MagneticWrapper strength={5} maxDistance={130}>
           <div className="hero-building-tag fade-up delay-4">
-            <span className="building-label">Currently Building</span>{" "}
-            <motion.a
-              href="https://www.solostack.ng"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="building-link"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            >
-              SoloStack
-              <motion.span
-                style={{ display: "inline-block", marginLeft: "2px" }}
-                whileHover={{ x: 2, y: -2 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            <div className="building-header">
+              <span className="building-label">Currently Building</span>
+              <motion.a
+                href="https://www.solostack.ng"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="building-link"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <ArrowUpRight size={14} className="link-arrow" />
-              </motion.span>
-            </motion.a>{" "}
-            <span className="building-desc">
+                SoloStack
+                <motion.span
+                  style={{ display: "inline-block", marginLeft: "2px" }}
+                  whileHover={{ x: 2, y: -2 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                >
+                  <ArrowUpRight size={14} className="link-arrow" />
+                </motion.span>
+              </motion.a>
+            </div>
+            <p className="building-desc">
               a business management platform for African freelancers.
-            </span>
+            </p>
           </div>
         </MagneticWrapper>
 

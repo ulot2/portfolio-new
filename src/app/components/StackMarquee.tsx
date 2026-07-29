@@ -18,6 +18,7 @@ export const StackMarquee = () => {
     <div
       className="stack-marquee-wrapper fade-up delay-5"
       aria-label="Tech Stack"
+      style={{ overflow: "hidden", maxWidth: "100%", contain: "paint" }}
     >
       <div className="stack-marquee-track">
         {items.map((item, index) => (
