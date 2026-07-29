@@ -90,29 +90,29 @@ interface FlickerCfg {
   loopDelay?: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildTextCfg(m: any): FlickerCfg {
+function buildTextCfg(m: Record<string, unknown> | undefined): FlickerCfg {
+  const easeObj = m?.ease as { duration?: number; ease?: unknown } | undefined;
   return {
-    duration: m?.ease?.duration ?? 2,
-    easeCurve: m?.ease?.ease ?? "easeInOut",
-    flickerCount: m?.flickerCount ?? 10,
-    showStroke: m?.showStroke ?? false,
-    strokePosition: m?.strokePosition ?? "start",
-    strokeCount: m?.strokeCount ?? 1,
-    strokeColor: m?.strokeColor ?? "#ffffff",
-    strokeWidth: m?.strokeWidth ?? 1.5,
-    restState: m?.restState ?? "filled",
-    delay: m?.delay ?? 0,
-    shakeEnabled: m?.shakeEnabled ?? false,
-    shakeWidth: m?.shakeWidth ?? 10,
-    shakeSpeed: m?.shakeSpeed ?? 10,
-    wordFlickerEnabled: m?.wordFlickerEnabled ?? false,
-    letterFlickerEnabled: m?.letterFlickerEnabled ?? true,
-    letterFlickerMode: m?.letterFlickerMode ?? "opacity",
-    letterFlickerIntensity: m?.letterFlickerIntensity ?? 10,
-    letterFlickerOpacity: m?.letterFlickerOpacity ?? 30,
-    loop: m?.loop,
-    loopDelay: m?.loopDelay,
+    duration: easeObj?.duration ?? 2,
+    easeCurve: easeObj?.ease ?? "easeInOut",
+    flickerCount: (m?.flickerCount as number) ?? 10,
+    showStroke: (m?.showStroke as boolean) ?? false,
+    strokePosition: (m?.strokePosition as StrokePosition) ?? "start",
+    strokeCount: (m?.strokeCount as number) ?? 1,
+    strokeColor: (m?.strokeColor as string) ?? "#ffffff",
+    strokeWidth: (m?.strokeWidth as number) ?? 1.5,
+    restState: (m?.restState as RestState) ?? "filled",
+    delay: (m?.delay as number) ?? 0,
+    shakeEnabled: (m?.shakeEnabled as boolean) ?? false,
+    shakeWidth: (m?.shakeWidth as number) ?? 10,
+    shakeSpeed: (m?.shakeSpeed as number) ?? 10,
+    wordFlickerEnabled: (m?.wordFlickerEnabled as boolean) ?? false,
+    letterFlickerEnabled: (m?.letterFlickerEnabled as boolean) ?? true,
+    letterFlickerMode: (m?.letterFlickerMode as LetterFlickerMode) ?? "opacity",
+    letterFlickerIntensity: (m?.letterFlickerIntensity as number) ?? 10,
+    letterFlickerOpacity: (m?.letterFlickerOpacity as number) ?? 30,
+    loop: m?.loop as boolean | undefined,
+    loopDelay: m?.loopDelay as number | undefined,
   };
 }
 
@@ -127,6 +127,9 @@ const COMPONENT_DEFAULTS = {
   textEnterFlickerEnabled: true,
   loop: false,
   loopDelay: 1,
+  font: undefined as React.CSSProperties | undefined,
+  className: undefined as string | undefined,
+  style: undefined as React.CSSProperties | undefined,
   flicker: {
     position: "above",
     replay: "yes",
@@ -172,37 +175,33 @@ const COMPONENT_DEFAULTS = {
 };
 
 export default function FlickerText(props: Record<string, unknown>) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mergedProps: Record<string, any> = { ...COMPONENT_DEFAULTS, ...props };
-  const {
-    contentType,
-    text,
-    font,
-    colorMode,
-    fontColor,
-    gradientStart,
-    gradientEnd,
-    gradientAngle,
-    tag,
-    className,
-    style,
-    loop,
-    loopDelay,
-    textEnterFlickerEnabled,
-    flicker,
-    textHoverFlickerEnabled,
-    flickerHover,
-  } = mergedProps;
+  const mergedProps = { ...COMPONENT_DEFAULTS, ...props };
+  const contentType = mergedProps.contentType as string | undefined;
+  const text = mergedProps.text as string | undefined;
+  const font = mergedProps.font as React.CSSProperties | undefined;
+  const colorMode = mergedProps.colorMode as string | undefined;
+  const fontColor = mergedProps.fontColor as string | undefined;
+  const gradientStart = mergedProps.gradientStart as string | undefined;
+  const gradientEnd = mergedProps.gradientEnd as string | undefined;
+  const gradientAngle = mergedProps.gradientAngle as number | undefined;
+  const tag = mergedProps.tag as TagType | undefined;
+  const className = mergedProps.className as string | undefined;
+  const style = mergedProps.style as React.CSSProperties | undefined;
+  const loop = mergedProps.loop as boolean | undefined;
+  const loopDelay = mergedProps.loopDelay as number | undefined;
+  const textEnterFlickerEnabled = mergedProps.textEnterFlickerEnabled as boolean | undefined;
+  const flicker = mergedProps.flicker as Record<string, unknown> | undefined;
+  const textHoverFlickerEnabled = mergedProps.textHoverFlickerEnabled as boolean | undefined;
+  const flickerHover = mergedProps.flickerHover as Record<string, unknown> | undefined;
 
   const enterCfg: FlickerCfg = buildTextCfg(flicker);
   const hoverCfg: FlickerCfg = buildTextCfg(flickerHover);
 
-  const enterEnabled: boolean = (textEnterFlickerEnabled as boolean) ?? true;
-  const hoverEnabled: boolean = (textHoverFlickerEnabled as boolean) ?? false;
+  const enterEnabled: boolean = textEnterFlickerEnabled ?? true;
+  const hoverEnabled: boolean = textHoverFlickerEnabled ?? false;
 
-  const flickerObj = flicker as Record<string, unknown> | undefined;
-  const replay: ReplayMode = (flickerObj?.replay as ReplayMode) ?? "no";
-  const amount: AmountMode = (flickerObj?.position as AmountMode) ?? "above";
+  const replay: ReplayMode = (flicker?.replay as ReplayMode) ?? "no";
+  const amount: AmountMode = (flicker?.position as AmountMode) ?? "above";
 
   const initialCfg = enterEnabled
     ? enterCfg
@@ -250,164 +249,80 @@ export default function FlickerText(props: Record<string, unknown>) {
     return intervals;
   }
 
-  function buildVisibleItems(cfg: FlickerCfg): string[] {
-    const sc = Math.min(cfg.strokeCount ?? 1, cfg.flickerCount);
-    if (!cfg.showStroke) {
-      return Array(cfg.flickerCount).fill("filled");
-    }
-    const fillCount = Math.max(1, cfg.flickerCount - sc);
-    const strokes = Array(sc).fill("outline");
-    const pos: StrokePosition = cfg.strokePosition ?? "start";
-    if (pos === "start") {
-      return [...strokes, ...Array(fillCount).fill("filled")];
-    }
-    if (pos === "end") {
-      return [
-        ...Array(fillCount - 1).fill("filled"),
-        ...strokes,
-        "filled",
-      ];
-    }
-    const before = Math.floor(fillCount / 2);
-    const after = fillCount - before;
-    return [
-      ...Array(before).fill("filled"),
-      ...strokes,
-      ...Array(after).fill("filled"),
-    ];
-  }
-
-  function runAnimation(cfg: FlickerCfg) {
+  const runAnimation = (cfg: FlickerCfg) => {
     timersRef.current.forEach(clearTimeout);
     timersRef.current = [];
     setFlickerLetters(new Set());
     setActiveCfg(cfg);
-    if (!cfg.wordFlickerEnabled && !cfg.letterFlickerEnabled) return;
-    const totalMs = cfg.duration * 1000;
-    const chars = (text ?? "").split("") as string[];
-    const nonSpaceIndices = chars.reduce<number[]>((acc, c, i) => {
-      if (c.trim() !== "") acc.push(i);
-      return acc;
-    }, []);
 
-    const scheduleTicks = (windowStart: number, windowDuration: number) => {
-      if (!cfg.letterFlickerEnabled || nonSpaceIndices.length === 0) return;
-      const cycleDuration = Math.round(
-        1000 * Math.pow(50 / 1000, (cfg.letterFlickerIntensity - 1) / 19)
-      );
-      const sub1 = Math.round(cycleDuration / 3);
-      const sub2 = Math.round((2 * cycleDuration) / 3);
-      const windowEnd = windowStart + windowDuration;
-      let tickCursor = windowStart;
-      while (tickCursor < windowEnd) {
-        const tFlicker1 = tickCursor;
-        const tFill = tickCursor + sub1;
-        const tFlicker2 = tickCursor + sub2;
-        const slot = { sel: new Set<number>() };
-        timersRef.current.push(
-          setTimeout(() => {
-            const count = Math.min(
-              nonSpaceIndices.length,
-              Math.floor(Math.random() * 2) + 1
-            );
-            const shuffled = [...nonSpaceIndices].sort(
-              () => Math.random() - 0.5
-            );
-            slot.sel = new Set(shuffled.slice(0, count));
-            setFlickerLetters(slot.sel);
-          }, tFlicker1)
-        );
-        if (tFill < windowEnd) {
-          timersRef.current.push(
-            setTimeout(() => setFlickerLetters(new Set()), tFill)
-          );
+    const totalMs = cfg.duration * 1000;
+    const delayMs = cfg.delay * 1000;
+
+    const executeCycle = () => {
+      setFlickerLetters(new Set());
+      setMoveX(0);
+
+      const delayTimer = setTimeout(() => {
+        if (cfg.showStroke) {
+          setCurrentPhase("outline");
+        } else {
+          setCurrentPhase("filled");
         }
-        if (tFlicker2 < windowEnd) {
-          timersRef.current.push(
-            setTimeout(() => setFlickerLetters(slot.sel), tFlicker2)
-          );
+
+        const count = Math.max(1, cfg.flickerCount);
+        const timings = generateTimings(count, totalMs, cfg.easeCurve);
+        let accumulated = 0;
+        const totalLetters = (text ?? "").length;
+
+        for (let i = 0; i < count; i++) {
+          accumulated += timings[i];
+          const isLast = i === count - 1;
+
+          const t = setTimeout(() => {
+            if (cfg.shakeEnabled) {
+              const direction = i % 2 === 0 ? 1 : -1;
+              const ratio = 1 - i / count;
+              setMoveX(direction * cfg.shakeWidth * ratio);
+            }
+
+            if (cfg.letterFlickerEnabled && totalLetters > 0) {
+              const numToPick = Math.max(
+                1,
+                Math.round(
+                  (totalLetters * (cfg.letterFlickerIntensity / 100)) / count
+                )
+              );
+              const picked = new Set<number>();
+              for (let k = 0; k < numToPick; k++) {
+                picked.add(Math.floor(Math.random() * totalLetters));
+              }
+              setFlickerLetters(picked);
+            }
+
+            if (isLast) {
+              setMoveX(0);
+              setFlickerLetters(new Set());
+              setCurrentPhase("filled");
+
+              if (loop) {
+                const pauseMs = (loopDelay ?? 1) * 1000;
+                const loopTimer = setTimeout(() => {
+                  executeCycle();
+                }, pauseMs);
+                timersRef.current.push(loopTimer);
+              }
+            }
+          }, accumulated);
+
+          timersRef.current.push(t);
         }
-        tickCursor += cycleDuration;
-      }
-      timersRef.current.push(
-        setTimeout(() => setFlickerLetters(new Set()), windowEnd)
-      );
+      }, delayMs);
+
+      timersRef.current.push(delayTimer);
     };
 
-    if (cfg.wordFlickerEnabled) {
-      setCurrentPhase(cfg.restState);
-      setMoveX(0);
-      const visibleItems = buildVisibleItems(cfg);
-      const sequence: string[] = [];
-      visibleItems.forEach((item) => {
-        sequence.push("invisible");
-        sequence.push(item);
-      });
-      const intervals = generateTimings(
-        sequence.length,
-        totalMs,
-        cfg.easeCurve
-      );
-      interface PhaseSlot {
-        phase: string;
-        startMs: number;
-        durationMs: number;
-      }
-      const phaseSlots: PhaseSlot[] = [];
-      let cursor = cfg.delay * 1000;
-      sequence.forEach((phase, i) => {
-        const startMs = cursor;
-        const durationMs = intervals[i] ?? 0;
-        phaseSlots.push({ phase, startMs, durationMs });
-        timersRef.current.push(
-          setTimeout(() => setCurrentPhase(phase), startMs)
-        );
-        cursor += durationMs;
-      });
-      timersRef.current.push(
-        setTimeout(() => {
-          setCurrentPhase(cfg.restState);
-          setMoveX(0);
-          setFlickerLetters(new Set());
-        }, cursor)
-      );
-      if (cfg.shakeEnabled) {
-        const flipMs = Math.round(
-          500 * Math.pow(30 / 500, (cfg.shakeSpeed - 1) / 19)
-        );
-        const animStart = cfg.delay * 1000;
-        const animEnd = cursor;
-        let flipCursor = animStart;
-        let dir = 1;
-        while (flipCursor < animEnd) {
-          const t = flipCursor;
-          const d = dir;
-          timersRef.current.push(
-            setTimeout(() => setMoveX(d * cfg.shakeWidth), t)
-          );
-          dir *= -1;
-          flipCursor += flipMs;
-        }
-      }
-      phaseSlots.forEach(({ phase, startMs, durationMs }) => {
-        if (phase !== "filled" && phase !== "outline") return;
-        scheduleTicks(startMs, durationMs);
-      });
-    } else {
-      scheduleTicks(cfg.delay * 1000, totalMs);
-    }
-
-    const isLooping = loop || cfg.loop;
-    if (isLooping) {
-      const finishMs = (cfg.delay + cfg.duration) * 1000;
-      const pauseMs = (loopDelay ?? cfg.loopDelay ?? 0.5) * 1000;
-      timersRef.current.push(
-        setTimeout(() => {
-          runAnimation(cfg);
-        }, finishMs + pauseMs)
-      );
-    }
-  }
+    executeCycle();
+  };
 
   const sig = JSON.stringify({
     contentType,
@@ -478,6 +393,7 @@ export default function FlickerText(props: Record<string, unknown>) {
     );
     observer.observe(elementRef.current);
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sig]);
 
   const handleMouseEnter = () => {
@@ -486,10 +402,10 @@ export default function FlickerText(props: Record<string, unknown>) {
     runAnimation(hoverCfg);
   };
 
-  const getFilledStyle = () => {
+  const getFilledStyle = (): React.CSSProperties => {
     if (colorMode === "gradient") {
       return {
-        background: `linear-gradient(${gradientAngle}deg, ${gradientStart}, ${gradientEnd})`,
+        background: `linear-gradient(${gradientAngle ?? 90}deg, ${gradientStart}, ${gradientEnd})`,
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         backgroundClip: "text",
@@ -505,7 +421,7 @@ export default function FlickerText(props: Record<string, unknown>) {
     };
   };
 
-  const getTextStyle = () => {
+  const getTextStyle = (): React.CSSProperties => {
     switch (currentPhase) {
       case "invisible":
         return {
@@ -555,8 +471,8 @@ export default function FlickerText(props: Record<string, unknown>) {
         color: "transparent",
         WebkitTextStroke: `${activeCfg.strokeWidth}px ${activeCfg.strokeColor}`,
         background: "none",
-        WebkitBackgroundClip: "unset" as any,
-        backgroundClip: "unset" as any,
+        WebkitBackgroundClip: "initial",
+        backgroundClip: "initial",
       };
     }
     return { opacity: activeCfg.letterFlickerOpacity / 100 };
@@ -582,11 +498,11 @@ export default function FlickerText(props: Record<string, unknown>) {
     });
   };
 
-  const Tag = (tag ?? "p") as TagType;
+  const Tag = (tag ?? "p") as React.ElementType;
 
   return (
     <Tag
-      ref={elementRef as any}
+      ref={elementRef as unknown as React.Ref<HTMLElement>}
       onMouseEnter={handleMouseEnter}
       className={className}
       style={{
