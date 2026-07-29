@@ -184,7 +184,8 @@ export const Hero = () => {
               </motion.a>
             </div>
             <p className="building-desc">
-              a business management platform for African freelancers.
+              <span>a business management platform</span>{" "}
+              <span>for African freelancers.</span>
             </p>
           </div>
         </MagneticWrapper>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import MobileStackMarquee from "./MobileStackMarquee";
 
 const STACK_ITEMS = [
   "React",
@@ -15,24 +16,29 @@ export const StackMarquee = () => {
   const items = [...STACK_ITEMS, ...STACK_ITEMS, ...STACK_ITEMS, ...STACK_ITEMS];
 
   return (
-    <div
-      className="stack-marquee-wrapper fade-up delay-5"
-      aria-label="Tech Stack"
-      style={{ overflow: "hidden", maxWidth: "100%", contain: "paint" }}
-    >
-      <div className="stack-marquee-track">
-        {items.map((item, index) => (
-          <React.Fragment key={index}>
-            <span className="stack-item" tabIndex={0}>
-              {item}
-            </span>
-            <span className="stack-dot" aria-hidden="true">
-              ·
-            </span>
-          </React.Fragment>
-        ))}
+    <>
+      {/* Desktop Marquee */}
+      <div
+        className="stack-marquee-wrapper desktop-stack-marquee-wrapper fade-up delay-5"
+        aria-label="Tech Stack Desktop"
+      >
+        <div className="stack-marquee-track">
+          {items.map((item, index) => (
+            <React.Fragment key={index}>
+              <span className="stack-item" tabIndex={0}>
+                {item}
+              </span>
+              <span className="stack-dot" aria-hidden="true">
+                ·
+              </span>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* Dedicated Mobile Marquee */}
+      <MobileStackMarquee />
+    </>
   );
 };
 

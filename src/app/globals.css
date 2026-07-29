@@ -474,6 +474,16 @@ p {
   box-sizing: border-box;
 }
 
+.building-desc span {
+  display: inline;
+}
+
+@media (max-width: 640px) {
+  .building-desc span {
+    display: block;
+  }
+}
+
 .hero-link {
   color: var(--fg);
   font-weight: 600;
@@ -518,7 +528,7 @@ p {
 .stack-marquee-wrapper {
   position: relative;
   width: 100%;
-  max-width: min(68ch, 100%);
+  max-width: 68ch;
   overflow: hidden;
   contain: paint;
   margin-top: 2rem;
@@ -526,16 +536,16 @@ p {
   box-sizing: border-box;
   -webkit-mask-image: linear-gradient(
     to right,
-    transparent 0px,
-    black 24px,
-    black calc(100% - 24px),
+    transparent 0%,
+    black 14%,
+    black 86%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
-    transparent 0px,
-    black 24px,
-    black calc(100% - 24px),
+    transparent 0%,
+    black 14%,
+    black 86%,
     transparent 100%
   );
   user-select: none;
@@ -553,6 +563,44 @@ p {
 
 .stack-marquee-wrapper:hover .stack-marquee-track {
   animation-play-state: paused;
+}
+
+/* Dedicated Mobile Stack Marquee */
+.mobile-stack-marquee-wrapper {
+  display: none;
+  position: relative;
+  width: 50% !important;
+  max-width: 50% !important;
+  overflow: hidden;
+  contain: paint;
+  margin-top: 1.5rem;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 28px,
+    black calc(100% - 28px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0px,
+    black 28px,
+    black calc(100% - 28px),
+    transparent 100%
+  );
+  user-select: none;
+}
+
+.mobile-stack-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee-slide 22s linear infinite;
+  will-change: transform;
 }
 
 .stack-item {
@@ -616,7 +664,9 @@ p {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  transition: padding var(--transition-fast), background-color var(--transition-fast);
+  transition:
+    padding var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .project-row:first-child {
@@ -892,7 +942,11 @@ p {
   opacity: 0.9;
   cursor: pointer;
   user-select: none;
-  transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .skill-pill:hover {
@@ -994,7 +1048,10 @@ p {
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   cursor: pointer;
-  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .copy-btn:hover {
@@ -1019,7 +1076,10 @@ p {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .contact-card:hover {
@@ -1063,7 +1123,9 @@ p {
 
 .contact-arrow {
   color: var(--muted);
-  transition: color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .contact-card:hover .contact-arrow {
@@ -1298,14 +1360,18 @@ p {
     font-size: 0.7rem;
   }
 
-  .stack-marquee-wrapper {
-    margin-top: 1.75rem;
-    padding: 0.5rem 0;
+  .desktop-stack-marquee-wrapper {
+    display: none !important;
+  }
+
+  .mobile-stack-marquee-wrapper {
+    display: block !important;
+    width: 50% !important;
+    max-width: 50% !important;
   }
 }
 
 @media (max-width: 640px) {
-
   .projects-page {
     padding: 4.5rem 0 3rem;
   }
