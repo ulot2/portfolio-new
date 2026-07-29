@@ -85,7 +85,7 @@ const MagneticWrapper = ({
   }, [maxDistance, strength, shouldReduceMotion, isMobile, x, y]);
 
   if (shouldReduceMotion || isMobile) {
-    return <div className={className} style={style}>{children}</div>;
+    return <div className={className} style={{ width: "100%", maxWidth: "100%", ...style }}>{children}</div>;
   }
 
   return (
@@ -96,6 +96,8 @@ const MagneticWrapper = ({
         x: springX,
         y: springY,
         display: "block",
+        width: "100%",
+        maxWidth: "100%",
         willChange: "transform",
         ...style,
       }}
@@ -108,7 +110,7 @@ const MagneticWrapper = ({
 export const Hero = () => {
   return (
     <section className="hero" id="hero">
-      <div>
+      <div className="hero-container">
         {/* Name with subtle magnetic spring pull */}
         <MagneticWrapper strength={6} maxDistance={140}>
           <DynamicWeight
@@ -157,10 +159,10 @@ export const Hero = () => {
           </div>
         </MagneticWrapper>
 
-        {/* Currently Building block with spring link feedback */}
+        {/* Currently Building block - responsive inline block sentence */}
         <MagneticWrapper strength={5} maxDistance={130}>
           <div className="hero-building-tag fade-up delay-4">
-            <span className="building-label">Currently Building</span>
+            <span className="building-label">Currently Building</span>{" "}
             <motion.a
               href="https://www.solostack.ng"
               target="_blank"
@@ -178,7 +180,7 @@ export const Hero = () => {
               >
                 <ArrowUpRight size={14} className="link-arrow" />
               </motion.span>
-            </motion.a>
+            </motion.a>{" "}
             <span className="building-desc">
               a business management platform for African freelancers.
             </span>
@@ -190,3 +192,5 @@ export const Hero = () => {
     </section>
   );
 };
+
+export default Hero;

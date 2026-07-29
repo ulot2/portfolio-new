@@ -393,14 +393,14 @@ p {
 
 /* Redesigned Building Focus Block */
 .hero-building-tag {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.75rem;
+  display: block;
+  width: 100%;
+  max-width: min(68ch, 100%);
   font-size: 1.05rem;
   line-height: 1.6;
   margin-top: 1.75rem;
-  max-width: 68ch;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .building-label {
@@ -414,6 +414,7 @@ p {
   align-items: center;
   gap: 0.4rem;
   user-select: none;
+  margin-right: 0.35rem;
 }
 
 .building-label::after {
@@ -431,6 +432,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
+  margin-right: 0.35rem;
   transition:
     color var(--transition-fast),
     border-color var(--transition-fast);
@@ -452,6 +454,9 @@ p {
 .building-desc {
   color: var(--muted);
   font-size: 0.975rem;
+  display: inline;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .hero-link {
@@ -498,10 +503,11 @@ p {
 .stack-marquee-wrapper {
   position: relative;
   width: 100%;
-  max-width: 68ch;
+  max-width: min(68ch, 100%);
   overflow: hidden;
   margin-top: 2rem;
   padding: 0.75rem 0;
+  box-sizing: border-box;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
