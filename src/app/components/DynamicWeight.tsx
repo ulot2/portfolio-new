@@ -178,7 +178,7 @@ export default function DynamicWeight(props: DynamicWeightProps) {
   letterRefs.current = [];
   let letterIndex = 0;
 
-  const Tag = (tag ?? "h1") as any;
+  const Tag = (tag ?? "h1") as React.ElementType;
 
   return (
     <Tag

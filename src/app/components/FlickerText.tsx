@@ -25,9 +25,14 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
   };
 }
 
-function makeEaseFn(ease: any): (t: number) => number {
+function makeEaseFn(ease: unknown): (t: number) => number {
   if (Array.isArray(ease) && ease.length === 4)
-    return cubicBezier(ease[0], ease[1], ease[2], ease[3]);
+    return cubicBezier(
+      Number(ease[0]),
+      Number(ease[1]),
+      Number(ease[2]),
+      Number(ease[3])
+    );
   switch (ease) {
     case "linear":
       return (t) => t;
@@ -64,7 +69,7 @@ type StrokePosition = "start" | "middle" | "end";
 
 interface FlickerCfg {
   duration: number;
-  easeCurve: any;
+  easeCurve: unknown;
   flickerCount: number;
   showStroke: boolean;
   strokePosition: StrokePosition;
@@ -85,6 +90,7 @@ interface FlickerCfg {
   loopDelay?: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function buildTextCfg(m: any): FlickerCfg {
   return {
     duration: m?.ease?.duration ?? 2,
@@ -165,8 +171,9 @@ const COMPONENT_DEFAULTS = {
   tag: "p",
 };
 
-export default function FlickerText(props: any) {
-  const mergedProps = { ...COMPONENT_DEFAULTS, ...props };
+export default function FlickerText(props: Record<string, unknown>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mergedProps: Record<string, any> = { ...COMPONENT_DEFAULTS, ...props };
   const {
     contentType,
     text,
@@ -190,11 +197,12 @@ export default function FlickerText(props: any) {
   const enterCfg: FlickerCfg = buildTextCfg(flicker);
   const hoverCfg: FlickerCfg = buildTextCfg(flickerHover);
 
-  const enterEnabled: boolean = textEnterFlickerEnabled ?? true;
-  const hoverEnabled: boolean = textHoverFlickerEnabled ?? false;
+  const enterEnabled: boolean = (textEnterFlickerEnabled as boolean) ?? true;
+  const hoverEnabled: boolean = (textHoverFlickerEnabled as boolean) ?? false;
 
-  const replay: ReplayMode = flicker?.replay ?? "no";
-  const amount: AmountMode = flicker?.position ?? "above";
+  const flickerObj = flicker as Record<string, unknown> | undefined;
+  const replay: ReplayMode = (flickerObj?.replay as ReplayMode) ?? "no";
+  const amount: AmountMode = (flickerObj?.position as AmountMode) ?? "above";
 
   const initialCfg = enterEnabled
     ? enterCfg
@@ -227,7 +235,7 @@ export default function FlickerText(props: any) {
   function generateTimings(
     count: number,
     totalMs: number,
-    easeCurve: any
+    easeCurve: unknown
   ): number[] {
     const slots = count;
     const fn = makeEaseFn(easeCurve);
@@ -431,6 +439,7 @@ export default function FlickerText(props: any) {
     setActiveCfg(baseCfg);
     setCurrentPhase(baseCfg.restState);
     setMoveX(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sig]);
 
   useEffect(() => {
