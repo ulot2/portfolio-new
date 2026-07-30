@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "./components/CustomCursor";
 
@@ -17,6 +17,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-serif-custom",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Toluwalope Adegoke — Software Engineer",
   description:
@@ -30,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jakarta.variable} ${jetbrainsMono.variable}`}>
+      <body className={`${jakarta.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
         <CustomCursor />
         {children}
       </body>

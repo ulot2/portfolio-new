@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import FlickerText from "./FlickerText";
 import DynamicWeight from "./DynamicWeight";
 import StackMarquee from "./StackMarquee";
@@ -24,7 +24,7 @@ const MagneticWrapper = ({
 }: MagneticWrapperProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -107,6 +107,54 @@ const MagneticWrapper = ({
   );
 };
 
+/* Pulse Waveform Component */
+const WaveformPulse = () => {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div className="hero-badge-container" title="Pulse Waveform">
+      <svg
+        width="64"
+        height="20"
+        viewBox="0 0 64 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="hero-waveform-svg"
+      >
+        <path
+          d="M0 10 H20 L24 4 L28 16 L32 7 L36 12 L40 10 H64"
+          stroke="var(--green)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.3"
+        />
+        {!shouldReduceMotion && (
+          <motion.path
+            d="M0 10 H20 L24 4 L28 16 L32 7 L36 12 L40 10 H64"
+            stroke="var(--green)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0, opacity: 0.8 }}
+            animate={{
+              pathLength: [0, 1, 1],
+              pathOffset: [0, 0, 1],
+              opacity: [0.2, 0.95, 0.2],
+            }}
+            transition={{
+              duration: 2.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.65, 1],
+            }}
+          />
+        )}
+      </svg>
+    </div>
+  );
+};
+
 export const Hero = () => {
   return (
     <section className="hero" id="hero">
@@ -131,7 +179,7 @@ export const Hero = () => {
             className="hero-tagline fade-up delay-2"
             fontColor="var(--accent)"
             loop={true}
-            loopDelay={1.5}
+            loopDelay={0.2}
             flicker={{
               strokeColor: "var(--accent)",
               showStroke: false,
@@ -141,21 +189,15 @@ export const Hero = () => {
               letterFlickerOpacity: 30,
               letterFlickerIntensity: 5,
               flickerCount: 5,
-              ease: { type: "tween", duration: 3.5, ease: "easeInOut" },
+              ease: { type: "tween", duration: 0.4, ease: "easeInOut" },
             }}
           />
         </MagneticWrapper>
 
-        {/* Availability badge with subtle magnetic spring pull */}
+        {/* Waveform Pulse Badge with magnetic pull */}
         <MagneticWrapper strength={5} maxDistance={110}>
-          <div className="fade-up delay-3">
-            <span
-              className="availability"
-              title="Available for full-time roles & contract projects"
-            >
-              <span className="availability-dot" />
-              <span>Open to Work</span>
-            </span>
+          <div className="fade-up delay-3" style={{ marginBottom: "1.5rem" }}>
+            <WaveformPulse />
           </div>
         </MagneticWrapper>
 

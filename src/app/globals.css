@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@font-face {
+  font-family: "InterVariableFramer";
+  src: url("https://rsms.me/inter/font-files/InterVariable.woff2?v=4.0") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ═══════════════════════════════════════════════
    DESIGN TOKENS
    ═══════════════════════════════════════════════ */
@@ -16,11 +26,11 @@
   --green-glow: rgba(34, 197, 94, 0.4);
 
   --font-sans:
-    var(--font-jakarta), "Plus Jakarta Sans", system-ui, -apple-system,
-    sans-serif;
-  --font-serif: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+    "Plus Jakarta Sans", "InterVariableFramer", var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-serif:
+    "Plus Jakarta Sans", "InterVariableFramer", var(--font-jakarta), system-ui, -apple-system, sans-serif;
   --font-mono:
-    var(--font-jetbrains-mono), "JetBrains Mono", "Courier New", monospace;
+    "Plus Jakarta Sans", "InterVariableFramer", var(--font-jakarta), system-ui, -apple-system, sans-serif;
 
   --max-width: 740px;
   --side-padding: 1.5rem;
@@ -44,6 +54,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Plus Jakarta Sans", "InterVariableFramer", system-ui, -apple-system, sans-serif !important;
 }
 
 html {
@@ -56,7 +67,7 @@ html {
 }
 
 body {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   background: var(--bg);
   color: var(--muted);
   font-size: 0.875rem;
@@ -241,10 +252,12 @@ body::before {
 h1,
 h2,
 h3,
-h4 {
-  font-family: var(--font-serif);
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
   color: var(--fg);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.15;
 }
 
@@ -303,6 +316,19 @@ p {
   margin-bottom: 1.25rem;
   font-style: italic;
   font-weight: 400;
+}
+
+/* Hero Pulse Waveform Badge */
+.hero-badge-container {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  user-select: none;
+}
+
+.hero-waveform-svg {
+  display: block;
+  opacity: 0.85;
 }
 
 .availability {
@@ -646,7 +672,7 @@ p {
    ═══════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════
-   WORK SECTION — STREAMLINED COMPACT ROW LIST
+   WORK SECTION — ULTRA-CLEAN MINIMAL LIST
    ═══════════════════════════════════════════════ */
 
 .projects-list {
@@ -657,7 +683,7 @@ p {
 .project-row {
   display: block;
   position: relative;
-  padding: 1.25rem 1rem;
+  padding: 1.4rem 1rem;
   margin: 0 -1rem;
   border-bottom: 1px solid var(--border);
   border-radius: 8px;
@@ -665,8 +691,9 @@ p {
   color: inherit;
   cursor: pointer;
   transition:
-    padding var(--transition-fast),
-    background-color var(--transition-fast);
+    padding 160ms var(--ease-out),
+    background-color 160ms var(--ease-out),
+    transform 120ms ease-out;
 }
 
 .project-row:first-child {
@@ -675,7 +702,11 @@ p {
 
 .project-row:hover {
   background-color: rgba(255, 255, 255, 0.025);
-  padding-left: 1.25rem;
+  padding-left: 1.35rem;
+}
+
+.project-row:active {
+  transform: scale(0.992);
 }
 
 .project-row-inner {
@@ -688,7 +719,7 @@ p {
 .project-left {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
   min-width: 0;
 }
 
@@ -701,26 +732,27 @@ p {
   opacity: 0.85;
 }
 
-.project-title-group {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  min-width: 0;
-}
-
 .project-name {
-  font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+  font-family: var(--font-sans);
+  font-size: clamp(1.2rem, 2.8vw, 1.55rem);
   color: var(--fg);
   font-weight: 600;
-  letter-spacing: -0.01em;
-  transition: color var(--transition-fast);
+  letter-spacing: -0.02em;
+  transition: color 160ms var(--ease-out);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-row:hover .project-name {
   color: var(--accent);
+}
+
+.project-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
 }
 
 .project-category {
@@ -730,38 +762,13 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
+  opacity: 0.8;
+  transition: color 160ms var(--ease-out), opacity 160ms var(--ease-out);
 }
 
-.project-right {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  flex-shrink: 0;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.project-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  padding: 0.2rem 0.55rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border2);
-  border-radius: 5px;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-  transition:
-    border-color var(--transition-fast),
-    color var(--transition-fast);
-}
-
-.project-row:hover .project-tag {
-  border-color: rgba(232, 197, 71, 0.3);
+.project-row:hover .project-category {
   color: var(--fg);
+  opacity: 1;
 }
 
 .project-arrow-wrap {
@@ -769,64 +776,18 @@ p {
   align-items: center;
   justify-content: center;
   color: var(--muted);
-  transition: color var(--transition-fast);
+  transition:
+    transform 160ms var(--ease-out),
+    color 160ms var(--ease-out);
 }
 
-.project-row:hover .project-arrow-icon {
+.project-arrow-icon {
+  transition: transform 160ms var(--ease-out);
+}
+
+.project-row:hover .project-arrow-wrap {
+  transform: translate(2.5px, -2.5px);
   color: var(--accent);
-}
-
-/* Floating Image Preview Follower (Compact 240px) */
-.project-floating-preview {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 240px;
-  pointer-events: none;
-  z-index: 999;
-}
-
-.preview-image-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background-color: var(--bg2);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85);
-}
-
-.preview-img {
-  object-fit: cover;
-}
-
-.preview-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 0.6rem 0.75rem;
-}
-
-.preview-badge {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: var(--fg);
-  letter-spacing: 0.03em;
-}
-
-.preview-cta {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-weight: 600;
 }
 
 .projects-footer {
