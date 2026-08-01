@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { LuCopy, LuCheck } from "react-icons/lu";
-import { ArrowUpRight, FileText } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const contactLinks = [
   {
