@@ -321,6 +321,7 @@ p {
   display: inline-flex;
   align-items: center;
   height: 28px;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -342,6 +343,7 @@ p {
   border-radius: 999px;
   margin-bottom: 2rem;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   transition:
     border-color var(--transition-fast),
@@ -450,6 +452,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -572,6 +575,7 @@ p {
     black 86%,
     transparent 100%
   );
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -614,6 +618,7 @@ p {
     black calc(100% - 28px),
     transparent 100%
   );
+  -webkit-user-select: none;
   user-select: none;
 }
 

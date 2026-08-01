@@ -40,6 +40,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Toluwalope Adegoke" }],
   creator: "Toluwalope Adegoke",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/me.png", type: "image/png" },
+    ],
+    shortcut: "/icon.svg",
+    apple: "/me.png",
+  },
   openGraph: {
     title: "Toluwalope Adegoke — Software Engineer",
     description:
@@ -47,6 +55,14 @@ export const metadata: Metadata = {
     siteName: "Toluwalope Adegoke Portfolio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/me.png",
+        width: 512,
+        height: 512,
+        alt: "Toluwalope Adegoke",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -54,6 +70,7 @@ export const metadata: Metadata = {
     description:
       "Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.",
     creator: "@Tolu_dev",
+    images: ["/me.png"],
   },
   robots: {
     index: true,
@@ -68,6 +85,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icon.svg?v=6" type="image/svg+xml" />
+        <link rel="icon" href="/me.png?v=6" type="image/png" />
+        <link rel="apple-touch-icon" href="/me.png?v=6" />
+        <link rel="shortcut icon" href="/icon.svg?v=6" />
+      </head>
       <body className={`${jakarta.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
         <CustomCursor />
         {children}
