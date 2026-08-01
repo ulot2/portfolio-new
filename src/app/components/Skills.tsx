@@ -67,9 +67,7 @@ export const Skills = () => {
   return (
     <section className="section" id="skills">
       <div className="section-label">
-        <span className="number">02</span>
         <span className="label">Tools & Skills</span>
-        <span className="line" />
       </div>
 
       <div className="skills-container">

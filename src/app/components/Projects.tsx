@@ -1,65 +1,79 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { projects } from "@/data/projects";
 
-const displayProjects = projects.slice(0, 5);
+const INITIAL_PROJECT_COUNT = 4;
 
 export const Projects = () => {
+  const [visibleCount, setVisibleCount] = useState(INITIAL_PROJECT_COUNT);
+  const hasMore = visibleCount < projects.length;
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => Math.min(prev + 4, projects.length));
+  };
+
+  const displayedProjects = projects.slice(0, visibleCount);
+
   return (
     <section className="section" id="work">
-      <div className="section-label">
-        <span className="number">01</span>
-        <span className="label">Selected Work</span>
-        <span className="line" />
+      <div
+        className="section-label fade-up delay-1"
+        style={{ marginBottom: "2.5rem" }}
+      >
+        <span className="label">Projects</span>
       </div>
 
-      <div className="projects-list">
-        {displayProjects.map((project, index) => {
-          const formattedIndex = String(index + 1).padStart(2, "0");
+      <div className="projects-grid">
+        <AnimatePresence initial={false}>
+          {displayedProjects.map((project, index) => {
+            const targetUrl =
+              project.liveUrl && project.liveUrl !== "/"
+                ? project.liveUrl
+                : project.githubUrl;
 
-          return (
-            <Link
-              key={project.id}
-              href={`/projects/${project.id}`}
-              className="project-row fade-up"
-              style={{ animationDelay: `${0.05 + index * 0.06}s` }}
-            >
-              <div className="project-row-inner">
-                {/* Left: Index & Title */}
-                <div className="project-left">
-                  <span className="project-index">{formattedIndex}</span>
-                  <h3 className="project-name">{project.title}</h3>
-                </div>
-
-                {/* Right: Category & Hover Arrow */}
-                <div className="project-right">
-                  <span className="project-category">{project.category}</span>
-                  <span className="project-arrow-wrap">
-                    <ArrowUpRight size={17} className="project-arrow-icon" />
+            return (
+              <motion.a
+                key={project.id}
+                href={targetUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-card"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25, delay: (index % 4) * 0.05 }}
+              >
+                <div className="project-card-header">
+                  <span className="project-card-title">
+                    <span className="title-text">{project.title}</span>
+                    <ArrowUpRight size={15} className="card-arrow-icon" />
                   </span>
                 </div>
-              </div>
-            </Link>
-          );
-        })}
+                <p className="project-card-desc">{project.description}</p>
+              </motion.a>
+            );
+          })}
+        </AnimatePresence>
       </div>
 
-      <div className="projects-footer fade-up delay-6">
-        <motion.div
-          whileTap={{ scale: 0.97 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          style={{ display: "inline-block" }}
-        >
-          <Link href="/projects" className="view-all-link">
-            <span>View all projects</span>
-            <span className="arrow">→</span>
-          </Link>
-        </motion.div>
-      </div>
+      {hasMore && (
+        <div className="projects-footer fade-up">
+          <motion.button
+            type="button"
+            onClick={handleLoadMore}
+            className="load-more-btn"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          >
+            <span>Load More</span>
+            <ChevronDown size={14} className="load-more-icon" />
+          </motion.button>
+        </div>
+      )}
     </section>
   );
 };

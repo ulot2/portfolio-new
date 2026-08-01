@@ -45,9 +45,7 @@ export const Contact = () => {
   return (
     <section className="section contact-section" id="contact">
       <div className="section-label">
-        <span className="number">03</span>
         <span className="label">Contact</span>
-        <span className="line" />
       </div>
 
       <div className="contact-container">
