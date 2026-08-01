@@ -25,7 +25,12 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: "Toluwalope Adegoke — Software Engineer",
   description:
     "Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.",
@@ -86,10 +91,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/icon.svg?v=6" type="image/svg+xml" />
-        <link rel="icon" href="/me.png?v=6" type="image/png" />
-        <link rel="apple-touch-icon" href="/me.png?v=6" />
-        <link rel="shortcut icon" href="/icon.svg?v=6" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/me.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/me.png" />
       </head>
       <body className={`${jakarta.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
         <CustomCursor />
