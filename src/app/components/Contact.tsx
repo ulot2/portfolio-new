@@ -1,35 +1,29 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { LuGithub, LuLinkedin, LuMail, LuCopy, LuCheck } from "react-icons/lu";
-import { FaXTwitter } from "react-icons/fa6";
-import { ArrowUpRight } from "lucide-react";
+import { LuCopy, LuCheck } from "react-icons/lu";
+import { ArrowUpRight, FileText } from "lucide-react";
 
 const contactLinks = [
   {
-    platform: "Email",
-    handle: "tolu.nuell@gmail.com",
-    href: "mailto:tolu.nuell@gmail.com",
-    icon: <LuMail size={18} />,
+    platform: "Resume / CV",
+    handle: "View Document",
+    href: "/resume.pdf",
   },
   {
     platform: "GitHub",
     handle: "@ulot2",
     href: "https://github.com/ulot2",
-    icon: <LuGithub size={18} />,
   },
   {
     platform: "LinkedIn",
     handle: "Toluwalope Adegoke",
     href: "https://www.linkedin.com/in/toluwalope-adegoke-b441b9380",
-    icon: <LuLinkedin size={18} />,
   },
   {
     platform: "X (Twitter)",
     handle: "@Tolu_dev",
     href: "https://x.com/Tolu_dev",
-    icon: <FaXTwitter size={17} />,
   },
 ];
 
@@ -44,7 +38,7 @@ export const Contact = () => {
 
   return (
     <section className="section contact-section" id="contact">
-      <div className="section-label">
+      <div className="section-label fade-up delay-1">
         <span className="label">Contact</span>
       </div>
 
@@ -52,67 +46,56 @@ export const Contact = () => {
         <div className="contact-header fade-up">
           <h2 className="contact-title">Let&apos;s build something together.</h2>
           <p className="contact-intro">
-            Currently open to full-time frontend roles, contract opportunities, and creative collaborations. Feel free to reach out directly:
+            Open to full-time frontend roles, contract work, and creative collaborations. Feel free to reach out:
           </p>
 
-          {/* Quick Copy Email Action */}
-          <div className="email-copy-bar">
-            <a href="mailto:tolu.nuell@gmail.com" className="email-link">
-              <LuMail size={16} className="text-accent" />
-              <span>tolu.nuell@gmail.com</span>
+          {/* Simple Email Bar */}
+          <div className="simple-email-row">
+            <a href="mailto:tolu.nuell@gmail.com" className="main-email-link">
+              tolu.nuell@gmail.com
             </a>
-            <motion.button
+            <button
+              type="button"
               onClick={handleCopyEmail}
-              className="copy-btn"
+              className="simple-copy-btn"
               title="Copy email to clipboard"
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 450, damping: 25 }}
             >
               {copied ? (
-                <>
-                  <LuCheck size={14} className="text-green" />
-                  <span className="text-green">Copied!</span>
-                </>
+                <span className="copied-text">
+                  <LuCheck size={13} /> Copied
+                </span>
               ) : (
-                <>
-                  <LuCopy size={14} />
-                  <span>Copy</span>
-                </>
+                <span className="copy-text">
+                  <LuCopy size={13} /> Copy
+                </span>
               )}
-            </motion.button>
+            </button>
           </div>
         </div>
 
-        {/* Social & Platform Link Grid */}
-        <div className="contact-grid fade-up delay-2">
+        {/* Minimal Social Links & Resume Grid */}
+        <div className="contact-simple-list fade-up delay-2">
           {contactLinks.map((link) => (
-            <motion.a
+            <a
               key={link.platform}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="contact-card"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="contact-row-item"
             >
-              <div className="contact-card-left">
-                <span className="contact-icon">{link.icon}</span>
-                <div className="contact-info">
-                  <span className="contact-platform">{link.platform}</span>
-                  <span className="contact-handle">{link.handle}</span>
-                </div>
+              <div className="contact-row-left">
+                <span className="contact-row-platform">{link.platform}</span>
+                <span className="contact-row-handle">{link.handle}</span>
               </div>
-              <ArrowUpRight size={16} className="contact-arrow" />
-            </motion.a>
+              <ArrowUpRight size={15} className="contact-row-arrow" />
+            </a>
           ))}
         </div>
 
         {/* Footer info */}
         <footer className="site-footer fade-up delay-3">
           <p>
-            &copy; {new Date().getFullYear()} Toluwalope Adegoke. Built with Next.js, TypeScript & Tailwind CSS.
+            &copy; {new Date().getFullYear()} Toluwalope Adegoke. Built with Next.js &amp; TypeScript.
           </p>
         </footer>
       </div>
