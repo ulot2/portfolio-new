@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Send, Sparkles, Trash2, ChevronDown, Terminal, Bot } from "lucide-react";
+import { Send, Trash2, ChevronDown, Terminal, Bot } from "lucide-react";
 
 const GLYPHS = "!@#$%^&*()_+-=[]{}|;:,.<>?/~#%*@?!";
 
@@ -13,6 +13,18 @@ const SUGGESTIONS = [
   "What did Tolu do at FireSwitch?",
   "How does PostFlow work?",
 ];
+
+interface ChatMessagePart {
+  type?: string;
+  text?: string;
+}
+
+interface ChatMessageItem {
+  id: string;
+  role: string;
+  content?: string;
+  parts?: ChatMessagePart[];
+}
 
 function ScrambleText({ text = "thinking..." }: { text?: string }) {
   const [displayText, setDisplayText] = useState("");
@@ -58,7 +70,7 @@ export function PortfolioChat() {
 
   const { messages, sendMessage, status, setMessages } = useChat({
     api: "/api/chat",
-  } as any);
+  } as unknown as Parameters<typeof useChat>[0]);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -90,12 +102,12 @@ export function PortfolioChat() {
     status === "submitted" || (status === "streaming" && messages.length === 0);
   const isActive = isThinking || status === "streaming";
 
-  const getMessageContent = (m: any) => {
+  const getMessageContent = (m: ChatMessageItem) => {
     if (typeof m.content === "string" && m.content) return m.content;
     if (Array.isArray(m.parts)) {
       return m.parts
-        .filter((p: any) => p.type === "text")
-        .map((p: any) => p.text)
+        .filter((p: ChatMessagePart) => p.type === "text")
+        .map((p: ChatMessagePart) => p.text || "")
         .join("");
     }
     return "";
@@ -132,7 +144,7 @@ export function PortfolioChat() {
               <div className="portfolio-chat-header">
                 <div className="portfolio-chat-title">
                   <Terminal className="icon-terminal" size={15} />
-                  <span>Tolu's AI Assistant</span>
+                  <span>Tolu&apos;s AI Assistant</span>
                   <span className="online-badge" />
                 </div>
                 <div className="portfolio-chat-actions">
@@ -179,7 +191,7 @@ export function PortfolioChat() {
                     </div>
                   </div>
                 ) : (
-                  messages.map((m: any) => (
+                  messages.map((m: ChatMessageItem) => (
                     <motion.div
                       key={m.id}
                       className={`portfolio-chat-msg ${
@@ -193,7 +205,7 @@ export function PortfolioChat() {
                     >
                       <div className="msg-content">
                         <span className="msg-role">
-                          {m.role === "user" ? "You" : "Tolu's AI"}
+                          {m.role === "user" ? "You" : "Tolu&apos;s AI"}
                         </span>
                         <p>{getMessageContent(m)}</p>
                       </div>
@@ -209,7 +221,7 @@ export function PortfolioChat() {
                     animate={{ opacity: 1, y: 0 }}
                   >
                     <div className="msg-content thinking">
-                      <span className="msg-role">Tolu's AI</span>
+                      <span className="msg-role">Tolu&apos;s AI</span>
                       <div className="scramble-thinking">
                         <ScrambleText text="thinking..." />
                       </div>

@@ -1,5 +1,5 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
-import { streamText, convertToModelMessages, createUIMessageStreamResponse, createUIMessageStream } from 'ai';
+import { streamText, convertToModelMessages, createTextStreamResponse } from 'ai';
 import { buildSystemPrompt } from '@/lib/knowledge';
 import { checkRateLimit } from '@/lib/ratelimit';
 
@@ -15,12 +15,9 @@ export async function POST(req: Request) {
 
     if (!rateLimit.success) {
       const limitMsg = "I've hit my daily message limit for now! Feel free to reach out to Tolu directly via the contact section below.";
-      const stream = createUIMessageStream({
-        execute: async ({ writer }) => {
-          writer.write({ type: 'text-delta', id: 'rate-limit-msg', delta: limitMsg });
-        },
+      return new Response(limitMsg, {
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
       });
-      return createUIMessageStreamResponse({ stream });
     }
 
     // 2. OpenRouter Key Verification
@@ -61,11 +58,12 @@ export async function POST(req: Request) {
       messages,
     });
 
-    return result.toUIMessageStreamResponse();
-  } catch (error: any) {
+    return createTextStreamResponse({ stream: result.textStream });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to generate response';
     console.error('Streaming Chat API Error:', error);
     return new Response(
-      JSON.stringify({ error: error?.message || 'Failed to generate response' }),
+      JSON.stringify({ error: errorMessage }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
