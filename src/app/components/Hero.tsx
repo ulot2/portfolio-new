@@ -5,8 +5,12 @@ import FlickerText from "./FlickerText";
 import DynamicWeight from "./DynamicWeight";
 import StackMarquee from "./StackMarquee";
 import { ArrowUpRight } from "lucide-react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
-
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useReducedMotion,
+} from "framer-motion";
 interface MagneticWrapperProps {
   children: React.ReactNode;
   maxDistance?: number;
@@ -37,7 +41,7 @@ const MagneticWrapper = ({
     const checkMobile = () => {
       setIsMobile(
         typeof window !== "undefined" &&
-          window.matchMedia("(pointer: coarse), (max-width: 768px)").matches
+          window.matchMedia("(pointer: coarse), (max-width: 768px)").matches,
       );
     };
     checkMobile();
@@ -85,7 +89,14 @@ const MagneticWrapper = ({
   }, [maxDistance, strength, shouldReduceMotion, isMobile, x, y]);
 
   if (shouldReduceMotion || isMobile) {
-    return <div className={className} style={{ width: "100%", maxWidth: "100%", ...style }}>{children}</div>;
+    return (
+      <div
+        className={className}
+        style={{ width: "100%", maxWidth: "100%", ...style }}
+      >
+        {children}
+      </div>
+    );
   }
 
   return (
@@ -234,6 +245,7 @@ export const Hero = () => {
 
         <StackMarquee />
       </div>
+      <div></div>
     </section>
   );
 };

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-
 interface SkillCategory {
   title: string;
   skills: string[];
@@ -11,15 +10,34 @@ interface SkillCategory {
 const skillsCategories: SkillCategory[] = [
   {
     title: "Frontend & Core",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "HTML/CSS"],
+    skills: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "HTML/CSS",
+    ],
   },
   {
     title: "Animation & Motion",
-    skills: ["Framer Motion", "Design Systems", "UI Engineering", "Responsive Layouts"],
+    skills: [
+      "Framer Motion",
+      "Design Systems",
+      "UI Engineering",
+      "Responsive Layouts",
+    ],
   },
   {
     title: "Tooling & Workflow",
-    skills: ["Git & GitHub", "Vercel", "Figma", "REST APIs", "Vite", "pnpm / npm"],
+    skills: [
+      "Git & GitHub",
+      "Vercel",
+      "Figma",
+      "REST APIs",
+      "Vite",
+      "pnpm / npm",
+    ],
   },
 ];
 

@@ -9,6 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.31",
+    "@ai-sdk/react": "^4.0.51",
+    "@openrouter/ai-sdk-provider": "^3.0.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.1",
+    "ai": "^7.0.48",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.23.12",
     "lucide": "^0.575.0",
@@ -17,7 +23,8 @@
     "next": "15.5.9",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "tnuellanimations": "file:../tnuellanimation"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

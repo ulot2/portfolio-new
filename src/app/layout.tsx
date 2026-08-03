@@ -47,11 +47,10 @@ export const metadata: Metadata = {
   creator: "Toluwalope Adegoke",
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/me.png", type: "image/png" },
+      { url: "/me.png?v=7", type: "image/png" },
     ],
-    shortcut: "/icon.svg",
-    apple: "/me.png",
+    shortcut: "/me.png?v=7",
+    apple: "/me.png?v=7",
   },
   openGraph: {
     title: "Toluwalope Adegoke — Software Engineer",
@@ -91,9 +90,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/me.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/me.png" />
+        <link rel="icon" href="/me.png?v=7" type="image/png" />
+        <link rel="apple-touch-icon" href="/me.png?v=7" />
+        <link rel="shortcut icon" href="/me.png?v=7" />
       </head>
       <body className={`${jakarta.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
         <CustomCursor />
