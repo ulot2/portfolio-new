@@ -17,7 +17,8 @@
   --bg: #0d0d0b;
   --bg2: #131310;
   --fg: #e8e4dc;
-  --muted: #5a5850;
+  --muted: #b0ae9f;
+  --muted-subtle: #c8c5b8;
   --subtle: #2a2a26;
   --accent: #e8c547;
   --border: #1f1f1c;
@@ -393,7 +394,6 @@ p {
 .availability-detail {
   font-size: 0.7rem;
   color: var(--muted);
-  opacity: 0.85;
   margin-left: 0.25rem;
   padding-left: 0.5rem;
   border-left: 1px solid rgba(34, 197, 94, 0.3);
@@ -492,7 +492,7 @@ p {
 .building-label::after {
   content: "—";
   color: var(--muted);
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 .building-link {
@@ -691,7 +691,7 @@ p {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--accent);
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 @keyframes marquee-slide {
@@ -813,7 +813,7 @@ p {
 }
 
 .project-card:hover .project-card-desc {
-  color: rgba(232, 228, 220, 0.85);
+  color: var(--fg);
 }
 
 .projects-footer {
@@ -922,8 +922,8 @@ p {
   font-size: 0.825rem;
   font-weight: 400;
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0.25rem 0.65rem;
   border-radius: 6px;
   transition:
@@ -967,7 +967,7 @@ p {
 .contact-intro {
   font-family:
     "Plus Jakarta Sans", "InterVariableFramer", system-ui, sans-serif !important;
-  font-size: 0.925rem;
+  font-size: 0.975rem;
   color: var(--muted);
   line-height: 1.6;
   max-width: 54ch;
@@ -1004,7 +1004,7 @@ p {
   font-size: 0.775rem;
   color: var(--muted);
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   padding: 0.2rem 0.6rem;
   border-radius: 6px;
   cursor: pointer;
@@ -1051,7 +1051,7 @@ p {
   justify-content: space-between;
   padding: 0.85rem 1rem;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   text-decoration: none;
   color: inherit;
@@ -1063,7 +1063,7 @@ p {
 
 .contact-row-item:hover {
   background-color: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 .contact-row-item:active {
@@ -1089,6 +1089,11 @@ p {
     "Plus Jakarta Sans", "InterVariableFramer", system-ui, sans-serif !important;
   font-size: 0.8rem;
   color: var(--muted);
+  transition: color 160ms var(--ease-out);
+}
+
+.contact-row-item:hover .contact-row-handle {
+  color: var(--fg);
 }
 
 .contact-row-arrow {
@@ -2009,7 +2014,7 @@ a.project-nav-btn:hover {
 }
 
 .portfolio-chat-input::placeholder {
-  color: var(--muted);
+  color: #9c9990;
 }
 
 .portfolio-chat-send-btn {
