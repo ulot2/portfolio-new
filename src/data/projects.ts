@@ -16,11 +16,10 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "PostFlow",
-    description:
-      "An intuitive, drag-and-drop social media calendar that replaces messy spreadsheets.",
-    liveUrl: "/", // Placeholder
-    githubUrl: "https://github.com/ulot2/postflow", // Placeholder
+    title: "LaseTales",
+    description: "A portfolio for an event videographer and editor",
+    liveUrl: "https://lasetales.vercel.app/", // Placeholder
+    githubUrl: "#", // Placeholder
   },
   // {
   //   id: 3,
