@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock, Share2, Check, Twitter } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
-import { ViewCounter } from "./ViewCounter";
+// import { ViewCounter } from "./ViewCounter";
 
 interface PostHeaderProps {
   post: PostMetadata;
@@ -63,8 +63,8 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
             <Clock size={13} className="meta-icon" />
             <span>{post.readingTime}</span>
           </span>
-          <span className="meta-separator">•</span>
-          <ViewCounter slug={post.slug} />
+          {/* <span className="meta-separator">•</span>
+          <ViewCounter slug={post.slug} /> */}
         </div>
 
         {/* Share buttons */}

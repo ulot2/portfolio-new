@@ -19,21 +19,24 @@ export const PostFooter = ({
       {/* Divider */}
       <hr className="article-footer-divider" />
 
-      {/* Author Bio Card */}
-      <div className="author-card">
+      {/* Author Signature */}
+      <div className="author-signature">
         <div className="author-avatar-wrapper">
           <Image
             src="/me.png"
             alt="Toluwalope Adegoke"
-            width={60}
-            height={60}
+            width={46}
+            height={46}
             className="author-avatar-img"
           />
         </div>
         <div className="author-info">
-          <span className="author-name">Written by Toluwalope Adegoke</span>
+          <div className="author-header-row">
+            <span className="author-name">Toluwalope Adegoke</span>
+            <span className="author-role-label">Frontend Engineer</span>
+          </div>
           <p className="author-bio">
-            Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript. Currently building SoloStack.
+            Crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript. Currently building SoloStack.
           </p>
           <div className="author-links">
             <a
@@ -42,10 +45,10 @@ export const PostFooter = ({
               rel="noopener noreferrer"
               className="author-link-item"
             >
-              <span>Follow on X</span>
-              <ArrowUpRight size={12} />
+              <span>X (Twitter)</span>
+              <ArrowUpRight size={11} />
             </a>
-            <span className="author-dot">•</span>
+            <span className="author-link-separator">•</span>
             <a
               href="https://github.com/ulot2"
               target="_blank"
@@ -53,12 +56,12 @@ export const PostFooter = ({
               className="author-link-item"
             >
               <span>GitHub</span>
-              <ArrowUpRight size={12} />
+              <ArrowUpRight size={11} />
             </a>
-            <span className="author-dot">•</span>
+            <span className="author-link-separator">•</span>
             <Link href="/#contact" className="author-link-item">
               <span>Get in touch</span>
-              <ArrowRight size={12} />
+              <ArrowRight size={11} />
             </Link>
           </div>
         </div>

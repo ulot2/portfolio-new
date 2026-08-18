@@ -2806,29 +2806,29 @@ a.project-nav-btn:hover {
 .article-footer-divider {
   border: none;
   border-top: 1px solid var(--border);
-  margin-bottom: 2.5rem;
+  margin: 3rem 0 2rem;
 }
 
-.author-card {
+.author-signature {
   display: flex;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  background: rgba(19, 19, 16, 0.7);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 2.5rem;
+  align-items: flex-start;
+  gap: 1.15rem;
+  padding: 0.25rem 0 2.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .author-avatar-wrapper {
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .author-avatar-img {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--border2);
   object-fit: cover;
+  background: var(--bg2);
 }
 
 .author-info {
@@ -2837,16 +2837,36 @@ a.project-nav-btn:hover {
   gap: 0.4rem;
 }
 
+.author-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .author-name {
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--fg);
+  line-height: 1.3;
+}
+
+.author-role-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
 }
 
 .author-bio {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--muted);
-  line-height: 1.55;
+  line-height: 1.6;
+  max-width: 60ch;
+  margin: 0;
 }
 
 .author-links {
@@ -2862,18 +2882,21 @@ a.project-nav-btn:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  color: var(--accent);
+  color: var(--fg);
+  opacity: 0.75;
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: opacity var(--transition-fast), color var(--transition-fast);
 }
 
 .author-link-item:hover {
-  color: #f7da66;
+  opacity: 1;
+  color: var(--accent);
 }
 
-.author-dot {
-  opacity: 0.4;
+.author-link-separator {
+  opacity: 0.35;
   color: var(--muted);
+  font-size: 0.7rem;
 }
 
 /* Pagination Grid */
