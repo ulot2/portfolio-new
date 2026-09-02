@@ -18,19 +18,11 @@ export const projects: Project[] = [
     id: 2,
     title: "LaseTales",
     description: "A portfolio for an event videographer and editor",
-    liveUrl: "https://lasetales.vercel.app/", // Placeholder
-    githubUrl: "#", // Placeholder
+    liveUrl: "https://lasetales.vercel.app/",
+    githubUrl: "#",
   },
-  // {
-  //   id: 3,
-  //   title: "PromptNest",
-  //   description:
-  //     "PromptNest is a community-driven library for discovering, sharing, and organizing high-quality AI prompts.",
-  //   liveUrl: "https://prompt-nest-eta.vercel.app/",
-  //   githubUrl: "https://github.com/ulot2/portfolio-new.git",
-  // },
   {
-    id: 4,
+    id: 3,
     title: "Ville Dishes",
     description:
       "A landing page for a restaurant called Ville Dishes, built with Nextjs and Tailwind CSS.",

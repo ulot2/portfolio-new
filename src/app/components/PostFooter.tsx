@@ -5,15 +5,11 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
 
 interface PostFooterProps {
-  currentPost: PostMetadata;
   prevPost?: PostMetadata | null;
   nextPost?: PostMetadata | null;
 }
 
-export const PostFooter = ({
-  prevPost,
-  nextPost,
-}: PostFooterProps) => {
+export const PostFooter = ({ prevPost, nextPost }: PostFooterProps) => {
   return (
     <footer className="article-footer fade-up">
       {/* Divider */}
