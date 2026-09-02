@@ -1,23 +1,18 @@
 "use client";
 
 import React from "react";
-
-const STACK_ITEMS = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "Framer Motion",
-];
+import { STACK_ITEMS, MARQUEE_REPEATS } from "@/data/stack";
 
 export const MobileStackMarquee = () => {
-  // Duplicate array for seamless infinite looping on mobile screens
-  const items = [...STACK_ITEMS, ...STACK_ITEMS, ...STACK_ITEMS, ...STACK_ITEMS];
+  const items = Array.from(
+    { length: MARQUEE_REPEATS },
+    () => STACK_ITEMS,
+  ).flat();
 
   return (
     <div
       className="mobile-stack-marquee-wrapper fade-up delay-5"
-      aria-label="Tech Stack Mobile"
+      aria-hidden="true"
       style={{
         width: "50%",
         maxWidth: "50%",
@@ -29,12 +24,8 @@ export const MobileStackMarquee = () => {
       <div className="mobile-stack-marquee-track">
         {items.map((item, index) => (
           <React.Fragment key={index}>
-            <span className="stack-item" tabIndex={0}>
-              {item}
-            </span>
-            <span className="stack-dot" aria-hidden="true">
-              ·
-            </span>
+            <span className="stack-item">{item}</span>
+            <span className="stack-dot">·</span>
           </React.Fragment>
         ))}
       </div>

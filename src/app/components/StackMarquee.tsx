@@ -2,35 +2,33 @@
 
 import React from "react";
 import MobileStackMarquee from "./MobileStackMarquee";
-
-const STACK_ITEMS = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "Framer Motion",
-];
+import { STACK_ITEMS, MARQUEE_REPEATS } from "@/data/stack";
 
 export const StackMarquee = () => {
-  // Duplicate array multiple times for seamless infinite looping
-  const items = [...STACK_ITEMS, ...STACK_ITEMS, ...STACK_ITEMS, ...STACK_ITEMS];
+  const items = Array.from(
+    { length: MARQUEE_REPEATS },
+    () => STACK_ITEMS,
+  ).flat();
 
   return (
     <>
+      {/* Both marquees are always in the DOM (CSS decides which is visible), so
+          the stack is announced once here and both tracks are hidden from
+          assistive tech. */}
+      <p className="visually-hidden">
+        Tech stack: {STACK_ITEMS.join(", ")}.
+      </p>
+
       {/* Desktop Marquee */}
       <div
         className="stack-marquee-wrapper desktop-stack-marquee-wrapper fade-up delay-5"
-        aria-label="Tech Stack Desktop"
+        aria-hidden="true"
       >
         <div className="stack-marquee-track">
           {items.map((item, index) => (
             <React.Fragment key={index}>
-              <span className="stack-item" tabIndex={0}>
-                {item}
-              </span>
-              <span className="stack-dot" aria-hidden="true">
-                ·
-              </span>
+              <span className="stack-item">{item}</span>
+              <span className="stack-dot">·</span>
             </React.Fragment>
           ))}
         </div>
