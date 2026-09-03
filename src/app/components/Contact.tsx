@@ -38,7 +38,9 @@ export const Contact = () => {
   return (
     <section className="section contact-section" id="contact">
       <div className="section-label fade-up delay-1">
+        <span className="number">04</span>
         <span className="label">Contact</span>
+        <span className="line" aria-hidden="true" />
       </div>
 
       <div className="contact-container">
