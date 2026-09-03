@@ -3,7 +3,8 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "./components/CustomCursor";
 import { ScrollToTop } from "./components/ScrollToTop";
-import { SiteHeader } from "./components/SiteHeader";
+import { SectionRail } from "./components/SectionRail";
+import { NavDock } from "./components/NavDock";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -89,9 +90,10 @@ export default function RootLayout({
           Skip to content
         </a>
         <CustomCursor />
-        <SiteHeader />
+        <SectionRail />
         {children}
         <ScrollToTop />
+        <NavDock />
       </body>
     </html>
   );
