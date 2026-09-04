@@ -22,9 +22,9 @@ export default function BlogIndexPage() {
   const tags = getAllTags();
 
   return (
-    <main className="site-container blog-index-page">
+    <main className="site-container blog-index-page" id="main">
       {/* Top back navigation */}
-      <nav className="blog-nav-header fade-up">
+      <nav className="blog-nav-header fade-up" aria-label="Breadcrumb">
         <Link href="/" className="back-link">
           <ArrowLeft size={15} className="back-arrow-icon" />
           <span>Back to Portfolio</span>

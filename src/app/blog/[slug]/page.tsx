@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 
   return (
-    <main className="site-container blog-article-page">
+    <main className="site-container blog-article-page" id="main">
       <TextSelectionShare articleTitle={post.metadata.title} />
       <PostHeader post={post.metadata} />
       <article className="blog-prose fade-up delay-1">
@@ -77,11 +77,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Interactive Engagement: Multi-Clap Button (commented out) */}
       {/* <ClapButton slug={slug} /> */}
 
-      <PostFooter
-        currentPost={post.metadata}
-        prevPost={prevPost}
-        nextPost={nextPost}
-      />
+      <PostFooter prevPost={prevPost} nextPost={nextPost} />
     </main>
   );
 }

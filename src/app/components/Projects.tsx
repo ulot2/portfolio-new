@@ -23,7 +23,9 @@ export const Projects = () => {
         className="section-label fade-up delay-1"
         style={{ marginBottom: "2.5rem" }}
       >
+        <span className="number">01</span>
         <span className="label">Projects</span>
+        <span className="line" aria-hidden="true" />
       </div>
 
       <div className="projects-grid">

@@ -45,7 +45,9 @@ export const Skills = () => {
   return (
     <section className="section" id="skills">
       <div className="section-label fade-up delay-1">
+        <span className="number">03</span>
         <span className="label">Tools & Skills</span>
+        <span className="line" aria-hidden="true" />
       </div>
 
       <div className="skills-simple-list">

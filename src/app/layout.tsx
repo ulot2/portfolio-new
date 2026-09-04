@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "./components/CustomCursor";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { SectionRail } from "./components/SectionRail";
+import { NavDock } from "./components/NavDock";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -15,13 +17,6 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-serif-custom",
   display: "swap",
 });
 
@@ -46,11 +41,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Toluwalope Adegoke" }],
   creator: "Toluwalope Adegoke",
   icons: {
-    icon: [
-      { url: "/me.png?v=7", type: "image/png" },
-    ],
-    shortcut: "/me.png?v=7",
-    apple: "/me.png?v=7",
+    icon: [{ url: "/me.png", type: "image/png" }],
+    shortcut: "/me.png",
+    apple: "/me.png",
   },
   openGraph: {
     title: "Toluwalope Adegoke — Software Engineer",
@@ -87,17 +80,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // The font variables belong on <html>, not <body>: globals.css builds
+  // --font-sans / --font-code from them on :root, and a var() that can't
+  // resolve where it is declared invalidates the whole stack.
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/me.png?v=7" type="image/png" />
-        <link rel="apple-touch-icon" href="/me.png?v=7" />
-        <link rel="shortcut icon" href="/me.png?v=7" />
-      </head>
-      <body className={`${jakarta.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`${jakarta.variable} ${jetbrainsMono.variable}`}>
+      <body>
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <CustomCursor />
+        <SectionRail />
         {children}
         <ScrollToTop />
+        <NavDock />
       </body>
     </html>
   );

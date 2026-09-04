@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { LuCopy, LuCheck } from "react-icons/lu";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check, Copy } from "lucide-react";
 
 const contactLinks = [
   {
@@ -39,7 +38,9 @@ export const Contact = () => {
   return (
     <section className="section contact-section" id="contact">
       <div className="section-label fade-up delay-1">
+        <span className="number">04</span>
         <span className="label">Contact</span>
+        <span className="line" aria-hidden="true" />
       </div>
 
       <div className="contact-container">
@@ -62,11 +63,11 @@ export const Contact = () => {
             >
               {copied ? (
                 <span className="copied-text">
-                  <LuCheck size={13} /> Copied
+                  <Check size={13} /> Copied
                 </span>
               ) : (
                 <span className="copy-text">
-                  <LuCopy size={13} /> Copy
+                  <Copy size={13} /> Copy
                 </span>
               )}
             </button>

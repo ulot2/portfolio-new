@@ -17,7 +17,9 @@ export const WritingSection = () => {
         className="section-label fade-up delay-1"
         style={{ marginBottom: "2rem" }}
       >
+        <span className="number">02</span>
         <span className="label">Writing</span>
+        <span className="line" aria-hidden="true" />
       </div>
 
       <div className="blog-posts-grid">

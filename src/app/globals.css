@@ -1,14 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
-
-@font-face {
-  font-family: "InterVariableFramer";
-  src: url("https://rsms.me/inter/font-files/InterVariable.woff2?v=4.0")
-    format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ═══════════════════════════════════════════════
    DESIGN TOKENS
    ═══════════════════════════════════════════════ */
@@ -27,15 +16,18 @@
   --green: #22c55e;
   --green-glow: rgba(34, 197, 94, 0.4);
 
+  /* Plus Jakarta Sans is the single display face. --font-serif and --font-mono
+     are deliberate aliases of it: the design uses them for tone (headings,
+     labels, meta) rather than to switch typeface. --font-code is the one place
+     a real monospace is wanted. */
   --font-sans:
-    "Plus Jakarta Sans", "InterVariableFramer", var(--font-jakarta), system-ui,
-    -apple-system, sans-serif;
-  --font-serif:
-    "Plus Jakarta Sans", "InterVariableFramer", var(--font-jakarta), system-ui,
-    -apple-system, sans-serif;
-  --font-mono:
-    "Plus Jakarta Sans", "InterVariableFramer", var(--font-jakarta), system-ui,
-    -apple-system, sans-serif;
+    var(--font-jakarta, "Plus Jakarta Sans"), system-ui, -apple-system,
+    sans-serif;
+  --font-serif: var(--font-sans);
+  --font-mono: var(--font-sans);
+  --font-code:
+    var(--font-jetbrains-mono, "JetBrains Mono"), ui-monospace, SFMono-Regular,
+    Menlo, monospace;
 
   --max-width: 740px;
   --side-padding: 1.5rem;
@@ -59,12 +51,339 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family:
-    "Plus Jakarta Sans",
-    "InterVariableFramer",
-    system-ui,
-    -apple-system,
-    sans-serif !important;
+}
+
+/* Form controls don't inherit the body face by default. */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Available to screen readers, absent from the visual layout. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Baseline keyboard focus ring. :where() keeps specificity at 0 so any
+   component that styles its own focus state still wins. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   SKIP LINK
+   ═══════════════════════════════════════════════ */
+
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  z-index: 10001;
+  padding: 0.7rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translate(-50%, 0);
+  outline-offset: -4px;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION RAIL  (left margin, ≥1200px)
+   ═══════════════════════════════════════════════ */
+
+/* Hidden by default: below 1200px there is no margin to sit in, and NavDock
+   takes over. display:none keeps it out of the accessibility tree entirely. */
+.section-rail {
+  display: none;
+}
+
+/* Wide enough for the longest label ("Tools & Skills") so every label stays
+   flush right. 740px column + 2 × (rail + gap) needs ~1156px, so the
+   breakpoint below leaves a little slack. */
+:root {
+  --rail-width: 10.5rem;
+  --rail-gap: 2.5rem;
+}
+
+@media (min-width: 1200px) {
+  .section-rail {
+    display: block;
+    position: fixed;
+    top: 50%;
+    /* Hangs just outside the left edge of the centred content column. */
+    left: calc(
+      50% - (var(--max-width) / 2) - var(--rail-gap) - var(--rail-width)
+    );
+    width: var(--rail-width);
+    transform: translateY(-50%);
+    /* Under the grain overlay (1000), like everything else on the page. */
+    z-index: 800;
+    animation: fadeIn 0.2s var(--ease-out) both;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.section-rail-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.section-rail-item a {
+  display: grid;
+  /* The leader track is reserved at full width so the label never shifts when
+     a section becomes active — only the rule inside the track grows. */
+  grid-template-columns: 1.4rem 1fr 1.25rem;
+  align-items: center;
+  gap: 0.5rem;
+  /* Same label voice as .section-label — not a new size. */
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  text-align: right;
+  transition: color var(--transition-fast);
+}
+
+.section-rail-item a:active {
+  transform: scale(0.97);
+  transition: transform 160ms var(--ease-out);
+}
+
+.section-rail-number {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  opacity: 0.4;
+  transition: opacity var(--transition-fast);
+}
+
+.section-rail-label {
+  white-space: nowrap;
+}
+
+/* The active marker: a short rule growing toward the column, echoing
+   .section-label .line. Deliberately not an underline — .title-text already
+   uses an accent underline for project links. */
+.section-rail-leader {
+  justify-self: start;
+  width: 0;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width var(--transition-fast);
+}
+
+.section-rail-item a[aria-current] {
+  color: var(--fg);
+}
+
+.section-rail-item a[aria-current] .section-rail-number {
+  opacity: 1;
+}
+
+.section-rail-item a[aria-current] .section-rail-leader {
+  width: 1.25rem;
+}
+
+/* Blog is a route, not a section — set apart by a gap, and unnumbered. */
+.section-rail-item.is-route {
+  margin-top: 0.9rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .section-rail-item a:hover {
+    color: var(--fg);
+  }
+
+  .section-rail-item a:hover .section-rail-leader {
+    width: 0.75rem;
+    background-color: var(--border2);
+  }
+
+  .section-rail-item a[aria-current]:hover .section-rail-leader {
+    width: 1.25rem;
+    background-color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-rail {
+    animation: none;
+  }
+
+  .section-rail-leader {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   NAV DOCK  (floating index, <1200px)
+   ═══════════════════════════════════════════════ */
+
+.nav-dock {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+}
+
+/* Above the rail breakpoint the rail is the index and ScrollToTop handles the
+   return to top, so the dock stands down. */
+@media (min-width: 1200px) {
+  .nav-dock {
+    display: none;
+  }
+}
+
+.nav-dock-anchor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.nav-dock-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: var(--fg);
+  background: rgba(19, 19, 16, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  cursor: none;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.nav-dock-trigger:hover {
+  border-color: rgba(232, 197, 71, 0.45);
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-dock-trigger:active {
+  transform: scale(0.97);
+  transition: transform 160ms var(--ease-out);
+}
+
+.nav-dock-chevron {
+  transition: transform var(--transition-fast);
+}
+
+.nav-dock-trigger[aria-expanded="true"] .nav-dock-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-dock-panel {
+  /* Grows out of the pill below it. */
+  transform-origin: bottom right;
+  min-width: 11rem;
+  padding: 0.4rem;
+  background: rgba(19, 19, 16, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.nav-dock-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-dock-list a,
+.nav-dock-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: none;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.nav-dock-list a:hover,
+.nav-dock-list button:hover {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-dock-list a[aria-current] {
+  color: var(--fg);
+}
+
+.nav-dock-list a[aria-current]::after {
+  content: "";
+  width: 1.25rem;
+  height: 1px;
+  background-color: var(--accent);
+}
+
+.nav-dock-top {
+  margin-top: 0.25rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--border);
+}
+
+.nav-dock-top button {
+  color: var(--fg);
 }
 
 html {
@@ -155,10 +474,38 @@ body::before {
   background-color: rgba(232, 228, 220, 0.15);
 }
 
-/* Hide custom cursor on touch devices */
+/* Give the system cursor back wherever the custom dot isn't rendered: touch
+   devices, and anyone who has asked for reduced motion. cursor: none is
+   declared on individual component classes as well as on body, so these
+   overrides need !important to outrank them from here. */
 @media (hover: none) and (pointer: coarse) {
-  body {
-    cursor: auto;
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
+  a,
+  button,
+  [role="link"],
+  [type="button"] {
+    cursor: pointer !important;
+  }
+  .cursor-dot {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
+  a,
+  button,
+  [role="link"],
+  [type="button"] {
+    cursor: pointer !important;
   }
   .cursor-dot {
     display: none;
@@ -178,45 +525,15 @@ body::before {
 .section {
   padding: 3rem 0;
   border-top: 1px solid var(--border);
+  /* Breathing room when jumping to an anchor — nothing is pinned over it. */
+  scroll-margin-top: 2rem;
 }
 
 .section:first-of-type {
   border-top: none;
-}
-
-/* ═══════════════════════════════════════════════
+}/* ═══════════════════════════════════════════════
    BUTTONS
    ═══════════════════════════════════════════════ */
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--bg);
-  background-color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  transition:
-    transform var(--transition-fast),
-    background-color var(--transition-fast),
-    border-color var(--transition-fast);
-  cursor: none;
-  white-space: nowrap;
-}
-
-.btn-primary:hover {
-  background-color: #d4b03a;
-  border-color: #d4b03a;
-  color: var(--bg);
-}
-
-.btn-primary:active {
-  transform: scale(0.97);
-}
 
 .btn-secondary {
   display: inline-flex;
@@ -314,14 +631,6 @@ p {
   color: var(--bg);
 }
 
-/* Buttons removed — not used in current design */
-
-@media (max-width: 900px) {
-  .side-label {
-    display: none;
-  }
-}
-
 /* ═══════════════════════════════════════════════
    HERO SECTION
    ═══════════════════════════════════════════════ */
@@ -364,63 +673,6 @@ p {
   opacity: 0.85;
 }
 
-.availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--green);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  background: rgba(34, 197, 94, 0.04);
-  padding: 0.38rem 0.9rem;
-  border-radius: 999px;
-  margin-bottom: 2rem;
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
-  transition:
-    border-color var(--transition-fast),
-    background-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.availability:hover {
-  background: rgba(34, 197, 94, 0.09);
-  border-color: rgba(34, 197, 94, 0.5);
-  transform: translateY(-1px);
-}
-
-.availability-detail {
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-left: 0.25rem;
-  padding-left: 0.5rem;
-  border-left: 1px solid rgba(34, 197, 94, 0.3);
-  transition: color var(--transition-fast);
-}
-
-.availability:hover .availability-detail {
-  color: var(--fg);
-}
-
-.availability-dot {
-  position: relative;
-  width: 8px;
-  height: 8px;
-  background-color: var(--green);
-  border-radius: 50%;
-}
-
-.availability-dot::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  background-color: var(--green);
-  animation: availability-ping 2.2s cubic-bezier(0.23, 1, 0.32, 1) infinite;
-}
-
 @keyframes availability-ping {
   0% {
     transform: scale(1);
@@ -431,28 +683,6 @@ p {
     transform: scale(2.6);
     opacity: 0;
   }
-}
-
-.hero-bio {
-  font-size: 1.075rem;
-  line-height: 1.85;
-  color: var(--muted);
-  max-width: 90ch;
-  margin-bottom: 0.75rem;
-  text-align: justify;
-}
-
-.hero-bio:last-child {
-  margin-bottom: 0;
-}
-
-.hero-line {
-  font-size: clamp(1rem, 2.2vw, 1.25rem);
-  line-height: 1.7;
-  color: var(--fg);
-  opacity: 0.9;
-  max-width: 68ch;
-  margin-top: 1.75rem;
 }
 
 /* Redesigned Building Focus Block */
@@ -544,25 +774,6 @@ p {
   }
 }
 
-.hero-link {
-  color: var(--fg);
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1.5px solid var(--accent);
-  padding-bottom: 2px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.15rem;
-  transition:
-    color var(--transition-fast),
-    border-color var(--transition-fast);
-}
-
-.hero-link:hover {
-  color: var(--accent);
-  border-color: var(--fg);
-}
-
 .hero-link .link-arrow {
   display: inline-block;
   transition: transform var(--transition-fast);
@@ -572,13 +783,6 @@ p {
 .hero-link:hover .link-arrow {
   transform: translate(2px, -2px);
   color: var(--accent);
-}
-
-.hero-highlight {
-  color: var(--fg);
-  font-weight: 500;
-  border-bottom: 1px dashed rgba(232, 197, 71, 0.4);
-  padding-bottom: 1px;
 }
 
 /* ═══════════════════════════════════════════════
@@ -679,12 +883,10 @@ p {
     text-shadow var(--transition-fast);
 }
 
-.stack-item:hover,
-.stack-item:focus {
+.stack-item:hover {
   color: var(--accent);
   transform: translateY(-1px);
   text-shadow: 0 0 14px rgba(232, 197, 71, 0.35);
-  outline: none;
 }
 
 .stack-dot {
@@ -701,25 +903,9 @@ p {
   100% {
     transform: translateX(-33.333%);
   }
-}
-
-/* ═══════════════════════════════════════════════
+}/* ═══════════════════════════════════════════════
    WORK SECTION — 2-COLUMN MINIMAL EDITORIAL GRID
    ═══════════════════════════════════════════════ */
-
-.projects-grid-header {
-  margin-bottom: 2rem;
-}
-
-.projects-grid-title {
-  font-family: "Instrument Serif", Georgia, serif !important;
-  font-style: italic;
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  font-weight: 400;
-  color: var(--fg);
-  letter-spacing: 0.01em;
-  line-height: 1.1;
-}
 
 .projects-grid {
   display: grid;
@@ -848,25 +1034,6 @@ p {
 
 .load-more-btn:hover .load-more-icon {
   transform: translateY(2px);
-}
-
-/* Hide floating preview on touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .project-floating-preview {
-    display: none !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .project-row-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  .project-right {
-    width: 100%;
-    justify-content: space-between;
-  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1118,11 +1285,6 @@ p {
   color: var(--muted);
 }
 
-.contact-card:hover .contact-arrow {
-  color: var(--accent);
-  transform: translate(2px, -2px);
-}
-
 .site-footer {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -1133,22 +1295,11 @@ p {
   text-align: center;
 }
 
-/* ═══════════════════════════════════════════════
-   CONTACT SECTION — TILE GRID (NEW DESIGN)
-   ═══════════════════════════════════════════════ */
+/* Contact spacing — these override the base rules above and must stay after
+   them. (What remains of a superseded tile-grid design that was never used.) */
 
 .contact-section {
   padding: 4rem 0 2rem;
-}
-
-.contact-heading {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  color: var(--fg);
-  font-weight: 700;
-  margin-bottom: 1.25rem;
 }
 
 .contact-intro {
@@ -1156,67 +1307,6 @@ p {
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.7;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.contact-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background-color: var(--bg2);
-  padding: 0.4rem 0.6rem;
-  border-radius: 10px;
-  text-decoration: none;
-  transition:
-    transform var(--transition-fast),
-    border-color var(--transition-fast),
-    background-color var(--transition-fast);
-  cursor: none;
-  border: 1px solid var(--border);
-}
-
-.contact-card:hover {
-  border-color: var(--accent);
-  background-color: #e8c54709;
-}
-
-.contact-card:active {
-  transform: scale(0.97);
-}
-
-.contact-icon {
-  font-size: 1.25rem;
-  color: var(--fg);
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
-  margin-top: 0.6rem;
-}
-
-.contact-card:hover .contact-icon {
-  opacity: 1;
-}
-
-.contact-text {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
-  font-size: 0.95rem;
-  color: var(--fg);
-  font-weight: 500;
-}
-
-@media (max-width: 640px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1254,23 +1344,10 @@ p {
 .delay-5 {
   animation-delay: 0.5s;
 }
-.delay-6 {
-  animation-delay: 0.6s;
-}
-.delay-7 {
-  animation-delay: 0.7s;
-}
-.delay-8 {
-  animation-delay: 0.8s;
-}
 
 /* ═══════════════════════════════════════════════
-   ALL PROJECTS PAGE
+   BACK LINK (blog index & article)
    ═══════════════════════════════════════════════ */
-
-.projects-page {
-  padding: 6rem 0 5rem;
-}
 
 .back-link {
   display: inline-flex;
@@ -1294,14 +1371,6 @@ p {
 
 .back-link:hover .arrow {
   transform: translateX(-4px);
-}
-
-.projects-page-title {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--fg);
-  margin-bottom: 3rem;
-  font-weight: 400;
 }
 
 /* ═══════════════════════════════════════════════
@@ -1332,12 +1401,6 @@ p {
     margin-bottom: 1.25rem;
   }
 
-  .availability {
-    padding: 0.35rem 0.8rem;
-    margin-bottom: 1.25rem;
-    max-width: 100%;
-  }
-
   .hero-building-tag {
     margin-top: 1.25rem;
     font-size: 0.925rem;
@@ -1362,361 +1425,8 @@ p {
 }
 
 @media (max-width: 640px) {
-  .projects-page {
-    padding: 4.5rem 0 3rem;
-  }
-
-  .project-row {
-    padding: 1.15rem 0.75rem;
-    margin: 0 -0.75rem;
-  }
-
-  .project-row-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.65rem;
-  }
-
-  .project-left {
-    gap: 0.75rem;
-    width: 100%;
-  }
-
-  .project-title-group {
-    gap: 0.4rem;
-  }
-
-  .project-name {
-    font-size: 1.2rem;
-    white-space: normal;
-  }
-
-  .project-right {
-    width: 100%;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  .skills-container {
-    gap: 1.75rem;
-  }
-
-  .skill-pill {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.725rem;
-  }
-
   .contact-title {
     font-size: 1.65rem;
-  }
-
-  .email-copy-bar {
-    width: 100%;
-    justify-content: space-between;
-    border-radius: 12px;
-    padding: 0.5rem 0.6rem 0.5rem 0.85rem;
-  }
-
-  .email-link {
-    font-size: 0.775rem;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ═══════════════════════════════════════════════
-   PROJECT DETAILS PAGE
-   ═══════════════════════════════════════════════ */
-
-.project-detail-page {
-  padding: 8rem 0 6rem;
-}
-
-.project-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5rem;
-}
-
-.project-back {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--muted);
-  transition: color 0.2s ease;
-  cursor: none;
-}
-
-.project-back:hover {
-  color: var(--fg);
-}
-
-.project-back svg {
-  margin-right: 0.4rem;
-  transition: transform 0.2s ease;
-}
-
-.project-back:hover svg {
-  transform: translateX(-4px);
-}
-
-.project-nav-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--bg2);
-  padding: 0.25rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-}
-
-.project-nav-btn {
-  padding: 0.5rem;
-  border-radius: 50%;
-  color: var(--muted);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: none;
-}
-
-a.project-nav-btn:hover {
-  color: var(--fg);
-  background-color: var(--subtle);
-}
-
-.project-nav-btn.disabled {
-  color: var(--subtle);
-  opacity: 0.5;
-  cursor: default;
-}
-
-.project-nav-divider {
-  width: 1px;
-  height: 1rem;
-  background-color: var(--border);
-}
-
-.project-header {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 5rem;
-}
-
-@media (min-width: 768px) {
-  .project-header {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-  }
-}
-
-.project-title-large {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 8vw, 3rem);
-  font-weight: 500;
-  line-height: 1.1;
-  color: var(--fg);
-  margin: 0;
-}
-
-.project-visit-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--bg);
-  background-color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  flex-shrink: 0;
-  cursor: none;
-}
-
-.project-visit-btn:hover {
-  background-color: #d4b03a;
-  border-color: #d4b03a;
-  color: var(--bg);
-}
-
-.project-visit-btn svg {
-  margin-left: 0.5rem;
-  transition: transform 0.2s ease;
-}
-
-.project-visit-btn:hover svg {
-  transform: translate(2px, -2px);
-}
-
-.project-content-section {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-}
-
-.project-overview-title {
-  font-family: var(--font-serif);
-  font-size: 1.75rem;
-  color: var(--fg);
-  margin-bottom: 2rem;
-  font-weight: 500;
-}
-
-.project-goal-card {
-  background-color: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2.5rem;
-}
-
-.project-goal-title {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--fg);
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.project-goal-text {
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.8;
-  margin: 0;
-  max-width: none;
-}
-
-.project-full-desc {
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.8;
-  white-space: pre-wrap;
-  max-width: none;
-}
-
-.project-details-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  padding-top: 4rem;
-  margin-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-@media (min-width: 768px) {
-  .project-details-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-}
-
-.project-detail-title {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  color: var(--fg);
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-.project-detail-text {
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.project-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.project-list li {
-  display: flex;
-  align-items: flex-start;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.project-list-bullet {
-  width: 6px;
-  height: 6px;
-  background-color: var(--muted);
-  border-radius: 50%;
-  margin-top: 0.5rem;
-  margin-right: 0.75rem;
-  flex-shrink: 0;
-}
-
-.project-gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  padding-top: 5rem;
-}
-
-.project-gallery-item {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: var(--bg2);
-  border: 1px solid var(--border);
-}
-
-.project-gallery-item-fallback {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.02);
-  z-index: 0;
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.project-gallery-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  position: relative;
-  z-index: 1;
-  transition: transform 0.2s ease;
-}
-
-.project-gallery-item:hover .project-gallery-img {
-  transform: scale(1.03);
-}
-
-@media (max-width: 768px) {
-  .project-gallery-item {
-    aspect-ratio: 4 / 3;
-    border-radius: 12px;
   }
 }
 
@@ -1755,6 +1465,14 @@ a.project-nav-btn:hover {
   border-color: rgba(232, 197, 71, 0.45);
   color: var(--accent);
   background: rgba(255, 255, 255, 0.08);
+}
+
+/* Below the rail breakpoint NavDock carries the return-to-top action, so only
+   one floating element is ever on screen. */
+@media (max-width: 1199px) {
+  .back-to-top-btn {
+    display: none;
+  }
 }
 
 .back-to-top-btn .arrow-icon {
@@ -2634,7 +2352,7 @@ a.project-nav-btn:hover {
 }
 
 .prose-inline-code {
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
   font-size: 0.85em;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border2);
@@ -2659,7 +2377,7 @@ a.project-nav-btn:hover {
   padding: 0.5rem 1rem;
   background: rgba(0, 0, 0, 0.25);
   border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
   font-size: 0.75rem;
 }
 
@@ -2673,7 +2391,7 @@ a.project-nav-btn:hover {
   border: 1px solid transparent;
   color: var(--muted);
   font-size: 0.75rem;
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   cursor: pointer;
@@ -2702,7 +2420,7 @@ a.project-nav-btn:hover {
 .code-block-content pre {
   padding: 1.25rem 1.25rem;
   overflow-x: auto;
-  font-family: var(--font-mono);
+  font-family: var(--font-code);
   font-size: 0.85rem;
   line-height: 1.65;
   color: #e6edf3;
