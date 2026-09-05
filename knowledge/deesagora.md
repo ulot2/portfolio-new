@@ -1,0 +1,11 @@
+# Dee's Agora
+
+Dee's Agora is a debate community platform live at www.deesagora.online, built for young people and centred on Nigeria. The premise: the room votes on the motion, two speakers argue it, and the audience decides who made the stronger case. The site is the operations and record layer around debates that happen on Google Meet or Zoom and are then published to YouTube, Instagram and TikTok. A WhatsApp group called "The Jury" runs the open floor between the formal, publicly voted sessions.
+
+Tolu designed and built it himself. The stack is Next.js 16 with the App Router, React 19, TypeScript, Tailwind CSS v4, and PostgreSQL through Prisma on Supabase, with NextAuth v5 for Google sign-in, Supabase Storage for avatars, and Resend for email.
+
+The Prisma schema encodes the full debate lifecycle rather than a generic forum: an admin opens a topic voting round, members vote and can flag that they want to speak and which side they'd take, the winning topic becomes a debate, applicants are selected as primary or backup speakers, the session is scheduled against a meeting platform, and afterwards an audience poll collects one vote per user — each of which must carry a reason, such as logical argument, eloquence, persuasiveness, or argument structure. Published media links close the loop. There are three roles (member, admin, and agora steward) and an admin audit log.
+
+Two pieces of the build are worth calling out. Email runs through a durable outbox table with dedupe keys, scheduled sends, retries and a drain lease, backing thirteen transactional templates; because Vercel's Hobby plan allows only one cron run per day, a GitHub Action drains the queue every five minutes so "starting in one hour" reminders actually arrive on time. And speaker certificates are generated server-side with next/og rather than stored as rows — the certificate is derived from the session data it describes, so the two cannot drift apart. Each has a public shareable page with its own preview image, alongside downloadable debate posters.
+
+The design system is custom: a lavender and violet brand palette expanded into semantic tokens that are redefined for dark mode, so no component needs a dark-mode prefix, plus dedicated colours for the "for" and "against" sides of a debate.
