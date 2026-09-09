@@ -1,4 +1,7 @@
-import { Redis } from "@upstash/redis";
+import type { Redis } from "@upstash/redis";
+import { getRedis } from "@/lib/redis";
+
+export { getRedis };
 
 /**
  * Storage for the jobs dashboard, on the Upstash instance that already serves
@@ -36,11 +39,7 @@ export type Role = {
 /** Fields the dashboard owns. A push must never overwrite these. */
 export const HIS_FIELDS = ["status", "notes", "applied_at"] as const;
 
-export function getRedis(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  return url && token ? new Redis({ url, token }) : null;
-}
+
 
 /** Upstash may hand back a parsed object or the raw string, depending on how it
  *  was written. Accept both rather than betting on one. */

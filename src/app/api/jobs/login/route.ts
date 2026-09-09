@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { getRedis, redisCredentials } from "@/lib/redis";
 import {
   COOKIE,
   authConfigured,
@@ -12,12 +12,10 @@ import {
 // Its own limiter, separate from the chat one in lib/ratelimit.ts: a different
 // window, a different prefix, and a failure here must never be softened.
 let limiter: Ratelimit | null = null;
-if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+const loginRedis = getRedis();
+if (loginRedis) {
   limiter = new Ratelimit({
-    redis: new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    }),
+    redis: loginRedis,
     limiter: Ratelimit.slidingWindow(10, "1 h"),
     prefix: "jobs_login",
   });
@@ -35,8 +33,8 @@ function missingConfig(): string[] {
   const missing: string[] = [];
   if (!process.env.JOBS_PASSPHRASE) missing.push("JOBS_PASSPHRASE");
   if (!process.env.JOBS_SESSION_SECRET) missing.push("JOBS_SESSION_SECRET");
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    missing.push("UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN");
+  if (!redisCredentials()) {
+    missing.push("UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN (or KV_REST_API_URL + KV_REST_API_TOKEN)");
   }
   return missing;
 }
