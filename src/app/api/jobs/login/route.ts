@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
+import { getRedis, redisCredentials } from "@/lib/redis";
 import {
   COOKIE,
   authConfigured,
@@ -12,15 +12,41 @@ import {
 // Its own limiter, separate from the chat one in lib/ratelimit.ts: a different
 // window, a different prefix, and a failure here must never be softened.
 let limiter: Ratelimit | null = null;
-if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+const loginRedis = getRedis();
+if (loginRedis) {
   limiter = new Ratelimit({
-    redis: new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    }),
+    redis: loginRedis,
     limiter: Ratelimit.slidingWindow(10, "1 h"),
     prefix: "jobs_login",
   });
+}
+
+/**
+ * Which variables are unset. Returned with the 503 so a misconfigured deploy
+ * says what is wrong instead of "not configured".
+ *
+ * Safe to expose: these are names, never values, and every name is already
+ * public in this repository. The 401 for a wrong passphrase stays vague; only
+ * operator configuration is described here.
+ */
+function missingConfig(): string[] {
+  const missing: string[] = [];
+  if (!process.env.JOBS_PASSPHRASE) missing.push("JOBS_PASSPHRASE");
+  if (!process.env.JOBS_SESSION_SECRET) missing.push("JOBS_SESSION_SECRET");
+  if (!redisCredentials()) {
+    missing.push("UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN (or KV_REST_API_URL + KV_REST_API_TOKEN)");
+  }
+  return missing;
+}
+
+function notConfigured(missing: string[]) {
+  return NextResponse.json(
+    {
+      error: `Login is not configured. Missing: ${missing.join(", ")}. Set these in Vercel, then redeploy — Vercel only applies variables to builds created after they are added.`,
+      missing,
+    },
+    { status: 503 },
+  );
 }
 
 function clientIp(req: NextRequest): string {
@@ -32,19 +58,15 @@ function clientIp(req: NextRequest): string {
 }
 
 export async function POST(req: NextRequest) {
-  if (!authConfigured()) {
-    // Fail shut. A missing secret must never mean "let everyone in".
-    return NextResponse.json({ error: "Login is not configured." }, { status: 503 });
-  }
+  // Fail shut. A missing secret must never mean "let everyone in".
+  if (!authConfigured()) return notConfigured(missingConfig());
 
   // Unlike the chat limiter, a Redis outage does not fall through to allowing
   // the request: an unlimited login endpoint is a brute-force target. The one
   // exception is local development, where there is no Redis and no internet
   // exposure. NODE_ENV is always "production" on Vercel, so this cannot leak out.
   if (!limiter) {
-    if (process.env.NODE_ENV === "production") {
-      return NextResponse.json({ error: "Login is not configured." }, { status: 503 });
-    }
+    if (process.env.NODE_ENV === "production") return notConfigured(missingConfig());
   } else {
     const { success } = await limiter.limit(clientIp(req));
     if (!success) {
@@ -68,9 +90,7 @@ export async function POST(req: NextRequest) {
   }
 
   const session = await createSession();
-  if (!session) {
-    return NextResponse.json({ error: "Login is not configured." }, { status: 503 });
-  }
+  if (!session) return notConfigured(missingConfig());
 
   const res = NextResponse.json({ ok: true });
   res.cookies.set(COOKIE, session, cookieOptions());

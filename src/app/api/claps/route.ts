@@ -1,18 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
+import { getRedis } from "@/lib/redis";
 
 // In-memory fallback if Redis is not configured
 const memoryClaps: Record<string, number> = {};
-
-function getRedisClient(): Redis | null {
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
-  }
-  return null;
-}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -22,7 +12,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Slug is required" }, { status: 400 });
   }
 
-  const redis = getRedisClient();
+  const redis = getRedis();
 
   if (redis) {
     try {
@@ -47,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     const safeIncrement = Math.min(Math.max(1, Number(increment)), 10);
-    const redis = getRedisClient();
+    const redis = getRedis();
 
     if (redis) {
       try {
