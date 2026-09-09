@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "@/lib/site";
-import { CustomCursor } from "./components/CustomCursor";
-import { ScrollToTop } from "./components/ScrollToTop";
-import { SectionRail } from "./components/SectionRail";
-import { NavDock } from "./components/NavDock";
+import { Chrome } from "./components/Chrome";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -86,11 +83,8 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <CustomCursor />
-        <SectionRail />
+        <Chrome />
         {children}
-        <ScrollToTop />
-        <NavDock />
       </body>
     </html>
   );
