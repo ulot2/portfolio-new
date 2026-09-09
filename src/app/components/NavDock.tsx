@@ -2,10 +2,11 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUp, ChevronUp } from "lucide-react";
 import { NAV_ITEMS } from "@/data/nav";
+import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
 
 const SHOW_AFTER = 350;
@@ -16,8 +17,10 @@ const SHOW_AFTER = 350;
  * that button below 1160px so there is only ever one floating element.
  */
 export const NavDock = () => {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
+  // The segment follows the rewritten route, so it is "blog" on the blog host
+  // as well, where the browser path is only "/".
+  const segment = useSelectedLayoutSegment();
+  const isHome = segment === null;
   const activeSection = useActiveSection(isHome);
   const shouldReduceMotion = useReducedMotion();
 
@@ -120,7 +123,7 @@ export const NavDock = () => {
                     {NAV_ITEMS.map((item) => {
                       const isBlog = item.route !== undefined;
                       const current = isBlog
-                        ? pathname.startsWith("/blog")
+                        ? segment === "blog"
                         : isHome && activeSection === item.id;
 
                       return (
@@ -135,7 +138,7 @@ export const NavDock = () => {
                             </Link>
                           ) : (
                             <a
-                              href={isHome ? `#${item.id}` : `/#${item.id}`}
+                              href={isHome ? `#${item.id}` : `${SITE_URL}/#${item.id}`}
                               onClick={() => close(false)}
                               aria-current={current ? "true" : undefined}
                             >

@@ -1,11 +1,13 @@
 // The site index, shared by the desktop margin rail and the mobile dock so the
 // two can't drift apart. Labels mirror the page's own section headings rather
 // than inventing umbrella terms — the id stays as it is in the markup.
+import { BLOG_URL } from "@/lib/site";
+
 export interface NavItem {
   /** Section element id on the home page, or null for a separate route. */
   id: string | null;
   label: string;
-  /** Set for items that are their own route rather than an in-page anchor. */
+  /** Set for items that are their own site rather than an in-page anchor. */
   route?: string;
 }
 
@@ -14,7 +16,7 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "writing", label: "Writing" },
   { id: "skills", label: "Tools & Skills" },
   { id: "contact", label: "Contact" },
-  { id: null, label: "Blog", route: "/blog" },
+  { id: null, label: "Blog", route: BLOG_URL },
 ];
 
 /** Section ids in page order, for the scroll-spy. */

@@ -7,6 +7,7 @@ import { PostFooter } from "@/app/components/PostFooter";
 // import { ClapButton } from "@/app/components/ClapButton";
 import { TextSelectionShare } from "@/app/components/TextSelectionShare";
 import { mdxComponents } from "@/app/components/MDXComponents";
+import { BLOG_URL } from "@/lib/site";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -35,11 +36,13 @@ export async function generateMetadata({
     title: `${metadata.title} — Toluwalope Adegoke`,
     description: metadata.description,
     keywords: metadata.tags,
+    alternates: { canonical: `${BLOG_URL}/${slug}` },
     authors: [{ name: "Toluwalope Adegoke" }],
     openGraph: {
       title: `${metadata.title} — Toluwalope Adegoke`,
       description: metadata.description,
       type: "article",
+      url: `${BLOG_URL}/${slug}`,
       publishedTime: metadata.date,
       authors: ["Toluwalope Adegoke"],
       tags: metadata.tags,

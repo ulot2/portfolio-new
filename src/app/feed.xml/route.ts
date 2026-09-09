@@ -1,12 +1,12 @@
 import { getAllPosts } from "@/lib/blog";
+import { BLOG_URL } from "@/lib/site";
 
 export async function GET() {
   const posts = getAllPosts();
-  const siteUrl = "https://toluwalope.dev";
 
   const feedItems = posts
     .map((post) => {
-      const postUrl = `${siteUrl}/blog/${post.slug}`;
+      const postUrl = `${BLOG_URL}/${post.slug}`;
       const pubDate = new Date(post.date).toUTCString();
 
       return `
@@ -26,11 +26,11 @@ export async function GET() {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Toluwalope Adegoke — Writing</title>
-    <link>${siteUrl}/blog</link>
+    <link>${BLOG_URL}</link>
     <description>Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.</description>
     <language>en-US</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${BLOG_URL}/feed.xml" rel="self" type="application/rss+xml"/>
     ${feedItems}
   </channel>
 </rss>`;

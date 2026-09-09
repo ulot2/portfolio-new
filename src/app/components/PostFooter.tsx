@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
+import { SITE_URL } from "@/lib/site";
 
 interface PostFooterProps {
   prevPost?: PostMetadata | null;
@@ -55,10 +56,10 @@ export const PostFooter = ({ prevPost, nextPost }: PostFooterProps) => {
               <ArrowUpRight size={11} />
             </a>
             <span className="author-link-separator">•</span>
-            <Link href="/#contact" className="author-link-item">
+            <a href={`${SITE_URL}/#contact`} className="author-link-item">
               <span>Get in touch</span>
               <ArrowRight size={11} />
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -67,7 +68,7 @@ export const PostFooter = ({ prevPost, nextPost }: PostFooterProps) => {
       {(prevPost || nextPost) && (
         <div className="post-pagination-grid">
           {prevPost ? (
-            <Link href={`/blog/${prevPost.slug}`} className="pagination-card prev">
+            <Link href={`/${prevPost.slug}`} className="pagination-card prev">
               <div className="pagination-label">
                 <ArrowLeft size={13} />
                 <span>Previous Article</span>
@@ -79,7 +80,7 @@ export const PostFooter = ({ prevPost, nextPost }: PostFooterProps) => {
           )}
 
           {nextPost ? (
-            <Link href={`/blog/${nextPost.slug}`} className="pagination-card next">
+            <Link href={`/${nextPost.slug}`} className="pagination-card next">
               <div className="pagination-label">
                 <span>Next Article</span>
                 <ArrowRight size={13} />
@@ -94,7 +95,7 @@ export const PostFooter = ({ prevPost, nextPost }: PostFooterProps) => {
 
       {/* Bottom Back Button */}
       <div className="article-bottom-nav">
-        <Link href="/blog" className="btn-secondary">
+        <Link href="/" className="btn-secondary">
           <ArrowLeft size={14} style={{ marginRight: "6px" }} />
           <span>All Articles</span>
         </Link>

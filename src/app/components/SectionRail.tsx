@@ -2,8 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { NAV_ITEMS } from "@/data/nav";
+import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
 
 /**
@@ -13,8 +14,10 @@ import { useActiveSection } from "../hooks/useActiveSection";
  * where that margin runs out and NavDock takes over.
  */
 export const SectionRail = () => {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
+  // The segment follows the rewritten route, so it is "blog" on the blog host
+  // as well, where the browser path is only "/".
+  const segment = useSelectedLayoutSegment();
+  const isHome = segment === null;
   const activeSection = useActiveSection(isHome);
 
   return (
@@ -23,7 +26,7 @@ export const SectionRail = () => {
         {NAV_ITEMS.map((item, index) => {
           const isBlog = item.route !== undefined;
           const current = isBlog
-            ? pathname.startsWith("/blog")
+            ? segment === "blog"
             : isHome && activeSection === item.id;
 
           const content = (
@@ -50,7 +53,7 @@ export const SectionRail = () => {
                 </Link>
               ) : (
                 <a
-                  href={isHome ? `#${item.id}` : `/#${item.id}`}
+                  href={isHome ? `#${item.id}` : `${SITE_URL}/#${item.id}`}
                   aria-current={current ? "true" : undefined}
                 >
                   {content}

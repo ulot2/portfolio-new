@@ -1,19 +1,21 @@
 import React from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getAllPosts, getAllTags } from "@/lib/blog";
 import { BlogListClient } from "../components/BlogListClient";
+import { SITE_URL, BLOG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Writing & Articles — Toluwalope Adegoke",
   description:
     "Technical articles, frontend engineering breakdowns, micro-interaction design, and lessons from building SaaS products by Toluwalope Adegoke.",
+  alternates: { canonical: BLOG_URL },
   openGraph: {
     title: "Writing & Articles — Toluwalope Adegoke",
     description:
       "Technical articles, frontend engineering breakdowns, and lessons from building SaaS products.",
     type: "website",
+    url: BLOG_URL,
   },
 };
 
@@ -25,10 +27,10 @@ export default function BlogIndexPage() {
     <main className="site-container blog-index-page" id="main">
       {/* Top back navigation */}
       <nav className="blog-nav-header fade-up" aria-label="Breadcrumb">
-        <Link href="/" className="back-link">
+        <a href={SITE_URL} className="back-link">
           <ArrowLeft size={15} className="back-arrow-icon" />
           <span>Back to Portfolio</span>
-        </Link>
+        </a>
       </nav>
 
       {/* Header */}

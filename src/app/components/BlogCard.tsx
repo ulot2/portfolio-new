@@ -9,9 +9,11 @@ import { PostMetadata } from "@/types/blog";
 interface BlogCardProps {
   post: PostMetadata;
   index?: number;
+  /** absolute origin when the card is rendered off the blog host */
+  base?: string;
 }
 
-export const BlogCard = ({ post, index = 0 }: BlogCardProps) => {
+export const BlogCard = ({ post, index = 0, base = "" }: BlogCardProps) => {
   const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -25,7 +27,7 @@ export const BlogCard = ({ post, index = 0 }: BlogCardProps) => {
       transition={{ duration: 0.25, delay: (index % 4) * 0.05 }}
       className="blog-item-wrapper"
     >
-      <Link href={`/blog/${post.slug}`} className="blog-item">
+      <Link href={`${base}/${post.slug}`} className="blog-item">
         <div className="blog-item-header">
           <span className="blog-item-title">
             <span className="title-text">{post.title}</span>

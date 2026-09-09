@@ -45,7 +45,7 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
     <header className="article-header fade-up">
       {/* Top back navigation */}
       <nav className="article-nav" aria-label="Breadcrumb">
-        <Link href="/blog" className="back-link">
+        <Link href="/" className="back-link">
           <ArrowLeft size={15} className="back-arrow-icon" />
           <span>Back to all articles</span>
         </Link>

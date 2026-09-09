@@ -1,18 +1,17 @@
 import { getAllPosts } from "@/lib/blog";
+import { SITE_URL, BLOG_URL } from "@/lib/site";
 
 export async function GET() {
   const posts = getAllPosts();
-  const baseUrl = "https://toluwalope.dev";
-
   const staticUrls = [
     {
-      url: `${baseUrl}`,
+      url: SITE_URL,
       lastMod: new Date().toISOString().split("T")[0],
       changefreq: "weekly",
       priority: "1.0",
     },
     {
-      url: `${baseUrl}/blog`,
+      url: BLOG_URL,
       lastMod: new Date().toISOString().split("T")[0],
       changefreq: "daily",
       priority: "0.9",
@@ -20,7 +19,7 @@ export async function GET() {
   ];
 
   const blogUrls = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
+    url: `${BLOG_URL}/${post.slug}`,
     lastMod: post.date,
     changefreq: "monthly",
     priority: "0.8",
