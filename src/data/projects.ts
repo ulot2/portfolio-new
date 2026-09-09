@@ -16,13 +16,22 @@ export const projects: Project[] = [
   },
   {
     id: 2,
+    title: "Dee's Agora",
+    description:
+      "Better arguments begin with better questions — a community for structured online debate.",
+    liveUrl: "https://www.deesagora.online",
+    // Private repo — the live site is the only public entry point.
+    githubUrl: "#",
+  },
+  {
+    id: 3,
     title: "LaseTales",
     description: "A portfolio for an event videographer and editor",
     liveUrl: "https://lasetales.vercel.app/",
     githubUrl: "#",
   },
   {
-    id: 3,
+    id: 4,
     title: "Ville Dishes",
     description:
       "A landing page for a restaurant called Ville Dishes, built with Nextjs and Tailwind CSS.",
