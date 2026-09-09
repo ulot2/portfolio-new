@@ -1,0 +1,84 @@
+import { NextRequest, NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
+import {
+  COOKIE,
+  authConfigured,
+  checkPassphrase,
+  cookieOptions,
+  createSession,
+} from "@/lib/jobs-auth";
+
+// Its own limiter, separate from the chat one in lib/ratelimit.ts: a different
+// window, a different prefix, and a failure here must never be softened.
+let limiter: Ratelimit | null = null;
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  limiter = new Ratelimit({
+    redis: new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    }),
+    limiter: Ratelimit.slidingWindow(10, "1 h"),
+    prefix: "jobs_login",
+  });
+}
+
+function clientIp(req: NextRequest): string {
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown"
+  );
+}
+
+export async function POST(req: NextRequest) {
+  if (!authConfigured()) {
+    // Fail shut. A missing secret must never mean "let everyone in".
+    return NextResponse.json({ error: "Login is not configured." }, { status: 503 });
+  }
+
+  // Unlike the chat limiter, a Redis outage does not fall through to allowing
+  // the request: an unlimited login endpoint is a brute-force target. The one
+  // exception is local development, where there is no Redis and no internet
+  // exposure. NODE_ENV is always "production" on Vercel, so this cannot leak out.
+  if (!limiter) {
+    if (process.env.NODE_ENV === "production") {
+      return NextResponse.json({ error: "Login is not configured." }, { status: 503 });
+    }
+  } else {
+    const { success } = await limiter.limit(clientIp(req));
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many attempts. Try again in an hour." },
+        { status: 429 },
+      );
+    }
+  }
+
+  let passphrase = "";
+  try {
+    passphrase = String((await req.json())?.passphrase ?? "");
+  } catch {
+    return NextResponse.json({ error: "That did not work." }, { status: 400 });
+  }
+
+  if (!(await checkPassphrase(passphrase))) {
+    // Deliberately vague and identical for every failure mode.
+    return NextResponse.json({ error: "That did not work." }, { status: 401 });
+  }
+
+  const session = await createSession();
+  if (!session) {
+    return NextResponse.json({ error: "Login is not configured." }, { status: 503 });
+  }
+
+  const res = NextResponse.json({ ok: true });
+  res.cookies.set(COOKIE, session, cookieOptions());
+  return res;
+}
+
+export async function DELETE() {
+  const res = NextResponse.json({ ok: true });
+  res.cookies.set(COOKIE, "", cookieOptions(0));
+  return res;
+}
