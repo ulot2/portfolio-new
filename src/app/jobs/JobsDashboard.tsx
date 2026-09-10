@@ -249,11 +249,18 @@ function RoleCard({
     try {
       const res = await fetch(`/api/jobs/resume/${encodeURIComponent(r.resume)}`);
       if (!res.ok) throw new Error(String(res.status));
+
+      // Fetching as a blob discards Content-Disposition, so read the filename
+      // off the header first. Without this the file saves under its internal
+      // slug, which is what an employer would then receive.
+      const disposition = res.headers.get("content-disposition") ?? "";
+      const named = /filename="([^"]+)"/.exec(disposition)?.[1];
+
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${r.resume}.pdf`;
+      a.download = named || `${r.resume}.pdf`;
       document.body.appendChild(a);
       a.click();
       a.remove();
