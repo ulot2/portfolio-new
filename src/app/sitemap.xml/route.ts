@@ -3,19 +3,11 @@ import { SITE_URL, BLOG_URL } from "@/lib/site";
 
 export async function GET() {
   const posts = getAllPosts();
-  const staticUrls = [
-    {
-      url: SITE_URL,
-      lastMod: new Date().toISOString().split("T")[0],
-      changefreq: "weekly",
-      priority: "1.0",
-    },
-    {
-      url: BLOG_URL,
-      lastMod: new Date().toISOString().split("T")[0],
-      changefreq: "daily",
-      priority: "0.9",
-    },
+  // No lastmod for the home page: we don't track when it changes, and a
+  // date that is always "today" teaches crawlers to ignore it.
+  const staticUrls: { url: string; lastMod?: string; changefreq: string; priority: string }[] = [
+    { url: SITE_URL, changefreq: "weekly", priority: "1.0" },
+    { url: BLOG_URL, lastMod: posts[0]?.date, changefreq: "weekly", priority: "0.9" },
   ];
 
   const blogUrls = posts.map((post) => ({
@@ -33,8 +25,7 @@ ${allUrls
   .map(
     (item) => `  <url>
     <loc>${item.url}</loc>
-    <lastmod>${item.lastMod}</lastmod>
-    <changefreq>${item.changefreq}</changefreq>
+${item.lastMod ? `    <lastmod>${item.lastMod}</lastmod>\n` : ""}    <changefreq>${item.changefreq}</changefreq>
     <priority>${item.priority}</priority>
   </url>`
   )

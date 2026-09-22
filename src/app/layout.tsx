@@ -46,14 +46,6 @@ export const metadata: Metadata = {
     siteName: "Toluwalope Adegoke Portfolio",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/me.png",
-        width: 512,
-        height: 512,
-        alt: "Toluwalope Adegoke",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -61,12 +53,26 @@ export const metadata: Metadata = {
     description:
       "Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.",
     creator: "@Tolu_dev",
-    images: ["/me.png"],
   },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+// Tells search engines who the site is about, so the name search can show
+// the right profile links.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Toluwalope Adegoke",
+  jobTitle: "Software Engineer",
+  url: SITE_URL,
+  sameAs: [
+    "https://github.com/ulot2",
+    "https://www.linkedin.com/in/toluwalope-adegoke-b441b9380",
+    "https://x.com/Tolu_dev",
+  ],
 };
 
 export default function RootLayout({
@@ -80,6 +86,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jakarta.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <a href="#main" className="skip-link">
           Skip to content
         </a>
