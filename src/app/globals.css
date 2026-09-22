@@ -1002,40 +1002,6 @@ p {
   color: var(--fg);
 }
 
-.projects-footer {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.load-more-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family:
-    "Plus Jakarta Sans", "InterVariableFramer", system-ui, sans-serif !important;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--muted);
-  background: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: color 160ms var(--ease-out);
-}
-
-.load-more-btn:hover {
-  color: var(--accent);
-}
-
-.load-more-icon {
-  transition: transform 160ms var(--ease-out);
-}
-
-.load-more-btn:hover .load-more-icon {
-  transform: translateY(2px);
-}
-
 /* ═══════════════════════════════════════════════
    SKILLS SECTION — ULTRA-CLEAN EDITORIAL LIST
    ═══════════════════════════════════════════════ */

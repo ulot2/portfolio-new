@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+The personal site of Toluwalope Adegoke, built with Next.js. One app serves three hosts:
 
-First, run the development server:
+| Host | What it serves |
+|---|---|
+| `tnuell.sbs` | The portfolio home page |
+| `blog.tnuell.sbs` | The blog. Posts are MDX files in `content/posts/`. |
+| `jobs.tnuell.sbs` | A private jobs dashboard. You must log in with a passphrase. |
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+`src/middleware.ts` sends each host to its route tree.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run it locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install the packages:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   pnpm install
+   ```
 
-## Learn More
+2. Start the dev server:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   pnpm dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Open these addresses:
+   - Home: http://localhost:3000
+   - Blog: http://blog.localhost:3000
+   - Jobs: http://jobs.localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Environment variables
 
-## Deploy on Vercel
+Put these in `.env.local`. The home page and the blog work without them.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Variable | Used for |
+|---|---|
+| `UPSTASH_REDIS_REST_URL` or `KV_REST_API_URL` | The Redis database for the jobs dashboard |
+| `UPSTASH_REDIS_REST_TOKEN` or `KV_REST_API_TOKEN` | The token for that database |
+| `JOBS_PASSPHRASE` | The passphrase for the jobs login |
+| `JOBS_SESSION_SECRET` | The key that signs the jobs login cookie |
+| `JOBS_SYNC_TOKEN` | The bearer token for `POST /api/jobs/sync` |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Write a blog post
+
+1. Add a `.mdx` file to `content/posts/`. The file name becomes the URL.
+2. Give it front matter with `title`, `description`, `date`, and `tags`.
+3. If the post is a draft, add `published: false`.
