@@ -4,7 +4,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/blog";
 import { PostHeader } from "@/app/components/PostHeader";
 import { PostFooter } from "@/app/components/PostFooter";
-// import { ClapButton } from "@/app/components/ClapButton";
 import { TextSelectionShare } from "@/app/components/TextSelectionShare";
 import { mdxComponents } from "@/app/components/MDXComponents";
 import { BLOG_URL } from "@/lib/site";
@@ -76,9 +75,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <article className="blog-prose fade-up delay-1">
         <MDXRemote source={post.content} components={mdxComponents} />
       </article>
-
-      {/* Interactive Engagement: Multi-Clap Button (commented out) */}
-      {/* <ClapButton slug={slug} /> */}
 
       <PostFooter prevPost={prevPost} nextPost={nextPost} />
     </main>

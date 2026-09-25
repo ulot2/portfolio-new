@@ -3,36 +3,26 @@
 import React, { useState } from "react";
 import { ArrowUpRight, Check, Copy } from "lucide-react";
 
+const EMAIL = "tolu.nuell@gmail.com";
+
 const contactLinks = [
+  { label: "Resume", href: "/resume.pdf" },
+  { label: "GitHub", href: "https://github.com/ulot2" },
   {
-    platform: "Resume / CV",
-    handle: "View Document",
-    href: "/resume.pdf",
-  },
-  {
-    platform: "GitHub",
-    handle: "@ulot2",
-    href: "https://github.com/ulot2",
-  },
-  {
-    platform: "LinkedIn",
-    handle: "Toluwalope Adegoke",
+    label: "LinkedIn",
     href: "https://www.linkedin.com/in/toluwalope-adegoke-b441b9380",
   },
-  {
-    platform: "X (Twitter)",
-    handle: "@Tolu_dev",
-    href: "https://x.com/Tolu_dev",
-  },
+  { label: "X", href: "https://x.com/Tolu_dev" },
 ];
 
 export const Contact = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("tolu.nuell@gmail.com");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    navigator.clipboard.writeText(EMAIL).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   return (
@@ -43,63 +33,48 @@ export const Contact = () => {
         <span className="line" aria-hidden="true" />
       </div>
 
-      <div className="contact-container">
-        <div className="contact-header fade-up">
-          <h2 className="contact-title">Let&apos;s build something together.</h2>
-          <p className="contact-intro">
-            Open to full-time frontend roles, contract work, and creative collaborations. Feel free to reach out:
-          </p>
+      <div className="contact-container fade-up">
+        <h2 className="contact-title">
+          Turning “What If”
+          <br />
+          into “What’s Next”
+        </h2>
+        <p className="contact-intro">
+          You have the concept. I have the stack. Let’s ship it together.
+        </p>
 
-          {/* Simple Email Bar */}
-          <div className="simple-email-row">
-            <a href="mailto:tolu.nuell@gmail.com" className="main-email-link">
-              tolu.nuell@gmail.com
-            </a>
-            <button
-              type="button"
-              onClick={handleCopyEmail}
-              className="simple-copy-btn"
-              title="Copy email to clipboard"
-            >
-              {copied ? (
-                <span className="copied-text">
-                  <Check size={13} /> Copied
-                </span>
-              ) : (
-                <span className="copy-text">
-                  <Copy size={13} /> Copy
-                </span>
-              )}
-            </button>
-          </div>
+        <div className="contact-email-row">
+          <a href={`mailto:${EMAIL}`} className="main-email-link contact-email">
+            {EMAIL}
+          </a>
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="contact-copy-btn"
+            aria-label={copied ? "Email copied" : "Copy email"}
+            title={copied ? "Copied" : "Copy email"}
+          >
+            {copied ? <Check size={16} /> : <Copy size={16} />}
+          </button>
         </div>
 
-        {/* Minimal Social Links & Resume Grid */}
-        <div className="contact-simple-list fade-up delay-2">
+        <ul className="contact-links">
           {contactLinks.map((link) => (
-            <a
-              key={link.platform}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contact-row-item"
-            >
-              <div className="contact-row-left">
-                <span className="contact-row-platform">{link.platform}</span>
-                <span className="contact-row-handle">{link.handle}</span>
-              </div>
-              <ArrowUpRight size={15} className="contact-row-arrow" />
-            </a>
+            <li key={link.label}>
+              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.label}
+                <ArrowUpRight size={13} aria-hidden="true" />
+              </a>
+            </li>
           ))}
-        </div>
-
-        {/* Footer info */}
-        <footer className="site-footer fade-up delay-3">
-          <p>
-            &copy; {new Date().getFullYear()} Toluwalope Adegoke. Built with Next.js &amp; TypeScript.
-          </p>
-        </footer>
+        </ul>
       </div>
+
+      <footer className="site-footer fade-up delay-3">
+        <p>
+          &copy; {new Date().getFullYear()} Toluwalope Adegoke. Built with Next.js &amp; TypeScript.
+        </p>
+      </footer>
     </section>
   );
 };

@@ -38,15 +38,11 @@ const MagneticWrapper = ({
   const springY = useSpring(y, { stiffness: 220, damping: 22 });
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(
-        typeof window !== "undefined" &&
-          window.matchMedia("(pointer: coarse), (max-width: 768px)").matches,
-      );
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const query = window.matchMedia("(pointer: coarse), (max-width: 768px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
   }, []);
 
   useEffect(() => {
@@ -245,7 +241,6 @@ export const Hero = () => {
 
         <StackMarquee />
       </div>
-      <div></div>
     </section>
   );
 };

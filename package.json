@@ -9,11 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@ai-sdk/react": "^4.0.51",
-    "@openrouter/ai-sdk-provider": "^3.0.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.1",
-    "ai": "^7.0.48",
     "framer-motion": "^12.23.12",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.575.0",

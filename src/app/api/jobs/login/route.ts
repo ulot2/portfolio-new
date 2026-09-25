@@ -9,8 +9,7 @@ import {
   createSession,
 } from "@/lib/jobs-auth";
 
-// Its own limiter, separate from the chat one in lib/ratelimit.ts: a different
-// window, a different prefix, and a failure here must never be softened.
+// A failed limiter check here must never be softened.
 let limiter: Ratelimit | null = null;
 const loginRedis = getRedis();
 if (loginRedis) {

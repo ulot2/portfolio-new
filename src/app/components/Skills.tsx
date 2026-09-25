@@ -1,43 +1,17 @@
-"use client";
-
 import React from "react";
-import { motion } from "framer-motion";
-interface SkillCategory {
-  title: string;
-  skills: string[];
-}
 
-const skillsCategories: SkillCategory[] = [
+const skillGroups = [
   {
-    title: "Frontend & Core",
-    skills: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "Tailwind CSS",
-      "HTML/CSS",
-    ],
+    title: "Frontend",
+    tools: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
   },
   {
-    title: "Animation & Motion",
-    skills: [
-      "Framer Motion",
-      "Design Systems",
-      "UI Engineering",
-      "Responsive Layouts",
-    ],
+    title: "Backend",
+    tools: ["Node.js", "Postgres", "Prisma", "Cloudflare Workers"],
   },
   {
-    title: "Tooling & Workflow",
-    skills: [
-      "Git & GitHub",
-      "Vercel",
-      "Figma",
-      "REST APIs",
-      "Vite",
-      "pnpm / npm",
-    ],
+    title: "Tooling",
+    tools: ["Git", "GitHub Actions", "Vercel", "Figma"],
   },
 ];
 
@@ -51,25 +25,18 @@ export const Skills = () => {
       </div>
 
       <div className="skills-simple-list">
-        {skillsCategories.map((category, index) => (
+        {skillGroups.map((group, index) => (
           <div
-            key={category.title}
+            key={group.title}
             className="skill-row fade-up"
             style={{ animationDelay: `${0.06 + index * 0.06}s` }}
           >
-            <span className="skill-category-name">{category.title}</span>
-            <div className="skill-tags">
-              {category.skills.map((skill) => (
-                <motion.span
-                  key={skill}
-                  className="simple-skill-tag"
-                  whileHover={{ y: -1 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {skill}
-                </motion.span>
+            <h3 className="skill-category-name">{group.title}</h3>
+            <ul className="skill-items">
+              {group.tools.map((tool) => (
+                <li key={tool}>{tool}</li>
               ))}
-            </div>
+            </ul>
           </div>
         ))}
       </div>

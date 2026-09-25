@@ -9,16 +9,12 @@ import {
 } from "framer-motion";
 
 // Everything the dot expands over. These must match class names that actually
-// exist in the components — Projects, Skills and Contact were all missed
-// before, so the effect only ever fired on bare links and buttons.
+// exist in the components. Skills rows are plain text, so they are left out.
 const INTERACTIVE_SELECTOR = [
   "a",
   "button",
   "[role='link']",
   ".project-card",
-  ".skill-row",
-  ".simple-skill-tag",
-  ".contact-row-item",
   ".btn-secondary",
 ].join(", ");
 

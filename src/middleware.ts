@@ -43,5 +43,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|.*[.]).*)"],
+  // Preview images are skipped so /blog/<slug>/opengraph-image is served on
+  // the apex, where metadataBase points, instead of redirecting to blog.*.
+  matcher: ["/((?!api|_next|.*[.]|.*opengraph-image).*)"],
 };

@@ -4,10 +4,10 @@ import { getRedis } from "@/lib/redis";
 export { getRedis };
 
 /**
- * Storage for the jobs dashboard, on the Upstash instance that already serves
- * the blog claps and view counters. Everything is namespaced under `jobs:`.
+ * Storage for the jobs dashboard, on Upstash Redis. Everything is namespaced
+ * under `jobs:`.
  *
- * Unlike api/claps/route.ts there is no in-memory fallback. A dashboard with no
+ * There is no in-memory fallback. A dashboard with no
  * Redis must fail loudly: an empty page reads as "no roles today", which is a
  * lie, and a status tap that silently vanished would be worse.
  */
