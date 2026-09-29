@@ -121,14 +121,19 @@ export async function isAuthed(req: Request): Promise<boolean> {
 }
 
 /**
- * Gate for the sync route, used by push.py on the laptop. Deliberately does not
- * accept a session cookie: a browser session must never be able to bulk-write
- * roles, and the sync token must never be usable to read the dashboard.
+ * Gate for the sync routes, used by push.py (jobs) and sync.py (prep) on the
+ * laptop. Deliberately does not accept a session cookie: a browser session
+ * must never be able to bulk-write, and a sync token must never be usable to
+ * read a dashboard. Each app passes its own token, so one leaked token cannot
+ * write to the other app.
  */
-export async function isSyncAuthed(req: Request): Promise<boolean> {
+export async function isSyncAuthed(
+  req: Request,
+  expected: string | undefined = process.env.JOBS_SYNC_TOKEN,
+): Promise<boolean> {
   const header = req.headers.get("authorization") ?? "";
   if (!header.toLowerCase().startsWith("bearer ")) return false;
-  return secretsMatch(header.slice(7).trim(), process.env.JOBS_SYNC_TOKEN);
+  return secretsMatch(header.slice(7).trim(), expected);
 }
 
 /** Cookie attributes. Secure is dropped in dev so http://jobs.localhost works. */
