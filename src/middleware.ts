@@ -10,11 +10,12 @@ export async function middleware(req: NextRequest) {
 
   // jobs.<domain> and prep.<domain> are private apps behind one passphrase.
   // Gate them before any rewrite, so an unauthenticated request never reaches
-  // a page that renders private data. Both share the jobs login page.
+  // a page that renders private data. Each app has its own login page, and
+  // both post to the same login route.
   const app = PRIVATE_APPS.find((name) => host.startsWith(`${name}.`));
   if (app) {
     if (pathname === "/login") {
-      return NextResponse.rewrite(new URL("/jobs/login", req.url));
+      return NextResponse.rewrite(new URL(`/${app}/login`, req.url));
     }
     if (!(await verifySession(req.cookies.get(COOKIE)?.value))) {
       return NextResponse.redirect(new URL("/login", req.url));

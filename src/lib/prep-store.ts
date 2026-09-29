@@ -61,6 +61,15 @@ export async function getLesson(redis: Redis, topicId: string): Promise<string |
   return typeof raw === "string" ? raw : null;
 }
 
+/** Several lessons in one call. Missing lessons are left out. */
+export async function getLessons(redis: Redis, topicIds: string[]): Promise<Record<string, string>> {
+  if (topicIds.length === 0) return {};
+  const raw = await redis.hmget<Record<string, unknown>>(LESSONS, ...topicIds);
+  const out: Record<string, string> = {};
+  for (const [id, v] of Object.entries(raw ?? {})) if (typeof v === "string") out[id] = v;
+  return out;
+}
+
 export async function getLastRun(redis: Redis): Promise<string | null> {
   const raw = await redis.hget<unknown>(META, "lastRun");
   return typeof raw === "string" ? raw : null;
