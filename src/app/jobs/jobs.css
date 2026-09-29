@@ -39,7 +39,13 @@
 /* globals.css sets `cursor: none` for the custom cursor and paints a noise
    overlay at z-index 1000. Neither belongs on a page of buttons and inputs. */
 body:has(.jobsRoot) { cursor: auto; background: #f5f6f7; }
-body:has(.jobsRoot)::before { display: none; }
+/* The portfolio widgets too: Chrome.tsx sees "/" on jobs.<domain>, not
+   "/jobs", so its path check never hides them here. */
+body:has(.jobsRoot)::before,
+body:has(.jobsRoot) .cursor-dot,
+body:has(.jobsRoot) .section-rail,
+body:has(.jobsRoot) .nav-dock,
+body:has(.jobsRoot) .back-to-top-btn { display: none; }
 @media (prefers-color-scheme: dark) {
   body:has(.jobsRoot) { background: #121417; }
 }
