@@ -19,6 +19,9 @@ export type TopicState = {
   topic: Topic;
   cards: CardState[];
   status: "new" | "learning" | "mastered";
+  /** First pass done: every card except the build has an answer. */
+  studied: boolean;
+  /** Remembered: every card is in box 3 or higher. */
   learned: boolean;
 };
 export type QueueItem =
@@ -58,8 +61,11 @@ export function topicStates(topics: Topic[], cards: Card[], attempts: Attempt[])
       const tried = states.filter((s) => s.attempts.length > 0);
       const status: TopicState["status"] =
         tried.length === 0 ? "new" : states.every((s) => s.box === 5) ? "mastered" : "learning";
+      // A build can wait for a day with more time, so it does not block "studied".
+      const core = states.filter((s) => s.card.type !== "build");
+      const studied = core.length > 0 && core.every((s) => s.attempts.length > 0);
       const learned = states.length > 0 && tried.length === states.length && states.every((s) => s.box >= 3);
-      return { topic, cards: states, status, learned };
+      return { topic, cards: states, status, studied, learned };
     });
 }
 

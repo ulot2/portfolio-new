@@ -31,6 +31,17 @@ test("topic status and learned", () => {
   assert.equal(a.status, "learning");
   assert.equal(a.learned, true); // box 3
   assert.equal(b.status, "new");
+  assert.equal(b.studied, false);
+});
+
+test("studied: every card answered once, except a build", () => {
+  const topics = [{ id: "t", track: "js", title: "T", order: 1 }];
+  const cards = [card("q1", "t"), card("q2", "t"), card("b", "t", "build", { minutes: 20 })];
+  const one = topicStates(topics, cards, tries("q1", { selfMark: "missed" }))[0];
+  assert.equal(one.studied, false); // q2 not answered yet
+  const both = topicStates(topics, cards, [...tries("q1", { selfMark: "missed" }), ...tries("q2", { selfMark: "partly" })])[0];
+  assert.equal(both.studied, true); // the build can wait
+  assert.equal(both.learned, false); // studied is not learned
 });
 
 test("streak counts back from today, or from yesterday while today is empty", () => {
