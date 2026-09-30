@@ -17,6 +17,12 @@
    /study, never /prep/study, on the server and in the browser, so a path
    check cannot see that this is the app. */
 body:has(.prepRoot) { cursor: auto; }
+/* globals.css sets overflow-x: hidden on html and body. Together they make
+   body a scroll box that never scrolls, so the sticky sidebar and top bar
+   stick to it and scroll away with the page. clip hides sideways overflow
+   the same way, without making a scroll box. */
+html:has(.prepRoot),
+body:has(.prepRoot) { overflow-x: clip; }
 body:has(.prepRoot)::before,
 body:has(.prepRoot) .cursor-dot,
 body:has(.prepRoot) .section-rail,
