@@ -20,12 +20,12 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Toluwalope Adegoke — Software Engineer",
+  title: "Toluwalope Adegoke — Software Developer",
   description:
     "Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.",
   keywords: [
     "Toluwalope Adegoke",
-    "Software Engineer",
+    "Software Developer",
     "Frontend Developer",
     "React Developer",
     "Next.js Developer",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     apple: "/me.png",
   },
   openGraph: {
-    title: "Toluwalope Adegoke — Software Engineer",
+    title: "Toluwalope Adegoke — Software Developer",
     description:
       "Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.",
     siteName: "Toluwalope Adegoke Portfolio",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Toluwalope Adegoke — Software Engineer",
+    title: "Toluwalope Adegoke — Software Developer",
     description:
       "Frontend engineer crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript.",
     creator: "@Tolu_dev",
@@ -66,7 +66,7 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Toluwalope Adegoke",
-  jobTitle: "Software Engineer",
+  jobTitle: "Software Developer",
   url: SITE_URL,
   sameAs: [
     "https://github.com/ulot2",

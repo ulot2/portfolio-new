@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from "react";
 import FlickerText from "./FlickerText";
 import DynamicWeight from "./DynamicWeight";
 import StackMarquee from "./StackMarquee";
+import ReelButton from "./ReelButton";
 import { ArrowUpRight } from "lucide-react";
 import {
   motion,
@@ -119,7 +120,7 @@ const WaveformPulse = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="hero-badge-container" title="Pulse Waveform">
+    <div className="hero-badge-container" aria-hidden="true">
       <svg
         width="64"
         height="20"
@@ -182,7 +183,7 @@ export const Hero = () => {
         <MagneticWrapper strength={4} maxDistance={120}>
           <FlickerText
             tag="p"
-            text="Software Engineer"
+            text="Software Developer"
             className="hero-tagline fade-up delay-2"
             fontColor="var(--accent)"
             loop={true}
@@ -201,10 +202,12 @@ export const Hero = () => {
           />
         </MagneticWrapper>
 
-        {/* Waveform Pulse Badge with magnetic pull */}
+        {/* The waveform opens the showreel, which starts on this same pulse. */}
         <MagneticWrapper strength={5} maxDistance={110}>
           <div className="fade-up delay-3" style={{ marginBottom: "1.5rem" }}>
-            <WaveformPulse />
+            <ReelButton>
+              <WaveformPulse />
+            </ReelButton>
           </div>
         </MagneticWrapper>
 
