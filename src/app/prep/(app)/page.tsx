@@ -18,6 +18,7 @@ export default async function Dashboard() {
   const all = states.flatMap((t) => t.cards);
   const due = all.filter((s) => s.due !== null && s.due <= now).length;
   const learned = states.filter((t) => t.learned).length;
+  const studied = states.filter((t) => t.studied).length;
   const weak = all.filter(isWeak).length;
   const days = streak(attempts, now);
 
@@ -42,7 +43,7 @@ export default async function Dashboard() {
     <div className="prep-stack">
       <div className="prep-stats">
         <Stat value={due} label="Due today" />
-        <Stat value={learned} of={states.length} label="Topics learned" />
+        <Stat value={learned} of={states.length} label="Topics learned" note={`${studied} studied`} />
         <Stat value={days} label={days === 1 ? "Day streak" : "Days streak"} tone="accent" />
         <Stat value={weak} label="Weak spots" tone={weak ? "red" : undefined} href={weak ? "/topics?weak=1" : undefined} />
       </div>
@@ -53,19 +54,27 @@ export default async function Dashboard() {
           <ul className="prep-tracks">
             {TRACKS.map((track) => {
               const mine = states.filter((t) => t.topic.track === track);
-              const done = mine.filter((t) => t.learned).length;
-              const pct = mine.length ? Math.round((done / mine.length) * 100) : 0;
+              const pct = (n: number) => (mine.length ? Math.round((n / mine.length) * 100) : 0);
+              const s = mine.filter((t) => t.studied).length;
+              const l = mine.filter((t) => t.learned).length;
               return (
                 <li key={track} className={mine.length ? "" : "idle"}>
                   <span>{TRACK_NAMES[track]}</span>
-                  <span className="n">{mine.length ? `${done} / ${mine.length}` : "Not started"}</span>
-                  <span className="prep-bar" aria-hidden="true">
-                    <span style={{ width: `${pct}%` }} />
+                  <span className="n">
+                    {mine.length ? `${s} of ${mine.length} studied · ${l} learned` : "Not started"}
+                  </span>
+                  <span className="prep-bar two" aria-hidden="true">
+                    <span className="studied" style={{ width: `${pct(s)}%` }} />
+                    <span style={{ width: `${pct(l)}%` }} />
                   </span>
                 </li>
               );
             })}
           </ul>
+          <p className="prep-quiet prep-key">
+            <i className="studied" aria-hidden="true" /> Studied: every card answered once.{" "}
+            <i aria-hidden="true" /> Learned: every card right twice, on separate days.
+          </p>
         </section>
 
         <section>
@@ -126,12 +135,14 @@ function Stat({
   label,
   tone,
   href,
+  note,
 }: {
   value: number;
   of?: number;
   label: string;
   tone?: "accent" | "red";
   href?: string;
+  note?: string;
 }) {
   const body = (
     <>
@@ -140,6 +151,7 @@ function Stat({
         {of !== undefined && <span> / {of}</span>}
       </b>
       <span>{label}</span>
+      {note && <small>{note}</small>}
     </>
   );
   return href ? (

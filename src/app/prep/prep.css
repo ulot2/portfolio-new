@@ -148,6 +148,14 @@ a.prep-stat:hover > span { color: var(--fg); }
 .prep-tracks li.idle { color: var(--muted); }
 .prep-bar { grid-column: 1 / -1; display: block; height: 2px; background: var(--subtle); }
 .prep-bar span { display: block; height: 100%; background: var(--accent); transition: width 0.4s var(--ease-out); }
+/* Two layers: studied (dim) under learned (bright). */
+.prep-bar.two { position: relative; }
+.prep-bar.two span { position: absolute; inset: 0 auto 0 0; }
+.prep-bar .studied, .prep-key i.studied { background: rgba(232, 197, 71, 0.35); }
+.prep-key { margin-top: 12px; font-size: 12px; }
+.prep-key i { display: inline-block; width: 12px; height: 3px; margin: 0 4px 3px 0; vertical-align: middle; background: var(--accent); }
+.prep-key i:not(:first-child) { margin-left: 10px; }
+.prep-stat small { font-size: 12px; color: var(--muted); }
 .prep-rows { list-style: none; }
 .prep-rows li {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -155,6 +163,7 @@ a.prep-stat:hover > span { color: var(--fg); }
 }
 .prep-rows li:first-child { border-top: 0; }
 .prep-rows a:hover { color: var(--accent); }
+.prep-rows .n { white-space: nowrap; }
 .prep-rows + .prep-quiet { margin-top: 8px; }
 
 /* topics */
