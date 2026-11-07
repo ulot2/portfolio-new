@@ -121,11 +121,22 @@ export const BriefcaseIcon = ({ className }: { className?: string }) => (
 export const BulbIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      className="ink-line"
+      className="ink-line" pathLength={1}
       d="M9.4 16.4c-2.4-1.4-3.8-4.1-3.3-6.9.5-3 3.2-5.3 6.2-5.2 3.2.1 5.8 2.7 5.8 5.9 0 2.4-1.3 4.6-3.4 5.8"
     />
-    <path className="ink-line" d="M9.6 17c1.6.2 3.3.2 4.9 0M10 19.6c1.3.2 2.7.2 4 0" />
-    <path className="ink-line" d="M10.6 11.4c.5.7 1 1.4 1.4 2.2.4-.8.9-1.5 1.4-2.2" />
+    <path className="ink-line" pathLength={1} d="M9.6 17c1.6.2 3.3.2 4.9 0M10 19.6c1.3.2 2.7.2 4 0" />
+    <path className="ink-line" pathLength={1} d="M10.6 11.4c.5.7 1 1.4 1.4 2.2.4-.8.9-1.5 1.4-2.2" />
+  </svg>
+);
+
+/** Writing: a pencil. */
+export const PencilIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      className="ink-line" pathLength={1}
+      d="M5.2 18.9l1.1-4.3 10.1-10.2c.8-.8 2.1-.8 2.9 0 .8.8.8 2 0 2.8L9.2 17.4l-4 1.5z"
+    />
+    <path className="ink-line" pathLength={1} d="M14.7 6.1l2.9 2.9M6.4 14.6l2.8 2.8" />
   </svg>
 );
 
@@ -133,10 +144,10 @@ export const BulbIcon = ({ className }: { className?: string }) => (
 export const WaveIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      className="ink-line"
+      className="ink-line" pathLength={1}
       d="M8 20.2c-2.4-1.6-3.6-4.4-3.4-7.2l.2-3.4c.1-.9.9-1.5 1.7-1.3.7.2 1.1.8 1.1 1.5l.1 2.4-.5-6.4c-.1-.9.6-1.6 1.4-1.6.8 0 1.4.6 1.5 1.4l.4 5.2-.2-6.2c0-.9.7-1.5 1.5-1.5s1.4.7 1.5 1.5l.2 6.2.2-4.8c.1-.8.7-1.4 1.5-1.3.8 0 1.4.7 1.3 1.5l-.2 7.8c-.1 3.6-2 6.6-5.2 7.4-1.2.3-2.4.1-3.5-.6"
     />
-    <path className="ink-line" d="M18.8 4.2c.9.7 1.5 1.6 1.8 2.6M20.6 2.6c1.2 1 2 2.3 2.3 3.7" />
+    <path className="ink-line" pathLength={1} d="M18.8 4.2c.9.7 1.5 1.6 1.8 2.6M20.6 2.6c1.2 1 2 2.3 2.3 3.7" />
   </svg>
 );
 
@@ -216,7 +227,7 @@ export const DatabaseIcon = ({ className }: { className?: string }) => (
 export const WrenchIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      className="ink-line"
+      className="ink-line" pathLength={1}
       d="M14.6 4.4c2.2-.8 4.6-.2 6 1.6l-3.2 3.2.2 2 2 .2 3.2-3.2c1 2.4.2 5.2-2 6.4-1.6.8-3.4.8-5 .2l-8.2 8.2c-.8.8-2.2.8-3 0s-.8-2.2 0-3l8.2-8.2c-.8-2.6.2-5.4 1.8-7.4z"
     />
   </svg>
@@ -284,27 +295,35 @@ const SUN_RAYS = [
   "M6.8 17.2c-.5.5-.9 1-1.5 1.5",
 ];
 
-export const SunIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      className="ink-line"
-      d="M12.4 7.8c2.3.2 4 2.1 3.9 4.4-.1 2.3-2.1 4.1-4.4 3.9-2.3-.1-4-2.1-3.9-4.4.2-2.2 2-3.9 4.2-3.9.4 0 .8.1 1.1.2"
-      pathLength={1}
-    />
-    {SUN_RAYS.map((d) => (
-      <path key={d} className="ink-line ink-ray" d={d} pathLength={1} />
-    ))}
-  </svg>
-);
+/*
+ * The sun's body and the moon's crescent use the same four curves, so CSS can
+ * bend one into the other (the `d` property). The moon is a full circle on the
+ * left with its right half pushed in.
+ */
+const SUN_BODY =
+  "M12 6.9C9.1 6.8 6.9 9.2 7 12.1C7.1 14.9 9.3 17.1 12.1 17C14.9 16.9 17.1 14.7 17 11.9C16.9 9.1 14.8 7 12 6.9Z";
+const MOON_BODY =
+  "M12.2 3.9C7.6 3.8 3.9 7.6 4 12.2C4.1 16.6 7.7 20.2 12.2 20.1C10.2 19.8 8.6 16.3 8.6 12C8.6 7.8 10.1 4.4 12.2 3.9Z";
 
-export const MoonIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      className="ink-line"
-      d="M19.4 14.7c-1.3.5-2.6.7-4 .6-4.1-.4-7.1-4.1-6.7-8.2.1-1.3.6-2.5 1.3-3.5-3.8 1.1-6.4 4.7-6 8.8.4 4.5 4.5 7.9 9 7.5 3-.3 5.4-2.2 6.5-5.1"
-      pathLength={1}
-    />
-    <path className="ink-line ink-ray" d="M18.2 3.9c0 .9.1 1.7 0 2.6M16.9 5.3c.9-.1 1.8 0 2.6-.1" pathLength={1} />
+/**
+ * Sun in the dark theme, moon in the light theme. Browsers that support the
+ * CSS `d` property morph between them; others switch the `d` attribute.
+ */
+export const ThemeIcon = ({ moon, className }: { moon: boolean; className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    style={{ "--sun": `path("${SUN_BODY}")`, "--moon": `path("${MOON_BODY}")` } as React.CSSProperties}
+  >
+    <path className="ink-line theme-body" d={moon ? MOON_BODY : SUN_BODY} pathLength={1} />
+    <g className="theme-rays">
+      {SUN_RAYS.map((d) => (
+        <path key={d} className="ink-line ink-ray" d={d} pathLength={1} />
+      ))}
+    </g>
+    <path className="ink-line theme-star" d="M18.1 5.2c0 .9.1 1.7 0 2.6M16.8 6.5c.9-.1 1.8 0 2.6-.1" pathLength={1} />
   </svg>
 );
 
@@ -366,7 +385,7 @@ export const OutArrowIcon = ({ className }: { className?: string }) => (
 export const EnvelopeIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
-      className="ink-line"
+      className="ink-line" pathLength={1}
       d="M3.9 8.4c5.4-.4 10.8-.4 16.2-.1.3 3.3.3 6.6 0 9.9-5.4.4-10.8.3-16.2 0-.3-3.3-.3-6.5 0-9.8z"
     />
     <path className="ink-line ink-flap" d="M4.3 8.8c2.5 1.9 5 3.6 7.7 5.2 2.6-1.7 5.1-3.4 7.6-5.3" />

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ReelButton from "./ReelButton";
 import HeroStatus from "./HeroStatus";
-import { EnvelopeIcon, PlayIcon, Signature } from "./ink";
+import { PlayIcon, Signature, WaveIcon } from "./ink";
 
 /** Lettered in the same single-stroke hand as the wordmark and signature. */
 const NextLettering = () => (
@@ -53,9 +53,11 @@ export const Hero = () => {
       <div className="hero-links">
         <a className="hero-link" href="mailto:tolu.nuell@gmail.com">
           <svg className="hero-button-outline" viewBox="0 0 152 50" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M14 3.8C48 2.3 97 3 138 3.2c7.8.1 10.1 4.7 10.4 20.6.4 15.9-2 22.6-10.2 22.8-37.7.6-88.3 1.2-124.4-.1C6 46.1 3.8 40 4.2 24.3 4.5 9.7 6 4.2 14 3.8Z" />
+            <path className="ink-line" pathLength={1} vectorEffect="non-scaling-stroke" d="M14 3.8C48 2.3 97 3 138 3.2c7.8.1 10.1 4.7 10.4 20.6.4 15.9-2 22.6-10.2 22.8-37.7.6-88.3 1.2-124.4-.1C6 46.1 3.8 40 4.2 24.3 4.5 9.7 6 4.2 14 3.8Z" />
+            <path className="ink-line hero-button-trace" pathLength={1} vectorEffect="non-scaling-stroke" d="M14 3.8C48 2.3 97 3 138 3.2c7.8.1 10.1 4.7 10.4 20.6.4 15.9-2 22.6-10.2 22.8-37.7.6-88.3 1.2-124.4-.1C6 46.1 3.8 40 4.2 24.3 4.5 9.7 6 4.2 14 3.8Z" />
+            <path className="ink-line hero-button-retrace" pathLength={1} vectorEffect="non-scaling-stroke" d="M9 6.5c40-2.6 92-2.2 131-1 6 .4 8.6 6 8.4 19.5-.3 14-3.3 19.8-10.6 20.3-35 1.4-90 1.7-123.6.4" />
           </svg>
-          <EnvelopeIcon className="hero-link-icon" />
+          <WaveIcon className="hero-link-icon" />
           Say hello
         </a>
         <ReelButton>

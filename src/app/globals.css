@@ -285,21 +285,36 @@ header.site-header {
   transform: translateX(4px);
 }
 
+/* A yellow sticky note, taped at the top and hung slightly crooked. It stays
+   yellow with dark ink in both themes, so the colors are fixed here. */
 .mm-panel {
+  --note: #ecc94b;
+  --note-ink: #1b1a16;
   position: absolute;
-  top: calc(100% + 0.35rem);
-  right: -0.35rem;
+  top: calc(100% + 0.6rem);
+  right: -0.2rem;
   z-index: 50;
-  width: 11rem;
-  padding: 0.6rem 0.4rem;
-  transform-origin: top right;
-  animation: mm-drop 260ms var(--ease-out) both;
+  width: 12.5rem;
+  padding: 1.4rem 0.75rem 1.5rem;
+  color: var(--note-ink);
+  rotate: 2deg;
+  transform-origin: 50% 0;
+  filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.35));
+  animation: mm-hang 520ms var(--ease-out) both;
 }
 
-@keyframes mm-drop {
-  from {
+/* Swings down from the tape and settles. */
+@keyframes mm-hang {
+  0% {
     opacity: 0;
-    transform: translateY(-6px) scale(0.96) rotate(-1deg);
+    transform: translateY(-10px) rotate(-9deg);
+  }
+  45% {
+    opacity: 1;
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-1.5deg);
   }
 }
 
@@ -309,9 +324,21 @@ header.site-header {
   width: 100%;
   height: 100%;
   overflow: visible;
-  fill: var(--bg2);
-  stroke: var(--border2);
-  stroke-width: 1.2;
+  fill: var(--note);
+  stroke: none;
+}
+
+.mm-tape {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 3.6rem;
+  height: 1.15rem;
+  translate: -50% 0;
+  rotate: -4deg;
+  background: rgb(255 255 255 / 0.28);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
 }
 
 .mm-list {
@@ -320,14 +347,14 @@ header.site-header {
 }
 
 .mm-list li {
-  animation: mm-item 260ms var(--ease-out) both;
-  animation-delay: calc(80ms + var(--i) * 50ms);
+  animation: mm-item 300ms var(--ease-out) both;
+  animation-delay: calc(220ms + var(--i) * 60ms);
 }
 
 @keyframes mm-item {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateX(-6px);
   }
 }
 
@@ -335,26 +362,61 @@ header.site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 2.75rem;
-  padding: 0 0.8rem;
-  font-size: 0.95rem;
-  color: var(--fg);
-  border-radius: 6px;
+  min-height: 2.9rem;
+  padding: 0 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--note-ink);
+}
+
+.mm-label {
+  position: relative;
+}
+
+.mm-underline {
+  position: absolute;
+  left: -2px;
+  bottom: -0.3rem;
+  width: calc(100% + 4px);
+  height: 7px;
+}
+
+.mm-underline .ink-line {
+  stroke-width: 2;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition:
+    stroke-dashoffset 380ms var(--ease-out),
+    opacity 120ms var(--ease-out);
 }
 
 .mm-list a:hover,
 .mm-list a:focus-visible {
-  color: var(--accent);
+  color: var(--note-ink);
+}
+
+.mm-list a:hover .mm-underline .ink-line,
+.mm-list a:focus-visible .mm-underline .ink-line,
+.mm-list a:active .mm-underline .ink-line {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.mm-list a:focus-visible {
+  outline: 2px solid var(--note-ink);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .mm-item-icon {
-  width: 1.05rem;
-  height: 1.05rem;
-  color: var(--accent);
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .mm-item-icon .ink-line {
-  stroke-width: 1.7;
+  stroke-width: 1.8;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -363,9 +425,27 @@ header.site-header {
     animation: none;
   }
 
+  .mm-underline .ink-line {
+    transition: none;
+  }
+
   .mm-icon .ink-line {
     transition: none;
   }
+}
+
+/* Theme switch: ThemeToggle grows the new page in a circle over the old one,
+   so the default cross-fade is turned off. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* The theme icon keeps its own morph. */
+.theme-switching,
+.theme-switching *:not(.theme-icon *) {
+  transition: none !important;
 }
 
 .theme-toggle {
@@ -390,14 +470,73 @@ header.site-header {
   transform: rotate(-14deg);
 }
 
-/* A new icon is drawn in each time the theme changes. */
+/* The icon draws in once on load. After that the sun and moon morph into
+   each other: the body bends, the rays spin and shrink away, a star appears. */
+.theme-icon {
+  overflow: visible;
+  --morph: 600ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
 .theme-icon .ink-line {
   stroke-width: 1.7;
   animation: ink-draw 420ms var(--ease-out) both;
+  transform-box: view-box;
+  transform-origin: 12px 12px;
 }
 
 .theme-icon .ink-ray {
   animation-delay: 180ms;
+}
+
+.theme-body {
+  d: var(--sun);
+  transition:
+    d var(--morph),
+    rotate var(--morph);
+}
+
+.theme-rays {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transition:
+    scale var(--morph),
+    rotate var(--morph),
+    opacity 300ms var(--ease-out);
+}
+
+.theme-icon .theme-star {
+  opacity: 0;
+  scale: 0;
+  transform-origin: 18.1px 6.5px;
+  transition:
+    scale 400ms var(--ease-out),
+    opacity 200ms var(--ease-out);
+}
+
+/* Moon: the crescent tilts so it opens to the upper right. */
+:root[data-theme="light"] .theme-body {
+  d: var(--moon);
+  rotate: -35deg;
+}
+
+:root[data-theme="light"] .theme-rays {
+  opacity: 0;
+  scale: 0.5;
+  rotate: 90deg;
+}
+
+:root[data-theme="light"] .theme-star {
+  opacity: 1;
+  scale: 1;
+  transition-delay: 250ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-body,
+  .theme-rays,
+  .theme-star {
+    transition: none;
+  }
 }
 
 .site-header-icon {
@@ -485,73 +624,144 @@ header.site-header {
   }
 }
 
+/* Each row: the name (flush right), then the track the pen line runs down. */
 .section-rail-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+}
+
+.section-rail-item {
+  animation: rail-item-in 450ms var(--ease-out) both;
+  animation-delay: calc(300ms + var(--i) * 70ms);
+}
+
+@keyframes rail-item-in {
+  from {
+    opacity: 0;
+    translate: -10px 0;
+  }
 }
 
 .section-rail-item a {
   display: grid;
-  /* The leader track is reserved at full width so the label never shifts when
-     a section becomes active — only the rule inside the track grows. */
-  grid-template-columns: 1.4rem 1fr 1.25rem;
+  grid-template-columns: 1fr 1.75rem;
   align-items: center;
-  gap: 0.5rem;
-  /* Same label voice as .section-label — not a new size. */
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--muted);
   text-decoration: none;
   text-align: right;
-  transition: color var(--transition-fast);
+  transition: color 250ms var(--ease-out);
 }
 
 .section-rail-item a:active {
-  transform: scale(0.97);
-  transition: transform 160ms var(--ease-out);
-}
-
-.section-rail-number {
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  opacity: 0.4;
-  transition: opacity var(--transition-fast);
+  scale: 0.97;
 }
 
 .section-rail-label {
+  position: relative;
+  justify-self: end;
   white-space: nowrap;
+  transition: translate 350ms var(--ease-out);
 }
 
-/* The active marker: a short rule growing toward the column, echoing
-   .section-label .line. Deliberately not an underline — .title-text already
-   uses an accent underline for project links. */
-.section-rail-leader {
-  justify-self: start;
-  width: 0;
-  height: 1px;
-  background-color: var(--accent);
-  transition: width var(--transition-fast);
+/* Mounted only on the current item, so it draws in each time the section changes. */
+.section-rail-underline {
+  position: absolute;
+  left: -2px;
+  bottom: -0.3rem;
+  width: calc(100% + 4px);
+  height: 6px;
+  color: var(--accent);
+}
+
+.section-rail-underline .ink-line {
+  stroke-width: 1.8;
+  animation: ink-draw 420ms var(--ease-out) 200ms both;
 }
 
 .section-rail-item a[aria-current] {
   color: var(--fg);
 }
 
-.section-rail-item a[aria-current] .section-rail-number {
-  opacity: 1;
+.section-rail-item a[aria-current] .section-rail-label {
+  translate: -3px 0;
 }
 
-.section-rail-item a[aria-current] .section-rail-leader {
-  width: 1.25rem;
+/* A stop on the line: an ink dot, which the current one swaps for a doodle. */
+.section-rail-stop {
+  position: relative;
+  justify-self: center;
+  width: 0;
+  height: 0;
 }
 
-/* Blog is a route, not a section — set apart by a gap, and unnumbered. */
+.section-rail-dot {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition:
+    scale 300ms var(--ease-out),
+    background-color 250ms var(--ease-out);
+}
+
+.section-rail-item a[aria-current] .section-rail-dot {
+  scale: 0;
+}
+
+/* The doodle sits on a small paper disc so the line doesn't run through it. */
+.section-rail-doodle {
+  position: absolute;
+  left: -0.8rem;
+  top: -0.8rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0.15rem;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--accent);
+  overflow: visible;
+  animation: doodle-pop 500ms cubic-bezier(0.34, 1.6, 0.64, 1) both;
+}
+
+@keyframes doodle-pop {
+  from {
+    scale: 0.4;
+    rotate: -20deg;
+  }
+}
+
+.section-rail-doodle .ink-line {
+  stroke-width: 1.6;
+  animation: ink-draw 500ms var(--ease-out) 80ms both;
+}
+
+/* Blog is a site of its own, not a stop on the line. */
 .section-rail-item.is-route {
-  margin-top: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+/* The pen line, from the first dot to the last, drawn top to bottom on load.
+   React sets its top and height. */
+.section-rail-line {
+  position: absolute;
+  right: calc(0.875rem - 2px);
+  width: 4px;
+  overflow: visible;
+  color: var(--border2);
+  pointer-events: none;
+}
+
+.section-rail-line .ink-line {
+  stroke-width: 1.2;
+  animation: ink-draw 900ms var(--ease-out) 150ms both;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -559,23 +769,29 @@ header.site-header {
     color: var(--fg);
   }
 
-  .section-rail-item a:hover .section-rail-leader {
-    width: 0.75rem;
-    background-color: var(--border2);
+  .section-rail-item a:not([aria-current]):hover .section-rail-label {
+    translate: -3px 0;
   }
 
-  .section-rail-item a[aria-current]:hover .section-rail-leader {
-    width: 1.25rem;
-    background-color: var(--accent);
+  .section-rail-item a:not([aria-current]):hover .section-rail-dot {
+    scale: 1.5;
+    background: var(--accent);
   }
 }
 
+.section-rail-item a:focus-visible {
+  color: var(--fg);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .section-rail {
+  .section-rail,
+  .section-rail-item,
+  .section-rail-doodle {
     animation: none;
   }
 
-  .section-rail-leader {
+  .section-rail-dot,
+  .section-rail-label {
     transition: none;
   }
 }
@@ -1086,9 +1302,9 @@ p {
   transition: color var(--transition-fast);
 }
 
+/* A pen box drawn twice around the label, like a word circled on paper. */
 .hero-link {
   padding: 0.25rem 1.3rem;
-  color: var(--bg);
   isolation: isolate;
 }
 
@@ -1097,23 +1313,74 @@ p {
   inset: 0;
   width: 100%;
   height: 100%;
-  fill: var(--accent);
+  overflow: visible;
+  color: color-mix(in srgb, var(--muted) 40%, var(--bg));
   pointer-events: none;
   z-index: -1;
-  transition: fill var(--transition-fast);
 }
 
-.hero-link:hover .hero-button-outline {
-  fill: var(--fg);
+.hero-button-outline .ink-line {
+  stroke-width: 1.8;
+  fill: transparent;
+  transition: fill var(--transition-fast);
+  animation: ink-draw 520ms var(--ease-out) 700ms both;
+}
+
+.hero-button-outline .hero-button-retrace {
+  stroke-width: 1.1;
+  opacity: 0.55;
+  animation-delay: 1050ms;
+}
+
+/* Yellow ink runs round the dark box on hover, and runs back off when the pointer leaves. */
+.hero-button-outline .hero-button-trace {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: none;
+  transition:
+    stroke-dashoffset 650ms var(--ease-out),
+    fill var(--transition-fast);
+}
+
+.hero-link:hover .hero-button-trace,
+.hero-link:focus-visible .hero-button-trace {
+  stroke-dashoffset: 0;
+  fill: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-button-outline .hero-button-trace {
+    transition: none;
+  }
 }
 
 .hero-link-icon {
   width: 1.25rem;
   height: 1.25rem;
+  color: var(--accent);
+  transform-origin: 40% 85%;
 }
 
 .hero-link-icon .ink-line {
   stroke-width: 1.6;
+}
+
+.hero-link:hover .hero-link-icon,
+.hero-link:focus-visible .hero-link-icon {
+  animation: hero-wave 700ms var(--ease-out);
+}
+
+@keyframes hero-wave {
+  20%, 60% { rotate: 14deg; }
+  40%, 80% { rotate: -8deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-link-icon {
+    animation: none !important;
+  }
 }
 
 .hero-play {
