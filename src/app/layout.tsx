@@ -34,11 +34,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Toluwalope Adegoke" }],
   creator: "Toluwalope Adegoke",
-  icons: {
-    icon: [{ url: "/me.png", type: "image/png" }],
-    shortcut: "/me.png",
-    apple: "/me.png",
-  },
   openGraph: {
     title: "Toluwalope Adegoke — Software Developer",
     description:
@@ -84,8 +79,20 @@ export default function RootLayout({
   // --font-sans / --font-code from them on :root, and a var() that can't
   // resolve where it is declared invalidates the whole stack.
   return (
-    <html lang="en" className={`${jakarta.variable} ${jetbrainsMono.variable}`}>
+    <html
+      lang="en"
+      className={`${jakarta.variable} ${jetbrainsMono.variable}`}
+      // The script below sets data-theme before React hydrates.
+      suppressHydrationWarning
+    >
       <body>
+        {/* Applies a saved theme before first paint, so a light-theme visitor
+            never sees a dark flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="light")document.documentElement.dataset.theme=t}catch(e){}`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
