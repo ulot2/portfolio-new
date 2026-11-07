@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { DownloadIcon, MenuIcon, PanelFrame } from "./ink";
+import { DownloadIcon, MenuIcon, PanelFrame, Underline } from "./ink";
 
 /**
  * On phones the header keeps only the theme switch in view. Everything else
- * lives in this hand-drawn dropdown.
+ * lives on a sticky note taped under the menu button.
  */
 export const MobileMenu = ({ links }: { links: { label: string; href: string }[] }) => {
   const [open, setOpen] = useState(false);
@@ -45,17 +45,24 @@ export const MobileMenu = ({ links }: { links: { label: string; href: string }[]
 
       <div className="mm-panel" id={panelId} hidden={!open}>
         <PanelFrame className="mm-frame" />
+        <span className="mm-tape" aria-hidden="true" />
         <ul className="mm-list">
           {links.map((link, i) => (
             <li key={link.label} style={{ "--i": i } as React.CSSProperties}>
               <a href={link.href} onClick={close}>
-                {link.label}
+                <span className="mm-label">
+                  {link.label}
+                  <Underline className="mm-underline" />
+                </span>
               </a>
             </li>
           ))}
           <li style={{ "--i": links.length } as React.CSSProperties}>
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={close}>
-              Resume
+              <span className="mm-label">
+                Resume
+                <Underline className="mm-underline" />
+              </span>
               <DownloadIcon className="mm-item-icon" />
             </a>
           </li>
