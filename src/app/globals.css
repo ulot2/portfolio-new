@@ -966,87 +966,105 @@ p {
    ═══════════════════════════════════════════════ */
 
 .hero {
-  padding: clamp(4.5rem, 14vh, 8rem) 0 4rem;
+  padding: clamp(3rem, 9vh, 5.5rem) 0 3.5rem;
 }
 
-.hero-paper {
-  max-width: 30rem;
-}
-
-/* Every line sits on the same 2.25rem rhythm, so the ruled lines meet the text. */
-.hero-ruled {
-  --rule: 2.25rem;
-  position: relative;
-}
-
-.hero-ruled::before {
-  content: "";
-  position: absolute;
-  inset: 0 -0.5rem;
-  background-color: var(--border2);
-  opacity: 0.7;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='36' preserveAspectRatio='none'%3E%3Cpath d='M0 33.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
-    0 0 / 100% var(--rule) repeat-y;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='36' preserveAspectRatio='none'%3E%3Cpath d='M0 33.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
-    0 0 / 100% var(--rule) repeat-y;
-  pointer-events: none;
-}
-
-.hero-hi,
-.hero-line {
-  position: relative;
-  max-width: none;
-  font-size: clamp(1.15rem, 3.3vw, 1.3rem);
-  line-height: var(--rule);
-  letter-spacing: -0.01em;
-}
-
-.hero-hi {
-  color: var(--muted);
-}
-
-.hero-line {
+.hero-title {
+  max-width: 40rem;
+  color: var(--fg);
+  font-size: clamp(2rem, 7vw, 3.25rem);
   font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.hero-title-line {
+  display: block;
+}
+
+.hero-title-finish {
+  display: flex;
+  align-items: center;
+  gap: 0.24em;
+  margin-top: 0.08em;
+}
+
+.hero-handwritten {
+  display: block;
+  flex: 0 1 7.3em;
+  min-width: 0;
+  color: var(--accent);
+  transform: rotate(-3deg) translateY(-0.02em);
+  transform-origin: left center;
+}
+
+.hero-handwritten svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.hero-lettering-strokes {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero-note {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 33rem;
+  margin-top: 1.75rem;
+}
+
+.hero-description {
+  color: var(--muted);
+  font-size: clamp(0.9375rem, 2.3vw, 1rem);
+  line-height: 1.85;
+}
+
+.hero-introduction {
+  display: block;
+  margin-bottom: 0.35rem;
   color: var(--fg);
 }
 
-/* Signed just under the last line, a little crooked, as people sign. */
+.hero-invitation {
+  display: block;
+}
+
 .hero-sign {
-  position: relative;
-  max-width: none;
-  height: calc(var(--rule) * 2);
-  padding-left: 52%;
+  flex: none;
+  line-height: 0;
+  margin-bottom: -0.15rem;
 }
 
 .hero-signature {
-  width: 8.5rem;
+  width: 6rem;
   height: auto;
   overflow: visible;
-  rotate: -5deg;
-  translate: 0 -0.35rem;
+  rotate: -6deg;
   color: var(--fg);
 }
 
 .hero-signature .ink-line {
   stroke-width: 1.9;
-  animation: ink-draw 420ms var(--ease-out) calc(700ms + var(--ink-delay)) both;
+  animation: ink-draw 420ms var(--ease-out) calc(250ms + var(--ink-delay)) both;
 }
 
-/* Re-signs on hover without the opening wait. */
 .hero-sign:hover .hero-signature .ink-line {
   animation-delay: var(--ink-delay);
 }
 
-@media (max-width: 480px) {
-  .hero-sign {
-    padding-left: 38%;
-  }
-}
 .hero-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.75rem;
+  gap: 0.75rem 1.5rem;
   margin-top: 1.75rem;
 }
 
@@ -1055,69 +1073,208 @@ p {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  min-height: 2.75rem;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
   padding: 0;
   border: none;
   background: transparent;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--fg);
   cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.hero-link {
+  padding: 0.25rem 1.3rem;
+  color: var(--bg);
+  isolation: isolate;
+}
+
+.hero-button-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--accent);
+  pointer-events: none;
+  z-index: -1;
+  transition: fill var(--transition-fast);
+}
+
+.hero-link:hover .hero-button-outline {
+  fill: var(--fg);
 }
 
 .hero-link-icon {
-  width: 1.1rem;
-  height: 1.1rem;
-  color: var(--accent);
-  transition: transform 220ms var(--ease-out);
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .hero-link-icon .ink-line {
-  stroke-width: 1.8;
-}
-
-.hero-link-icon .ink-flap {
-  transform-origin: 50% 37%;
-  transition: transform 260ms var(--ease-out);
-}
-
-.hero-link:hover .ink-flap {
-  transform: scaleY(-1);
-}
-
-.hero-link-underline {
-  position: absolute;
-  left: 0;
-  bottom: 0.35rem;
-  left: 1.55rem;
-  width: calc(100% - 1.55rem);
-  height: 6px;
-  color: var(--accent);
-}
-
-.hero-link-underline .ink-line {
-  stroke-width: 1.5;
-}
-
-.hero-pulse {
-  width: 1.9rem;
-  height: 0.95rem;
-  color: var(--green);
-}
-
-.hero-pulse .ink-line {
   stroke-width: 1.6;
 }
 
-.hero .reel-trigger:hover {
+.hero-play {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--muted);
+  transition: color var(--transition-fast);
+}
+
+.hero-play .ink-line {
+  stroke-width: 1.4;
+}
+
+.hero .reel-trigger:hover,
+.hero .reel-trigger:hover .hero-play {
   color: var(--accent);
+}
+
+.hero-footnote {
+  position: relative;
+  max-width: 36rem;
+  margin-top: 2.25rem;
+  padding-top: 1.25rem;
+}
+
+.hero-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.5rem;
+  color: var(--border2);
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 3rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-note {
+    position: relative;
+    display: block;
+    margin-top: 1.5rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .hero-sign {
+    position: absolute;
+    right: 0;
+    bottom: -0.1rem;
+  }
+
+  .hero-signature {
+    width: 4.25rem;
+  }
+
+  .hero-invitation {
+    padding-right: 4.75rem;
+  }
+
+  .hero-links {
+    gap: 0.5rem 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-link {
+    padding-inline: 1rem;
+  }
 }
 
 .reel-time {
   font-weight: 400;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
+}
+
+.hero-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-width: 100%;
+}
+
+.hero-status-clock {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: 0.25rem;
+  color: var(--accent);
+}
+
+.hero-status-clock .ink-line {
+  stroke-width: 2;
+}
+
+.hero-status-copy {
+  min-width: 0;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+
+.hero-status-time {
+  color: var(--fg);
+}
+
+.hero-status-time time {
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-status-availability {
+  display: inline-block;
+  color: var(--muted);
+}
+
+.hero-status-music {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.hero-status-record {
+  flex: none;
+  align-self: flex-start;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+.hero-status-record .ink-line,
+.hero-status-arrow .ink-line {
+  stroke-width: 1.5;
+}
+
+.hero-status-music a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+
+.hero-status-music a:hover {
+  color: var(--fg);
+}
+
+.hero-status-arrow {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.2rem;
+  vertical-align: -0.05em;
+}
+
+.hero-status-ago,
+.hero-status-source {
+  white-space: nowrap;
 }
 
 .hero-rise {
@@ -1759,201 +1916,114 @@ p {
   text-align: center;
 }
 
-/* ── Contact, redrawn by hand ── */
+/* ── Contact: an open invitation, signed off in ink ── */
 
 #contact.section {
   border-top: none;
+  padding-top: 4rem;
+}
+
+.ct-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ct-title {
+  color: var(--fg);
+  font-size: clamp(1.75rem, 5.5vw, 2.625rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+}
+
+.ct-title-mark {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.ct-title-underline {
+  position: absolute;
+  width: 100%;
+  height: 0.16em;
+  bottom: -0.12em;
+  left: 0;
+  color: var(--accent);
+  overflow: visible;
+}
+
+.ct-title-underline .ink-line {
+  stroke-width: 1.3;
+}
+
+.ct-wave {
+  flex: none;
+  width: clamp(2rem, 6vw, 3rem);
+  height: auto;
+  color: var(--accent);
+  rotate: 12deg;
+}
+
+.ct-wave .ink-line {
+  stroke-width: 1.3;
 }
 
 .ct-intro {
-  margin-bottom: 0.75rem;
-  font-size: 1.05rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
   color: var(--muted);
-}
-
-/* ── Footer: the logo again, smaller, closing the page ── */
-
-.ft {
-  position: relative;
-  margin-top: 4.5rem;
-  padding: 1.75rem 0 1rem;
-}
-
-/* A loose pen rule instead of a straight border. */
-.ft::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 8px;
-  background-color: var(--border2);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='8' preserveAspectRatio='none'%3E%3Cpath d='M0 4.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
-    0 0 / 100% 100% no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='8' preserveAspectRatio='none'%3E%3Cpath d='M0 4.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
-    0 0 / 100% 100% no-repeat;
-}
-
-.ft-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.ft-mark {
-  height: 1.5rem;
-  width: auto;
-  overflow: visible;
-  color: var(--muted);
-}
-
-.ft-mark .ink-line {
-  stroke-width: 2.2;
-}
-
-.ft-top {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  min-height: 2.75rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-  transition: color 160ms var(--ease-out);
-}
-
-.ft-top:hover {
-  color: var(--fg);
-}
-
-.ft-top-icon {
-  width: 1rem;
-  height: 1rem;
-  color: var(--accent);
-  transition: transform 220ms var(--ease-out);
-}
-
-.ft-top-icon .ink-line {
-  stroke-width: 1.8;
-}
-
-.ft-top:hover .ft-top-icon {
-  transform: translateY(-3px);
-}
-
-.ft-small {
-  max-width: none;
-  margin-top: 0.75rem;
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-/* Three reasons, each a one-click email that is already started. */
-.ct-reasons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 2.25rem;
-  margin-bottom: 1.75rem;
-  list-style: none;
-}
-
-.ct-reason {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 2.75rem;
-  color: var(--fg);
-}
-
-.ct-reason-icon {
-  width: 1.6rem;
-  height: 1.6rem;
-  flex: none;
-  color: var(--accent);
-  transform-origin: 50% 80%;
-  transition: transform 280ms var(--ease-out);
-}
-
-.ct-reason-icon .ink-line {
-  stroke-width: 1.6;
-}
-
-.ct-reason:hover .ct-reason-icon {
-  transform: rotate(-10deg);
-}
-
-.ct-reason-label {
-  position: relative;
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  transition: color 160ms var(--ease-out);
-}
-
-.ct-reason:hover .ct-reason-label {
-  color: var(--accent);
-}
-
-/* Hidden lines still paint a dot from the round pen tip, so they also fade. */
-.ct-reason-underline {
-  position: absolute;
-  left: -2px;
-  bottom: -0.3rem;
-  width: calc(100% + 4px);
-  height: 6px;
-  color: var(--accent);
-}
-
-.ct-reason-underline .ink-line {
-  stroke-width: 1.6;
-  stroke-dasharray: 1 1;
-  stroke-dashoffset: 1;
-  opacity: 0;
-  transition:
-    stroke-dashoffset 380ms var(--ease-out),
-    opacity 120ms var(--ease-out);
-}
-
-.ct-reason:hover .ct-reason-underline .ink-line,
-.ct-reason:focus-visible .ct-reason-underline .ink-line {
-  stroke-dashoffset: 0;
-  opacity: 1;
-}
-
-.ct-reason-out {
-  width: 0.95rem;
-  height: 0.95rem;
-  color: var(--accent);
-  transition: transform 220ms var(--ease-out);
-}
-
-.ct-reason-out .ink-line {
-  stroke-width: 2;
-}
-
-.ct-reason:hover .ct-reason-out {
-  transform: translate(2px, -2px);
 }
 
 .ct-email-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.15rem 0.5rem;
-  max-width: 100%;
-}
-
-.ct-or {
-  font-size: 0.9rem;
-  color: var(--muted);
+  gap: 0.25rem 0.5rem;
+  margin-top: 1.75rem;
 }
 
 .ct-email {
-  font-size: 1rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  min-height: 2.75rem;
+  font-size: clamp(1rem, 3.7vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
   color: var(--fg);
+  transition: color var(--transition-fast);
+}
+
+.ct-email-address {
+  position: relative;
   overflow-wrap: anywhere;
-  transition: color 160ms var(--ease-out);
+}
+
+.ct-email-underline {
+  position: absolute;
+  left: 0;
+  bottom: -0.3rem;
+  width: 100%;
+  height: 5px;
+  color: var(--accent);
+}
+
+.ct-email-underline .ink-line {
+  stroke-width: 1;
+}
+
+.ct-email-arrow {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--accent);
+}
+
+.ct-email-arrow .ink-line {
+  stroke-width: 1.6;
 }
 
 .ct-email:hover {
@@ -1967,19 +2037,21 @@ p {
   height: 2.75rem;
   flex: none;
   border: none;
+  border-radius: 8px;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  transition: color 160ms var(--ease-out);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .ct-copy:hover {
   color: var(--fg);
+  background: var(--bg2);
 }
 
 .ct-copy-icon {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 .ct-copy-icon .ink-line {
@@ -1990,46 +2062,143 @@ p {
   color: var(--green);
 }
 
-.ct-tick .ink-line {
-  stroke-width: 2.1;
-  animation: ink-draw 320ms var(--ease-out) both;
+.ct-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin-top: 1.5rem;
+  list-style: none;
+}
+
+.ct-reason {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  color: var(--muted);
+  transition: color var(--transition-fast);
+}
+
+.ct-reason-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+}
+
+.ct-reason-icon .ink-line {
+  stroke-width: 1.6;
+}
+
+.ct-reason-label {
+  font-size: 0.8125rem;
+}
+
+.ct-reason:hover,
+.ct-reason:focus-visible {
+  color: var(--accent);
+}
+
+.ft {
+  position: relative;
+  margin-top: 3rem;
+  padding: 1.5rem 0 0;
+}
+
+.ft::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-color: var(--border2);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='8' preserveAspectRatio='none'%3E%3Cpath d='M0 4.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
+    0 0 / 100% 100% no-repeat;
+}
+
+.ft-row,
+.ft-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+.ft-mark {
+  height: 1.5rem;
+  width: auto;
+  overflow: visible;
+  color: var(--fg);
+}
+
+.ft-mark .ink-line {
+  stroke-width: 2.2;
 }
 
 .ct-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.6rem;
-  margin-top: 1.5rem;
+  gap: 0.25rem 1.25rem;
   list-style: none;
 }
 
-.ct-links a {
+.ct-links a,
+.ft-top {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.2rem;
   min-height: 2.75rem;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   color: var(--muted);
-  transition: color 160ms var(--ease-out);
+  transition: color var(--transition-fast);
 }
 
-.ct-links a:hover {
-  color: var(--fg);
-}
-
-.ct-link-icon {
-  width: 1rem;
-  height: 1rem;
+.ct-links a:hover,
+.ft-top:hover {
   color: var(--accent);
-  transition: transform 220ms var(--ease-out);
 }
 
-.ct-link-icon .ink-line {
-  stroke-width: 1.8;
+.ct-link-icon,
+.ft-top-icon {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
-.ct-links a:hover .ct-link-icon {
-  transform: translate(2px, -2px);
+.ct-link-icon .ink-line,
+.ft-top-icon .ink-line {
+  stroke-width: 1.6;
+}
+
+.ft-bottom {
+  margin-top: 0.5rem;
+  gap: 0 1rem;
+}
+
+.ft-small {
+  max-width: none;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+@media (max-width: 480px) {
+  .ct-heading-row {
+    gap: 0.75rem;
+  }
+
+  .ct-reasons {
+    gap: 0 1rem;
+  }
+
+  .ft-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ct-links {
+    gap: 0.25rem 1.1rem;
+  }
 }
 
 .site-footer p {

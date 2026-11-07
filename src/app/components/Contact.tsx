@@ -13,7 +13,6 @@ import {
   UpArrowIcon,
   WaveIcon,
 } from "./ink";
-import { SectionHeading } from "./SectionHeading";
 
 const EMAIL = "tolu.nuell@gmail.com";
 
@@ -62,36 +61,26 @@ export const Contact = () => {
   };
 
   return (
-    <section className="section ct" id="contact">
-      <SectionHeading word="contact" label="Contact" />
-
-      <p className="ct-intro">Why are you reaching out?</p>
-
-      <ul className="ct-reasons">
-        {REASONS.map(({ label, Icon, href }) => (
-          <li key={label}>
-            <a className="ct-reason" href={href}>
-              <Icon className="ct-reason-icon" />
-              <span className="ct-reason-label">
-                {label}
-                <Underline className="ct-reason-underline" />
-              </span>
-              <OutArrowIcon className="ct-reason-out" />
-            </a>
-          </li>
-        ))}
-      </ul>
+    <section className="section ct" id="contact" aria-labelledby="contact-title">
+      <div className="ct-heading-row">
+        <h2 className="ct-title" id="contact-title">
+          Have a <span className="ct-title-mark">&ldquo;what if&rdquo;?<Underline className="ct-title-underline" /></span>
+        </h2>
+        <WaveIcon className="ct-wave" />
+      </div>
+      <p className="ct-intro">A project, a role, or a conversation.<br />Let&rsquo;s see where it goes.</p>
 
       <div className="ct-email-row">
-        <span className="ct-or">or write it yourself:</span>
         <a className="ct-email" href={`mailto:${EMAIL}`}>
-          {EMAIL}
+          <span className="ct-email-address">{EMAIL}<Underline className="ct-email-underline" /></span>
+          <OutArrowIcon className="ct-email-arrow" />
         </a>
         <button
           type="button"
           className="ct-copy"
           onClick={copyEmail}
           aria-label={copied ? "Email copied" : "Copy email"}
+          title={copied ? "Copied!" : "Copy email address"}
         >
           {copied ? <TickIcon className="ct-copy-icon ct-tick" /> : <CopyIcon className="ct-copy-icon" />}
         </button>
@@ -100,7 +89,21 @@ export const Contact = () => {
         </span>
       </div>
 
-      <ul className="ct-links">
+      <ul className="ct-reasons" aria-label="Start a conversation">
+        {REASONS.map(({ label, Icon, href }) => (
+          <li key={label}>
+            <a className="ct-reason" href={href}>
+              <Icon className="ct-reason-icon" />
+              <span className="ct-reason-label">{label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <footer className="ft">
+        <div className="ft-row">
+          <NameMark className="ft-mark" />
+          <ul className="ct-links" aria-label="Find me elsewhere">
         <li>
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
             Resume
@@ -116,18 +119,16 @@ export const Contact = () => {
           </li>
         ))}
       </ul>
-
-      <footer className="ft">
-        <div className="ft-row">
-          <NameMark className="ft-mark" />
+        </div>
+        <div className="ft-bottom">
+          <p className="ft-small">
+            &copy; {new Date().getFullYear()} Toluwalope Adegoke
+          </p>
           <a className="ft-top" href="#main">
             Back to top
             <UpArrowIcon className="ft-top-icon" />
           </a>
         </div>
-        <p className="ft-small">
-          &copy; {new Date().getFullYear()} Toluwalope Adegoke · Built with Next.js &amp; TypeScript
-        </p>
       </footer>
     </section>
   );
