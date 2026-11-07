@@ -1,39 +1,43 @@
-import React from "react";
-import { ArrowRight } from "lucide-react";
 import { getFeaturedPosts } from "@/lib/blog";
 import { BLOG_URL } from "@/lib/site";
-import { BlogCard } from "./BlogCard";
+import { ArrowIcon, OutArrowIcon, Underline } from "./ink";
+import { SectionHeading } from "./SectionHeading";
+
+const formatDate = (date: string) =>
+  new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 export const WritingSection = () => {
   const posts = getFeaturedPosts(3);
-
-  if (!posts || posts.length === 0) {
-    return null;
-  }
+  if (!posts || posts.length === 0) return null;
 
   return (
     <section className="section" id="writing">
-      <div
-        className="section-label fade-up delay-1"
-        style={{ marginBottom: "2rem" }}
-      >
-        <span className="number">02</span>
-        <span className="label">Writing</span>
-        <span className="line" aria-hidden="true" />
-      </div>
+      <SectionHeading word="writing" label="Writing" />
 
-      <div className="blog-posts-grid">
-        {posts.map((post, index) => (
-          <BlogCard key={post.slug} post={post} index={index} base={BLOG_URL} />
+      <ul className="wr-list">
+        {posts.map((post) => (
+          <li key={post.slug}>
+            <a className="wr-link" href={`${BLOG_URL}/${post.slug}`}>
+              <span className="wr-meta">
+                {formatDate(post.date)} · {post.readingTime}
+              </span>
+              <span className="wr-head">
+                <span className="wr-title">
+                  {post.title}
+                  <Underline className="wr-underline" />
+                </span>
+                <OutArrowIcon className="wr-out" />
+              </span>
+              {post.description && <span className="wr-desc">{post.description}</span>}
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <div className="section-footer fade-up" style={{ marginTop: "2rem" }}>
-        <a href={BLOG_URL} className="view-all-link">
-          <span>Read All Articles</span>
-          <ArrowRight size={14} className="view-all-arrow" />
-        </a>
-      </div>
+      <a className="wr-all" href={BLOG_URL}>
+        All writing
+        <ArrowIcon className="wr-all-icon" />
+      </a>
     </section>
   );
 };
