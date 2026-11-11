@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, Share2, Check, Twitter } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
+import { CopyIcon, OutArrowIcon, Rule, TickIcon } from "./ink";
 
 interface PostHeaderProps {
   post: PostMetadata;
@@ -12,110 +11,65 @@ interface PostHeaderProps {
 export const PostHeader = ({ post }: PostHeaderProps) => {
   const [copied, setCopied] = useState(false);
 
+  // Post dates are plain days, so they are read in UTC to stay on the same day everywhere.
   const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   });
 
   const handleShareCopy = async () => {
     try {
-      if (typeof window !== "undefined") {
-        await navigator.clipboard.writeText(window.location.href);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy link:", err);
     }
   };
 
   const handleShareToTwitter = () => {
-    if (typeof window !== "undefined") {
-      const tweetText = `"${post.title}" by @Tolu_dev`;
-      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        tweetText
-      )}&url=${encodeURIComponent(window.location.href)}`;
-      window.open(tweetUrl, "_blank", "noopener,noreferrer,width=550,height=420");
-    }
+    const tweetText = `"${post.title}" by @Tolu_dev`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetText
+    )}&url=${encodeURIComponent(window.location.href)}`;
+    window.open(tweetUrl, "_blank", "noopener,noreferrer,width=550,height=420");
   };
 
   return (
-    <header className="article-header fade-up">
-      {/* Top back navigation */}
-      <nav className="article-nav" aria-label="Breadcrumb">
-        <Link href="/" className="back-link">
-          <ArrowLeft size={15} className="back-arrow-icon" />
-          <span>Back to all articles</span>
-        </Link>
-      </nav>
+    <header className="ar-header">
+      <p className="ar-meta">
+        <time dateTime={post.date}>{formattedDate}</time>
+        <span aria-hidden="true"> · </span>
+        {post.readingTime}
+      </p>
 
-      {/* Meta tags & date */}
-      <div className="article-meta-row">
-        <div className="article-meta-info">
-          <span className="article-meta-item">
-            <Calendar size={13} className="meta-icon" />
-            <span>{formattedDate}</span>
-          </span>
-          <span className="meta-separator">•</span>
-          <span className="article-meta-item">
-            <Clock size={13} className="meta-icon" />
-            <span>{post.readingTime}</span>
-          </span>
-        </div>
+      <h1 className="ar-title">{post.title}</h1>
 
-        {/* Share buttons */}
-        <div className="article-share-actions">
-          <button
-            type="button"
-            onClick={handleShareCopy}
-            className="share-action-btn"
-            title="Copy article link"
-          >
-            {copied ? (
-              <>
-                <Check size={13} className="share-icon-copied" />
-                <span>Copied</span>
-              </>
-            ) : (
-              <>
-                <Share2 size={13} />
-                <span>Share</span>
-              </>
-            )}
+      {post.description && <p className="ar-lede">{post.description}</p>}
+
+      <div className="ar-bar">
+        {post.tags && post.tags.length > 0 && (
+          <p className="ar-tags">
+            <span className="visually-hidden">Topics: </span>
+            {post.tags.join(" / ")}
+          </p>
+        )}
+
+        <div className="ar-share">
+          <button type="button" onClick={handleShareCopy} className="ar-share-btn" data-copied={copied || undefined}>
+            {copied ? <TickIcon className="ar-share-icon" /> : <CopyIcon className="ar-share-icon" />}
+            <span aria-live="polite">{copied ? "Link copied" : "Copy link"}</span>
           </button>
-          <button
-            type="button"
-            onClick={handleShareToTwitter}
-            className="share-action-btn twitter-btn"
-            title="Share on X"
-          >
-            <Twitter size={13} />
-            <span>Post</span>
+          <button type="button" onClick={handleShareToTwitter} className="ar-share-btn">
+            Post on X
+            <OutArrowIcon className="ar-share-icon ar-share-out" />
           </button>
         </div>
       </div>
 
-      {/* Title */}
-      <h1 className="article-main-title">{post.title}</h1>
-
-      {/* Description */}
-      {post.description && (
-        <p className="article-lead-description">{post.description}</p>
-      )}
-
-      {/* Tag pills */}
-      {post.tags && post.tags.length > 0 && (
-        <div className="article-tags-row">
-          {post.tags.map((tag) => (
-            <span key={tag} className="article-tag-pill">
-              #{tag}
-            </span>
-          ))}
-        </div>
-      )}
-
-      <hr className="article-header-divider" />
+      <Rule className="ar-rule" />
     </header>
   );
 };

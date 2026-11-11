@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
 import { SITE_URL } from "@/lib/site";
+import { SignOff } from "./SignOff";
+import { ArrowIcon, OutArrowIcon, Rule, Underline } from "./ink";
 
 interface PostFooterProps {
   prevPost?: PostMetadata | null;
@@ -12,94 +13,73 @@ interface PostFooterProps {
 
 export const PostFooter = ({ prevPost, nextPost }: PostFooterProps) => {
   return (
-    <footer className="article-footer fade-up">
-      {/* Divider */}
-      <hr className="article-footer-divider" />
+    <footer className="ar-footer">
+      <SignOff />
 
-      {/* Author Signature */}
-      <div className="author-signature">
-        <div className="author-avatar-wrapper">
-          <Image
-            src="/me.png"
-            alt="Toluwalope Adegoke"
-            width={46}
-            height={46}
-            className="author-avatar-img"
-          />
-        </div>
-        <div className="author-info">
-          <div className="author-header-row">
-            <span className="author-name">Toluwalope Adegoke</span>
-            <span className="author-role-label">Frontend Engineer</span>
-          </div>
-          <p className="author-bio">
-            Crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript. Currently building SoloStack.
+      <div className="ar-author">
+        <Rule className="ar-rule ar-rule-top" />
+        <Image src="/me.png" alt="" width={56} height={56} className="ar-author-photo" />
+        <div className="ar-author-copy">
+          <p className="ar-author-name">
+            Toluwalope Adegoke
+            <span className="ar-author-role">Software developer</span>
           </p>
-          <div className="author-links">
-            <a
-              href="https://x.com/Tolu_dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="author-link-item"
-            >
-              <span>X (Twitter)</span>
-              <ArrowUpRight size={11} />
+          <p className="ar-author-bio">
+            Crafting thoughtful, high-performance web applications with Next.js, React, and TypeScript. Currently
+            building SoloStack.
+          </p>
+          <p className="ar-author-links">
+            <a href="https://x.com/Tolu_dev" target="_blank" rel="noopener noreferrer" className="ar-author-link">
+              X<OutArrowIcon className="ar-author-icon" />
             </a>
-            <span className="author-link-separator">•</span>
-            <a
-              href="https://github.com/ulot2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="author-link-item"
-            >
-              <span>GitHub</span>
-              <ArrowUpRight size={11} />
+            <a href="https://github.com/ulot2" target="_blank" rel="noopener noreferrer" className="ar-author-link">
+              GitHub
+              <OutArrowIcon className="ar-author-icon" />
             </a>
-            <span className="author-link-separator">•</span>
-            <a href={`${SITE_URL}/#contact`} className="author-link-item">
-              <span>Get in touch</span>
-              <ArrowRight size={11} />
+            <a href={`${SITE_URL}/#contact`} className="ar-author-link">
+              Get in touch
+              <ArrowIcon className="ar-author-icon ar-author-onward" />
             </a>
-          </div>
+          </p>
         </div>
       </div>
 
-      {/* Next / Previous Article Navigation */}
       {(prevPost || nextPost) && (
-        <div className="post-pagination-grid">
+        <nav className="ar-more" aria-label="More writing">
+          <Rule className="ar-rule ar-rule-top" />
           {prevPost ? (
-            <Link href={`/${prevPost.slug}`} className="pagination-card prev">
-              <div className="pagination-label">
-                <ArrowLeft size={13} />
-                <span>Previous Article</span>
-              </div>
-              <span className="pagination-title">{prevPost.title}</span>
+            <Link href={`/${prevPost.slug}`} className="ar-more-link ar-more-prev">
+              <span className="ar-more-label">
+                <ArrowIcon className="ar-more-icon" />
+                Earlier
+              </span>
+              <span className="ar-more-title">
+                {prevPost.title}
+                <Underline className="ar-more-underline" />
+              </span>
             </Link>
           ) : (
-            <div />
+            <span />
           )}
-
-          {nextPost ? (
-            <Link href={`/${nextPost.slug}`} className="pagination-card next">
-              <div className="pagination-label">
-                <span>Next Article</span>
-                <ArrowRight size={13} />
-              </div>
-              <span className="pagination-title">{nextPost.title}</span>
+          {nextPost && (
+            <Link href={`/${nextPost.slug}`} className="ar-more-link ar-more-next">
+              <span className="ar-more-label">
+                Later
+                <ArrowIcon className="ar-more-icon" />
+              </span>
+              <span className="ar-more-title">
+                {nextPost.title}
+                <Underline className="ar-more-underline" />
+              </span>
             </Link>
-          ) : (
-            <div />
           )}
-        </div>
+        </nav>
       )}
 
-      {/* Bottom Back Button */}
-      <div className="article-bottom-nav">
-        <Link href="/" className="btn-secondary">
-          <ArrowLeft size={14} style={{ marginRight: "6px" }} />
-          <span>All Articles</span>
-        </Link>
-      </div>
+      <Link href="/" className="ar-all">
+        <ArrowIcon className="ar-all-icon" />
+        All writing
+      </Link>
     </footer>
   );
 };

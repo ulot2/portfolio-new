@@ -1,3 +1,4 @@
+import React from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -6,6 +7,7 @@ import { PostHeader } from "@/app/components/PostHeader";
 import { PostFooter } from "@/app/components/PostFooter";
 import { TextSelectionShare } from "@/app/components/TextSelectionShare";
 import { mdxComponents } from "@/app/components/MDXComponents";
+import { BlogTopBar } from "@/app/components/BlogTopBar";
 import { BLOG_URL } from "@/lib/site";
 
 interface BlogPostPageProps {
@@ -69,15 +71,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 
   return (
-    <main className="site-container blog-article-page" id="main">
-      <TextSelectionShare articleTitle={post.metadata.title} />
-      <PostHeader post={post.metadata} />
-      <article className="blog-prose fade-up delay-1">
-        <MDXRemote source={post.content} components={mdxComponents} />
-      </article>
+    <>
+      <BlogTopBar href="/" label="Writing" />
+      <main className="site-container ar-page" id="main">
+        <TextSelectionShare articleTitle={post.metadata.title} />
+        <PostHeader post={post.metadata} />
+        <article className="blog-prose hero-rise" style={{ "--i": 1 } as React.CSSProperties}>
+          <MDXRemote source={post.content} components={mdxComponents} />
+        </article>
 
-      <PostFooter prevPost={prevPost} nextPost={nextPost} />
-    </main>
+        <PostFooter prevPost={prevPost} nextPost={nextPost} />
+      </main>
+    </>
   );
 }
 

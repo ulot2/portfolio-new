@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { getAllPosts, getAllTags } from "@/lib/blog";
 import { BlogListClient } from "../components/BlogListClient";
 import { SectionHeading } from "../components/SectionHeading";
-import { ThemeToggle } from "../components/ThemeToggle";
-import { ArrowIcon, FeedIcon, NameMark, Underline } from "../components/ink";
+import { BlogTopBar } from "../components/BlogTopBar";
+import { FeedIcon } from "../components/ink";
 import { SITE_URL, BLOG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -27,20 +27,7 @@ export default function BlogIndexPage() {
 
   return (
     <>
-      {/* The same header as the portfolio, with one way back to it. */}
-      <header className="site-container site-header">
-        <a href={SITE_URL} className="site-logo" aria-label="Toluwalope Adegoke, back to the portfolio">
-          <NameMark className="site-logo-mark" />
-        </a>
-        <nav className="site-nav" aria-label="Main">
-          <a href={SITE_URL} className="site-nav-link bl-back">
-            <ArrowIcon className="bl-back-icon" />
-            Portfolio
-            <Underline className="site-nav-underline" />
-          </a>
-          <ThemeToggle />
-        </nav>
-      </header>
+      <BlogTopBar href={SITE_URL} label="Portfolio" />
 
       <main className="site-container bl-page" id="main">
         <header className="bl-intro">

@@ -448,3 +448,36 @@ export const Rule = ({ className, children }: { className?: string; children?: R
 );
 
 export const RULE = "M2 4.7c92-2.5 164 1.3 251-.5 113-2.3 214 1.5 305-.2 43-.8 82-.4 120-1";
+
+/** An opening quote mark: two fat commas, hung upside down. */
+export const QuoteIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M9.6 6.8c-3 1-4.9 3.4-4.8 6.3.1 2 1.5 3.4 3.3 3.3 1.7-.1 2.9-1.5 2.7-3.1-.2-1.5-1.5-2.5-3.1-2.3" />
+    <path className="ink-line" d="M18.3 6.6c-3 1.1-4.8 3.5-4.7 6.4.1 2 1.5 3.4 3.3 3.3 1.7-.1 2.8-1.6 2.6-3.2-.2-1.4-1.5-2.4-3-2.2" />
+  </svg>
+);
+
+/** A note in the margin: a ringed "i". */
+export const InfoIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M12.2 3.6C7.4 3.3 3.5 7.3 3.7 12.1c-.1 4.7 3.7 8.4 8.4 8.3 4.8.1 8.4-3.8 8.2-8.5C20.4 7.3 16.8 3.4 12.2 3.6Z" />
+    <path className="ink-line" d="M12.1 11.2c.1 1.8 0 3.5.1 5.2" />
+    <path className="ink-line" d="M12 7.7c.2.2.2.5 0 .7" />
+  </svg>
+);
+
+/** Careful: a warning triangle. */
+export const WarningIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M12.1 4.2c-3 4.8-5.8 9.7-8.4 14.8 5.6.4 11.2.4 16.8 0-2.6-5.1-5.4-10-8.4-14.8Z" />
+    <path className="ink-line" d="M12.1 9.8c.1 1.7 0 3.3.1 5" />
+    <path className="ink-line" d="M12.1 17.1c.2.2.2.4 0 .6" />
+  </svg>
+);
+
+/** A pen stroke down the margin, stretched to the height of what it marks. */
+export const MarginLine = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 8 100" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path className="ink-line" vectorEffect="non-scaling-stroke" d="M4.4 1.5c-1.3 16.2.9 31.4-.3 48.6-.9 16.1 1 32.1.2 48.4" />
+  </svg>
+);
