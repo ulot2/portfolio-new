@@ -5,6 +5,8 @@ import { SectionHeading } from "./SectionHeading";
 // The "what if" each project answered, written from what the project does.
 // Keyed by title; a project without one shows its description instead.
 const WHAT_IF: Record<string, string> = {
+  "Museum of Ordinary Things": "What if the everyday things you keep had a museum?",
+  SecondLook: "What if someone checked your application before you sent it?",
   cowrite: "What if writing had live cursors?",
   SoloStack: "What if African freelancers had one workspace?",
   "Dee's Agora": "What if online debate had real structure?",
@@ -17,7 +19,9 @@ const WHAT_IF: Record<string, string> = {
 
 const isUrl = (url: string) => url.startsWith("http");
 
-const hrefFor = (liveUrl: string, githubUrl: string) => (isUrl(liveUrl) ? liveUrl : githubUrl);
+// The live site if there is one, else the code; null when neither is public yet.
+const hrefFor = (liveUrl: string, githubUrl: string) =>
+  isUrl(liveUrl) ? liveUrl : isUrl(githubUrl) ? githubUrl : null;
 
 // Things you open in a browser get the window; things you install get the wrench.
 const KIND_ICON = {
@@ -38,26 +42,29 @@ export const Projects = () => (
         const KindIcon = KIND_ICON[project.kind];
         // The name already goes to the code when there is no live site.
         const hasCode = isUrl(project.liveUrl) && isUrl(project.githubUrl);
+        const href = hrefFor(project.liveUrl, project.githubUrl);
+        const heading = (linked: boolean) => (
+          <>
+            <span className="wi-question">{WHAT_IF[project.title] ?? project.description}</span>
+            <span className="wi-answer">
+              <HookArrowIcon className="wi-hook" />
+              <span className="wi-name">
+                {project.title}
+                {linked && <Underline className="wi-underline" />}
+              </span>
+              {linked && <OutArrowIcon className="wi-out" />}
+            </span>
+          </>
+        );
         return (
           <li key={project.id} className="wi-item">
-            <a
-              className="wi-link"
-              href={hrefFor(project.liveUrl, project.githubUrl)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="wi-question">
-                {WHAT_IF[project.title] ?? project.description}
-              </span>
-              <span className="wi-answer">
-                <HookArrowIcon className="wi-hook" />
-                <span className="wi-name">
-                  {project.title}
-                  <Underline className="wi-underline" />
-                </span>
-                <OutArrowIcon className="wi-out" />
-              </span>
-            </a>
+            {href ? (
+              <a className="wi-link" href={href} target="_blank" rel="noopener noreferrer">
+                {heading(true)}
+              </a>
+            ) : (
+              <div className="wi-link">{heading(false)}</div>
+            )}
             <div className="wi-detail">
               <p className="wi-desc">{project.description}</p>
               <p className="wi-meta">
@@ -65,6 +72,7 @@ export const Projects = () => (
                   <KindIcon className="wi-kind-icon" />
                   {project.kind}
                 </span>
+                {project.inProgress && <span className="wi-status">In progress</span>}
                 {hasCode && (
                   <a
                     className="wi-code"

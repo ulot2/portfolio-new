@@ -6,9 +6,32 @@ export interface Project {
   description: string;
   liveUrl: string;
   githubUrl: string;
+  /** Set while a project is still being built; it then shows without a link if it has none. */
+  inProgress?: boolean;
 }
 
 export const projects: Project[] = [
+  {
+    id: 9,
+    title: "Museum of Ordinary Things",
+    kind: "Web app",
+    description:
+      "Photograph an everyday object, write its story, and publish it as an exhibit to share by link or add to the public collection.",
+    liveUrl: "https://moot.tnuell.sbs",
+    // Private repo — the live site is the only public entry point.
+    githubUrl: "#",
+  },
+  {
+    id: 10,
+    title: "SecondLook",
+    kind: "Web app",
+    description:
+      "Checks scholarship application files against the instructions you give it: format, size, page and word counts, all on your own device.",
+    liveUrl: "",
+    // Private repo, not deployed yet.
+    githubUrl: "#",
+    inProgress: true,
+  },
   {
     id: 1,
     title: "cowrite",

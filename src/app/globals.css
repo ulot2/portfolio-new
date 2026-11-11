@@ -2113,6 +2113,23 @@ p {
   stroke-width: 1.7;
 }
 
+/* Still being built: said in words, with a small pen dot. */
+.wi-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  color: var(--muted-subtle);
+}
+
+.wi-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 46% 54% 50% 50%;
+  background: var(--accent);
+}
+
 .wi-code {
   display: inline-flex;
   align-items: center;
