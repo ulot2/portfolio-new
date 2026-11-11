@@ -9,6 +9,7 @@ import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
 import {
   BulbIcon,
+  ClockIcon,
   ChevronIcon,
   EnvelopeIcon,
   OutArrowIcon,
@@ -23,6 +24,7 @@ import {
 const DOODLES: Record<string, (props: { className?: string }) => React.ReactElement> = {
   hero: WaveIcon,
   work: BulbIcon,
+  now: ClockIcon,
   writing: PencilIcon,
   contact: EnvelopeIcon,
 };

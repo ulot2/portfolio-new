@@ -4178,3 +4178,108 @@ p {
     transition: none;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   NOW  (what I'm working on, a note in a pen box)
+   ═══════════════════════════════════════════════ */
+
+.nw-note {
+  position: relative;
+  max-width: 36rem;
+  padding: 1.6rem 1.75rem 1.75rem;
+}
+
+.nw-box {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--border2);
+  pointer-events: none;
+  /* Only the box leans; tilted text would blur. */
+  rotate: -0.6deg;
+}
+
+.nw-box .ink-line {
+  stroke-width: 1.4;
+}
+
+.nw-updated {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.nw-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.1rem;
+  list-style: none;
+}
+
+.nw-item {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted-subtle);
+}
+
+.nw-tick {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.3rem;
+  color: var(--accent);
+}
+
+.nw-tick .ink-line {
+  stroke-width: 1.8;
+}
+
+.nw-title {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.nw-link {
+  transition: color var(--transition-fast);
+}
+
+.nw-link:hover {
+  color: var(--accent);
+}
+
+.nw-out {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.15em;
+  vertical-align: 0;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.nw-out .ink-line {
+  stroke-width: 2;
+}
+
+.nw-link:hover .nw-out {
+  translate: 2px -2px;
+}
+
+.nw-text {
+  color: var(--muted);
+}
+
+@media (max-width: 560px) {
+  .nw-note {
+    padding: 1.35rem 1.25rem 1.5rem;
+  }
+
+  .nw-box {
+    rotate: none;
+  }
+}
