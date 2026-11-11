@@ -6,6 +6,8 @@ export interface Project {
   /** What sort of thing it is, shown as a small label under the name. */
   kind: "Web app" | "Website" | "Command-line tool" | "Chrome extension" | "GitHub Action";
   description: string;
+  /** The main tools it is built with, read from its repository. Shown on /projects. */
+  stack: string[];
   liveUrl: string;
   githubUrl: string;
   /** Set while a project is still being built; it then shows without a link if it has none. */
@@ -20,6 +22,7 @@ export const projects: Project[] = [
     kind: "Web app",
     description:
       "Photograph an everyday object, write its story, and publish it as an exhibit to share by link or add to the public collection.",
+    stack: ["Next.js", "Cloudflare D1 & R2", "Drizzle", "Better Auth", "Tiptap"],
     liveUrl: "https://moot.tnuell.sbs",
     // Private repo — the live site is the only public entry point.
     githubUrl: "#",
@@ -31,6 +34,7 @@ export const projects: Project[] = [
     kind: "Web app",
     description:
       "Checks scholarship application files against the instructions you give it: format, size, page and word counts, all on your own device.",
+    stack: ["Next.js", "TypeScript", "PDF.js", "Web Workers"],
     liveUrl: "",
     // Private repo, not deployed yet.
     githubUrl: "#",
@@ -43,6 +47,7 @@ export const projects: Project[] = [
     kind: "Web app",
     description:
       "Comment, suggest edits and restore any earlier version. It keeps working offline and merges when you reconnect.",
+    stack: ["React Router", "Yjs", "Cloudflare Workers", "Better Auth", "BlockNote"],
     liveUrl: "https://cowrite.cowrite.workers.dev",
     githubUrl: "https://github.com/ulot2/cowrite",
   },
@@ -52,6 +57,7 @@ export const projects: Project[] = [
     question: "What if African freelancers had one workspace?",
     kind: "Web app",
     description: "An all-in-one workspace for African freelancers.",
+    stack: ["Next.js", "Postgres", "Prisma", "Auth.js", "Inngest"],
     liveUrl: "https://solostack.ng/",
     githubUrl: "#",
   },
@@ -61,6 +67,7 @@ export const projects: Project[] = [
     question: "What if online debate had real structure?",
     kind: "Web app",
     description: "Better arguments begin with better questions.",
+    stack: ["Next.js", "Postgres", "Prisma", "Supabase", "Auth.js"],
     liveUrl: "https://www.deesagora.online",
     // Private repo — the live site is the only public entry point.
     githubUrl: "#",
@@ -72,6 +79,7 @@ export const projects: Project[] = [
     kind: "Web app",
     description:
       "Built for a university quiz club: the host runs the contest on stage while contestants buzz in from their own phones.",
+    stack: ["Next.js", "Postgres", "Prisma", "Web Push"],
     liveUrl: "https://bamssalads-quiz.vercel.app",
     // Private repo — the live site is the only public entry point.
     githubUrl: "#",
@@ -83,6 +91,7 @@ export const projects: Project[] = [
     kind: "Command-line tool",
     description:
       "Lists the merged and squash-merged leftovers, then deletes them in one go. No dependencies.",
+    stack: ["Node.js", "TypeScript"],
     liveUrl: "https://www.npmjs.com/package/gitmop",
     githubUrl: "https://github.com/ulot2/gitmop",
   },
@@ -93,6 +102,7 @@ export const projects: Project[] = [
     kind: "Chrome extension",
     description:
       "Saves the text of pages you actually read to a local database you can search offline. Nothing leaves your computer.",
+    stack: ["Chrome Manifest V3", "SQLite (WebAssembly)", "Readability"],
     liveUrl: "",
     githubUrl: "https://github.com/ulot2/readtrail",
   },
@@ -103,6 +113,7 @@ export const projects: Project[] = [
     kind: "GitHub Action",
     description:
       "Checks the wording of changed UI, and fails the build only on checks proven to match human review.",
+    stack: ["GitHub Actions", "Playwright", "axe-core"],
     liveUrl: "",
     githubUrl: "https://github.com/ulot2/hallway",
   },
@@ -112,6 +123,7 @@ export const projects: Project[] = [
     question: "What if an event videographer had a home for their films?",
     kind: "Website",
     description: "A portfolio for an event videographer and editor.",
+    stack: ["Next.js", "Three.js", "GSAP", "Framer Motion"],
     liveUrl: "https://lasetales.vercel.app/",
     githubUrl: "#",
   },

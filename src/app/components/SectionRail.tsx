@@ -6,7 +6,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { NAV_ITEMS } from "@/data/nav";
 import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
-import { BulbIcon, EnvelopeIcon, PencilIcon, Underline, WaveIcon, WrenchIcon } from "./ink";
+import { BulbIcon, EnvelopeIcon, PencilIcon, Underline, WaveIcon } from "./ink";
 
 const SECTIONS = NAV_ITEMS.filter((item) => item.route === undefined);
 const BLOG = NAV_ITEMS.find((item) => item.route !== undefined);
@@ -16,7 +16,6 @@ const DOODLES: Record<string, (props: { className?: string }) => React.ReactElem
   hero: WaveIcon,
   work: BulbIcon,
   writing: PencilIcon,
-  skills: WrenchIcon,
   contact: EnvelopeIcon,
 };
 

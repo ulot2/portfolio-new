@@ -17,15 +17,13 @@ import {
   Underline,
   UpArrowIcon,
   WaveIcon,
-  WrenchIcon,
-} from "./ink";
+  } from "./ink";
 
 // The same doodles the margin rail opens its dots into, so the two indexes match.
 const DOODLES: Record<string, (props: { className?: string }) => React.ReactElement> = {
   hero: WaveIcon,
   work: BulbIcon,
   writing: PencilIcon,
-  skills: WrenchIcon,
   contact: EnvelopeIcon,
 };
 

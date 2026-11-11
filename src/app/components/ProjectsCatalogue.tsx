@@ -77,6 +77,11 @@ export const ProjectsCatalogue = ({ projects }: { projects: Project[] }) => {
                   <ProjectKindIcon kind={project.kind} className="pj-kind-icon" />
                   {project.kind}
                 </span>
+                <ul className="pj-stack" aria-label="Built with">
+                  {project.stack.map((tool) => (
+                    <li key={tool}>{tool}</li>
+                  ))}
+                </ul>
               </div>
 
               <div className="pj-body">
