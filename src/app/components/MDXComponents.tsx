@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { MarginLine, OutArrowIcon, Rule } from "./ink";
 import { CodeBlock } from "./CodeBlock";
 import { Callout } from "./Callout";
 
@@ -42,11 +42,16 @@ export const mdxComponents = {
   ),
   blockquote: ({ children, ...props }: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote className="prose-blockquote" {...props}>
+      <MarginLine className="prose-margin-line" />
       {children}
     </blockquote>
   ),
+  // A pen rule stands in for the line; the hr stays for screen readers.
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-    <hr className="prose-hr" {...props} />
+    <div className="prose-hr">
+      <hr className="visually-hidden" {...props} />
+      <Rule className="prose-hr-rule" />
+    </div>
   ),
   pre: ({ children }: { children?: React.ReactNode }) => {
     return <div className="prose-pre-container">{children}</div>;
@@ -83,8 +88,8 @@ export const mdxComponents = {
         className="prose-link prose-external-link"
         {...props}
       >
-        <span>{children}</span>
-        <ArrowUpRight size={13} className="prose-link-icon" />
+        {children}
+        <OutArrowIcon className="prose-link-icon" />
       </a>
     );
   },

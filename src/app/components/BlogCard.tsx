@@ -1,10 +1,7 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
+import { ArrowIcon, Rule, Underline } from "./ink";
 
 interface BlogCardProps {
   post: PostMetadata;
@@ -13,40 +10,43 @@ interface BlogCardProps {
   base?: string;
 }
 
+/** One entry in the writing index: the date in the margin, the piece beside it. */
 export const BlogCard = ({ post, index = 0, base = "" }: BlogCardProps) => {
-  const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
+  const date = new Date(post.date);
+  const formattedDate = date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   });
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, delay: (index % 4) * 0.05 }}
-      className="blog-item-wrapper"
-    >
-      <Link href={`${base}/${post.slug}`} className="blog-item">
-        <div className="blog-item-header">
-          <span className="blog-item-title">
-            <span className="title-text">{post.title}</span>
-            <ArrowUpRight size={15} className="card-arrow-icon" />
+    <li className="bl-item hero-rise" style={{ "--i": Math.min(index, 5) } as React.CSSProperties}>
+      <Link href={`${base}/${post.slug}`} className="bl-link">
+        <span className="bl-meta">
+          <time dateTime={post.date}>{formattedDate}</time>
+          <span className="bl-meta-read">{post.readingTime}</span>
+        </span>
+        <span className="bl-body">
+          <span className="bl-head">
+            <span className="bl-title">
+              {post.title}
+              <Underline className="bl-underline" />
+            </span>
+            <ArrowIcon className="bl-arrow" />
           </span>
-          <div className="blog-item-meta">
-            <span className="blog-item-date">{formattedDate}</span>
-            <span className="blog-item-dot">•</span>
-            <span className="blog-item-readtime">{post.readingTime}</span>
-          </div>
-        </div>
-
-        {post.description && (
-          <p className="blog-item-desc">{post.description}</p>
-        )}
+          {post.description && <span className="bl-desc">{post.description}</span>}
+          {post.tags.length > 0 && (
+            <span className="bl-item-tags">
+              <span className="visually-hidden">Topics: </span>
+              {post.tags.join(" / ")}
+            </span>
+          )}
+        </span>
       </Link>
-    </motion.article>
+      <Rule className="bl-rule" />
+    </li>
   );
 };
 
 export default BlogCard;
-

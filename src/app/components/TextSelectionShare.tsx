@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Twitter, Check, Copy } from "lucide-react";
+import { CopyIcon, OutArrowIcon, TickIcon } from "./ink";
 
 interface TextSelectionShareProps {
   articleTitle: string;
@@ -137,8 +137,8 @@ export const TextSelectionShare = ({ articleTitle }: TextSelectionShareProps) =>
           className="toolbar-btn twitter-action"
           title="Share highlighted quote on X"
         >
-          <Twitter size={13} />
           <span>Post quote</span>
+          <OutArrowIcon className="toolbar-icon" />
         </button>
 
         <span className="toolbar-divider" />
@@ -151,12 +151,12 @@ export const TextSelectionShare = ({ articleTitle }: TextSelectionShareProps) =>
         >
           {copied ? (
             <>
-              <Check size={13} className="check-icon" />
-              <span>Copied!</span>
+              <TickIcon className="toolbar-icon check-icon" />
+              <span>Copied</span>
             </>
           ) : (
             <>
-              <Copy size={13} />
+              <CopyIcon className="toolbar-icon" />
               <span>Copy</span>
             </>
           )}

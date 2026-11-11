@@ -12,10 +12,16 @@ export const SectionHeading = ({
   word,
   label,
   count,
+  countLabel,
+  as: Title = "h2",
 }: {
   word: string;
   label: string;
   count?: number;
+  /** What the tally counts, read to screen readers. Defaults to the label. */
+  countLabel?: string;
+  /** The page's main title uses h1; section titles stay h2. */
+  as?: "h1" | "h2";
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -36,14 +42,14 @@ export const SectionHeading = ({
 
   return (
     <div className="hand-heading" ref={ref}>
-      <h2 className="hand-heading-title">
+      <Title className="hand-heading-title">
         <span className="visually-hidden">{label}</span>
         <HandWord word={word} className="hand-heading-word" />
-      </h2>
+      </Title>
       {count !== undefined && (
         <span className="hand-heading-tally">
           <span className="visually-hidden">
-            {count} {label.toLowerCase()}
+            {count} {countLabel ?? label.toLowerCase()}
           </span>
           <Tally count={count} className="hand-heading-tally-ink" />
         </span>
