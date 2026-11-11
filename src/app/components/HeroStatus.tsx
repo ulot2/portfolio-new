@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { ListeningStatus } from "@/lib/spotify-types";
+import { NOW } from "@/data/now";
 
 const timeFormat = new Intl.DateTimeFormat("en-US", {
   timeZone: "Africa/Lagos",
@@ -94,6 +95,21 @@ export default function HeroStatus() {
             </> : "A little quiet on Spotify right now."}
           </span>
         </p>
+        {NOW.length > 0 && (
+          <p className="hero-status-now">
+            <svg className="hero-status-pin" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path className="ink-line" d="M10 17.4c-3-3.4-5.2-6.3-5.1-9.1C5 5.4 7.3 3.2 10.1 3.3c2.8.1 4.9 2.3 4.9 5-.1 2.8-2.2 5.7-5 9.1Z" />
+              <path className="ink-line" d="M10 6.6c-1-.1-1.8.8-1.7 1.8.1.9.8 1.6 1.8 1.6.9-.1 1.6-.9 1.5-1.8 0-.9-.7-1.6-1.6-1.6Z" />
+            </svg>
+            <a href="#now">
+              Now: {NOW.slice(0, 2).map((entry) => entry.title).join(", ")}
+              {NOW.length > 2 && <> and {NOW.length - 2} more</>}
+              <svg className="hero-status-down" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path className="ink-line" d="M8 3.2c-.1 3.2 0 6.4.1 9.6M4.6 9.4c1.2 1.1 2.3 2.3 3.4 3.5 1.1-1.2 2.2-2.4 3.4-3.5" />
+              </svg>
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

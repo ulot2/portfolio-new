@@ -4,7 +4,7 @@
 // (once a month is plenty) or take the section out.
 
 export interface NowEntry {
-  /** A few words, set in bold: the thing itself. */
+  /** The thing itself, set in bold. The hero names the first two. */
   title: string;
   /** One or two sentences on where it stands. */
   note: string;
@@ -20,16 +20,21 @@ export const NOW_PLACE = "Lagos, Nigeria";
 
 export const NOW: NowEntry[] = [
   {
-    title: "Building SecondLook",
+    title: "SecondLook",
     note: "The checks on real application files work. Next, it learns to read the requirements straight from the instructions you paste in.",
+  },
+  {
+    title: "Roost",
+    note: "An Android app that keeps a history of your notifications, holds the noisy ones, and hands them over in a summary at the times you choose.",
+  },
+  {
+    title: "Museum of Ordinary Things",
+    note: "Opening the public collection, where keepers can choose to show their exhibits, and adding a way to save the ones you'd keep.",
+    href: "https://moot.tnuell.sbs",
   },
   {
     title: "Ferry",
     note: "Moving clipboard text and images between my Windows laptop and Android phone, encrypted end to end.",
     href: "https://github.com/ulot2/ferry",
-  },
-  {
-    title: "Redrawing this site by hand",
-    note: "Every icon on it is now drawn in pen. Next come screenshots of the work.",
   },
 ];

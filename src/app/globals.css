@@ -1727,6 +1727,57 @@ p {
   vertical-align: -0.05em;
 }
 
+/* A pointer to the Now note further down the page. */
+.hero-status-now {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  color: var(--muted);
+}
+
+.hero-status-pin {
+  flex: none;
+  align-self: flex-start;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+.hero-status-pin .ink-line,
+.hero-status-down .ink-line {
+  stroke-width: 1.5;
+}
+
+.hero-status-now a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.hero-status-now a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+
+.hero-status-down {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.25rem;
+  vertical-align: -0.05em;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.hero-status-now a:hover .hero-status-down {
+  translate: 0 2px;
+}
+
 .hero-status-ago,
 .hero-status-source {
   white-space: nowrap;

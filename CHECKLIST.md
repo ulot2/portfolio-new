@@ -16,10 +16,13 @@ go, and delete this file once it is all done.
 - [ ] **SecondLook link.** Not deployed yet, so it shows "In progress" with no
       link. When it goes live, set `liveUrl` and remove `inProgress: true` in
       `src/data/projects.ts`.
-- [ ] **The "Now" note.** I wrote a first draft from your recent repos
-      (SecondLook, Ferry, this redesign). Rewrite it in your own words in
-      `src/data/now.ts`, and move `NOW_UPDATED` forward each time you change
-      it. Keep it current (about once a month) or take the section out; a stale
+- [ ] **The "Now" note.** A first draft from your repos: SecondLook, Roost,
+      Museum of Ordinary Things and Ferry. The Roost line comes from its code,
+      not your LinkedIn (I can't reach LinkedIn from here), so check it.
+      Rewrite it in your own words in `src/data/now.ts`, and move
+      `NOW_UPDATED` forward each time you change it. The hero's "Now:" line
+      names the first two entries, so put the ones you most want seen first.
+      Keep it current (about once a month) or take the section out; a stale
       "now" looks worse than none.
 - [ ] **Delete the showreel video** from Vercel Blob (store "portfolio-media")
       if you don't want to keep it. The reel was removed from the site.
@@ -52,7 +55,8 @@ go, and delete this file once it is all done.
 - [ ] Say hello button outlined in yellow; "See my work ↓" replaces the reel.
 - [ ] Projects: description, kind label and a Code link (where the code is
       public) under each name; only the first six show.
-- [ ] New **Now** section between Projects and Writing.
+- [ ] New **Now** section between Projects and Writing, and a "Now: …" line
+      under the Spotify line in the hero that jumps to it.
 - [ ] Tools & Skills section removed.
 
 ### Navigation
