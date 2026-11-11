@@ -1972,7 +1972,7 @@ p {
 .wi-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.25rem 3rem;
+  gap: 2.5rem 3rem;
   list-style: none;
 }
 
@@ -2073,10 +2073,89 @@ p {
   opacity: 1;
 }
 
+/* What it actually is, in plain words, set in from the name's hook arrow. */
+.wi-detail {
+  margin-top: 0.55rem;
+  padding-left: 1.45rem;
+}
+
+.wi-desc {
+  max-width: 34ch;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.wi-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.1rem;
+  margin-top: 0.3rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.wi-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+}
+
+.wi-kind-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.wi-kind-icon .ink-line {
+  stroke-width: 1.7;
+}
+
+.wi-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2.75rem;
+  font-weight: 500;
+  color: var(--fg);
+  transition: color var(--transition-fast);
+}
+
+.wi-code-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.wi-code-icon .ink-line {
+  stroke-width: 2;
+}
+
+.wi-code:hover {
+  color: var(--accent);
+}
+
+.wi-code:hover .wi-code-icon {
+  translate: 2px -2px;
+}
+
 @media (max-width: 560px) {
   .wi-list {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1.9rem;
+    gap: 2rem;
+  }
+
+  /* One column has no neighbour to line up with, so no line is held in reserve. */
+  .wi-question {
+    min-height: 0;
+    max-width: none;
+  }
+
+  .wi-desc {
+    max-width: none;
   }
 }
 
