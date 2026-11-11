@@ -481,3 +481,40 @@ export const MarginLine = ({ className }: { className?: string }) => (
     <path className="ink-line" vectorEffect="non-scaling-stroke" d="M4.4 1.5c-1.3 16.2.9 31.4-.3 48.6-.9 16.1 1 32.1.2 48.4" />
   </svg>
 );
+
+/** A small chevron, pointing up; rotate it to point elsewhere. */
+export const ChevronIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M6.4 14.8c1.9-1.9 3.7-3.8 5.7-5.6 1.8 1.9 3.7 3.8 5.5 5.8" />
+  </svg>
+);
+
+const PEN_BOX = {
+  wide: {
+    viewBox: "0 0 152 50",
+    outer:
+      "M14 3.8C48 2.3 97 3 138 3.2c7.8.1 10.1 4.7 10.4 20.6.4 15.9-2 22.6-10.2 22.8-37.7.6-88.3 1.2-124.4-.1C6 46.1 3.8 40 4.2 24.3 4.5 9.7 6 4.2 14 3.8Z",
+    retrace: "M9 6.5c40-2.6 92-2.2 131-1 6 .4 8.6 6 8.4 19.5-.3 14-3.3 19.8-10.6 20.3-35 1.4-90 1.7-123.6.4",
+  },
+  // Drawn for a box taller than it is wide, so the corners keep their shape.
+  tall: {
+    viewBox: "0 0 100 160",
+    outer:
+      "M10 4C35 2.5 65 3 90 3.6c5 .2 6.4 3 6.6 9 .6 45 .2 90-.3 135-.1 6-2.6 8.4-7.6 8.6-26 .8-54 .9-79 .1-5-.2-6.8-3-6.9-9-.5-45-.3-90 .3-135C3.4 6 5 4.2 10 4Z",
+    retrace: "M7 7.4c29-2.2 58-1.9 85-1 3.4.3 4.6 4 4.4 12-.6 42-.2 86-1.4 128-.2 5-2.4 7-6.6 7.2-26 1-52 1.2-77 .3",
+  },
+};
+
+/**
+ * A pen box drawn twice round whatever it sits in, like a word circled on
+ * paper. It stretches to its parent, so the parent needs position: relative.
+ */
+export const PenBox = ({ className, tall = false }: { className?: string; tall?: boolean }) => {
+  const box = PEN_BOX[tall ? "tall" : "wide"];
+  return (
+    <svg className={className} viewBox={box.viewBox} preserveAspectRatio="none" aria-hidden="true">
+      <path className="ink-line" vectorEffect="non-scaling-stroke" d={box.outer} />
+      <path className="ink-line pen-box-retrace" vectorEffect="non-scaling-stroke" d={box.retrace} />
+    </svg>
+  );
+};
