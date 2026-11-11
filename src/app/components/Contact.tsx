@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   BriefcaseIcon,
   BulbIcon,
@@ -50,7 +50,8 @@ const LINKS = [
   { label: "X", href: "https://x.com/Tolu_dev" },
 ];
 
-export const Contact = () => {
+/** `beforeFooter` lets the page put server-rendered content (the year line) above the footer. */
+export const Contact = ({ beforeFooter }: { beforeFooter?: ReactNode }) => {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = () => {
@@ -99,6 +100,8 @@ export const Contact = () => {
           </li>
         ))}
       </ul>
+
+      {beforeFooter}
 
       <footer className="ft">
         <div className="ft-row">

@@ -77,15 +77,15 @@ export const WORDS: Record<string, Word> = {
       { d: "M34.4 12.8c2.6-.5 5.2-.6 7.8-.3", accent: true },
     ],
   },
-  tools: {
-    viewBox: "0 0 54 34",
+  // n and w borrowed from "writing", o from "projects", in the same hand.
+  now: {
+    viewBox: "0 0 48 34",
     strokes: [
-      { d: "M5.2 3.5c-.4 5-.6 10-.4 15 .1 3 1.3 4.8 3.7 5" },
-      { d: "M19.8 13.6c-1.8-1.7-4.9-1.6-6.4.6-1.6 2.3-1.3 6.1.8 8.3 2 2 5.3 1.4 6.4-1.1 1-2.4.8-5.6-1-7.6" },
-      { d: "M31.8 13.6c-1.8-1.7-4.9-1.6-6.4.6-1.6 2.3-1.3 6.1.8 8.3 2 2 5.3 1.4 6.4-1.1 1-2.4.8-5.6-1-7.6" },
-      { d: "M37.4 2.8c-.5 6.7-.7 13.4-.4 19.4.1 1.4.8 2.2 2 2.1" },
-      { d: "M50.2 14.2c-1.4-1.6-4.2-1.9-5.8-.6-1.6 1.4-.8 3.4 1 4.2 1.8.8 4.4 1.4 4.8 3.4.4 2.2-2 3.6-4.4 3.4-1.6-.1-3-.8-3.8-1.8" },
-      { d: "M2.4 12.8c2.6-.5 5.2-.6 7.8-.3", accent: true },
+      { d: "M2.2 12.8c0 3.7.1 7.4.2 11 .2-3.2 1-6.6 3-8.6 1.8-1.8 4.4-1.4 5.2.8.8 2.4.6 5.2.8 7.8" },
+      { d: "M23.6 13.6c-1.8-1.7-4.9-1.6-6.4.6-1.6 2.3-1.3 6.1.8 8.3 2 2 5.3 1.4 6.4-1.1 1-2.4.8-5.6-1-7.6" },
+      { d: "M28.8 12.6c.8 3.8 1.7 7.5 2.9 11.2 1.3-3.4 2.4-6.9 3.5-10.4 1.1 3.5 2.3 7 3.6 10.4 1.3-3.7 2.3-7.4 3.1-11.2" },
+      // No t to cross, so the yellow goes under the word instead.
+      { d: "M2.6 29.4c12.6-1.3 26.4-1.5 40.2-.5", accent: true },
     ],
   },
   contact: {
@@ -208,20 +208,6 @@ export const BrowserIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-/** Backend: a database. */
-export const DatabaseIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      className="ink-line"
-      d="M5.2 6.6c.2-1.6 3.2-2.6 6.8-2.6 3.6 0 6.6 1 6.8 2.6-.2 1.6-3.2 2.6-6.8 2.6-3.6 0-6.6-1-6.8-2.6z"
-    />
-    <path
-      className="ink-line"
-      d="M5.2 6.6c-.1 3.6-.1 7.2 0 10.8.2 1.6 3.2 2.6 6.8 2.6 3.6 0 6.6-1 6.8-2.6.1-3.6.1-7.2 0-10.8"
-    />
-    <path className="ink-line" d="M5.3 12c.4 1.5 3.3 2.5 6.7 2.5 3.4 0 6.4-1 6.7-2.5" />
-  </svg>
-);
 
 /** Tooling: a wrench. */
 export const WrenchIcon = ({ className }: { className?: string }) => (
@@ -399,23 +385,7 @@ export const ArrowIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-/** A play button, traced with one loose circle and a small pen triangle. */
-export const PlayIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 28 28" fill="none" aria-hidden="true">
-    <path className="ink-line" d="M14.3 2.8C7.8 2.1 2.7 7.2 2.8 13.9c-.1 6.4 4.9 11.3 11.3 11.2 6.6.2 11.3-5.2 11.1-11.4C25 7.4 20.5 2.6 14.3 2.8Z" />
-    <path className="ink-line" d="M11.2 9.3c2.2 1.4 4.8 3 7 4.8-2.3 1.6-4.5 3-6.8 4.5-.3-3.1-.4-6.1-.2-9.3Z" />
-  </svg>
-);
 
-/** The reel's pulse, redrawn by hand. */
-export const PulseIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 40 20" fill="none" aria-hidden="true">
-    <path
-      className="ink-line"
-      d="M2.4 10.3c3.2-.2 6.4.1 9.5-.2.9-1.7 1.8-3.4 2.6-5.1 1 3.5 2 7 3.1 10.4 1-2.5 1.9-4.9 2.9-7.4.7 1.4 1.3 2.8 2 4.2 5.4-.1 10.9-.3 16.4-.1"
-    />
-  </svg>
-);
 
 export const DownloadIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -427,5 +397,121 @@ export const DownloadIcon = ({ className }: { className?: string }) => (
       className="ink-line"
       d="M4.4 15.4c.2 1.6 0 3.2.3 4.6 2.5.3 5 .2 7.5.2 2.4 0 4.9.1 7.2-.2.3-1.5.2-3 .3-4.6"
     />
+  </svg>
+);
+
+/** A magnifying glass: one loose ring and a quick handle. */
+export const SearchIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M10.6 3.9c-3.8-.2-6.9 2.9-6.7 6.7.1 3.6 3.1 6.5 6.8 6.4 3.7-.1 6.5-3.1 6.4-6.8-.1-3.5-3-6.3-6.5-6.3Z" />
+    <path className="ink-line" d="M15.7 15.5c1.5 1.6 3 3.1 4.6 4.7" />
+  </svg>
+);
+
+/** Two crossed pen strokes, for clearing or closing. */
+export const CrossIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M6.2 6.4c3.7 3.8 7.6 7.5 11.5 11.4" />
+    <path className="ink-line" d="M17.8 6.1c-3.9 3.8-7.7 7.7-11.4 11.7" />
+  </svg>
+);
+
+/** A feed mark: a dot sending out two arcs. */
+export const FeedIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M6 17.4c-.9.1-.9 1.4.1 1.4.9 0 .9-1.5-.1-1.4Z" />
+    <path className="ink-line" d="M5.2 11.3c4.2.2 7.5 3.4 7.7 7.6" />
+    <path className="ink-line" d="M5 5.2c7.7.3 13.6 6.2 13.9 13.8" />
+  </svg>
+);
+
+/** A long pen rule, stretched to the width of whatever it sits under. */
+export const Rule = ({ className, children }: { className?: string; children?: React.ReactNode }) => (
+  <svg className={className} viewBox="0 0 680 8" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path className="ink-line" vectorEffect="non-scaling-stroke" d={RULE} />
+    {children}
+  </svg>
+);
+
+export const RULE = "M2 4.7c92-2.5 164 1.3 251-.5 113-2.3 214 1.5 305-.2 43-.8 82-.4 120-1";
+
+/** An opening quote mark: two fat commas, hung upside down. */
+export const QuoteIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M9.6 6.8c-3 1-4.9 3.4-4.8 6.3.1 2 1.5 3.4 3.3 3.3 1.7-.1 2.9-1.5 2.7-3.1-.2-1.5-1.5-2.5-3.1-2.3" />
+    <path className="ink-line" d="M18.3 6.6c-3 1.1-4.8 3.5-4.7 6.4.1 2 1.5 3.4 3.3 3.3 1.7-.1 2.8-1.6 2.6-3.2-.2-1.4-1.5-2.4-3-2.2" />
+  </svg>
+);
+
+/** A note in the margin: a ringed "i". */
+export const InfoIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M12.2 3.6C7.4 3.3 3.5 7.3 3.7 12.1c-.1 4.7 3.7 8.4 8.4 8.3 4.8.1 8.4-3.8 8.2-8.5C20.4 7.3 16.8 3.4 12.2 3.6Z" />
+    <path className="ink-line" d="M12.1 11.2c.1 1.8 0 3.5.1 5.2" />
+    <path className="ink-line" d="M12 7.7c.2.2.2.5 0 .7" />
+  </svg>
+);
+
+/** Careful: a warning triangle. */
+export const WarningIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M12.1 4.2c-3 4.8-5.8 9.7-8.4 14.8 5.6.4 11.2.4 16.8 0-2.6-5.1-5.4-10-8.4-14.8Z" />
+    <path className="ink-line" d="M12.1 9.8c.1 1.7 0 3.3.1 5" />
+    <path className="ink-line" d="M12.1 17.1c.2.2.2.4 0 .6" />
+  </svg>
+);
+
+/** A pen stroke down the margin, stretched to the height of what it marks. */
+export const MarginLine = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 8 100" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path className="ink-line" vectorEffect="non-scaling-stroke" d="M4.4 1.5c-1.3 16.2.9 31.4-.3 48.6-.9 16.1 1 32.1.2 48.4" />
+  </svg>
+);
+
+/** A small chevron, pointing up; rotate it to point elsewhere. */
+export const ChevronIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M6.4 14.8c1.9-1.9 3.7-3.8 5.7-5.6 1.8 1.9 3.7 3.8 5.5 5.8" />
+  </svg>
+);
+
+const PEN_BOX = {
+  wide: {
+    viewBox: "0 0 152 50",
+    outer:
+      "M14 3.8C48 2.3 97 3 138 3.2c7.8.1 10.1 4.7 10.4 20.6.4 15.9-2 22.6-10.2 22.8-37.7.6-88.3 1.2-124.4-.1C6 46.1 3.8 40 4.2 24.3 4.5 9.7 6 4.2 14 3.8Z",
+    retrace: "M9 6.5c40-2.6 92-2.2 131-1 6 .4 8.6 6 8.4 19.5-.3 14-3.3 19.8-10.6 20.3-35 1.4-90 1.7-123.6.4",
+  },
+  // Drawn for a box taller than it is wide, so the corners keep their shape.
+  tall: {
+    viewBox: "0 0 100 160",
+    outer:
+      "M10 4C35 2.5 65 3 90 3.6c5 .2 6.4 3 6.6 9 .6 45 .2 90-.3 135-.1 6-2.6 8.4-7.6 8.6-26 .8-54 .9-79 .1-5-.2-6.8-3-6.9-9-.5-45-.3-90 .3-135C3.4 6 5 4.2 10 4Z",
+    retrace: "M7 7.4c29-2.2 58-1.9 85-1 3.4.3 4.6 4 4.4 12-.6 42-.2 86-1.4 128-.2 5-2.4 7-6.6 7.2-26 1-52 1.2-77 .3",
+  },
+};
+
+/**
+ * A pen box drawn twice round whatever it sits in, like a word circled on
+ * paper. It stretches to its parent, so the parent needs position: relative.
+ */
+export const PenBox = ({ className, tall = false }: { className?: string; tall?: boolean }) => {
+  const box = PEN_BOX[tall ? "tall" : "wide"];
+  return (
+    <svg className={className} viewBox={box.viewBox} preserveAspectRatio="none" aria-hidden="true">
+      <path className="ink-line" vectorEffect="non-scaling-stroke" d={box.outer} />
+      <path className="ink-line pen-box-retrace" vectorEffect="non-scaling-stroke" d={box.retrace} />
+    </svg>
+  );
+};
+
+/** Now: a clock face with its two hands. */
+export const ClockIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      className="ink-line" pathLength={1}
+      d="M12 3.4C7.2 3 3.2 7.2 3.5 12.1c-.2 4.7 3.9 8.5 8.6 8.3 4.9.1 8.5-3.8 8.4-8.5C20.7 7.1 16.8 3.2 12 3.4Z"
+    />
+    <path className="ink-line" pathLength={1} d="M12 12.1c-.1-2-.1-3.9.1-5.8M12 12.1c1.4.9 2.7 1.8 4 2.8" />
   </svg>
 );

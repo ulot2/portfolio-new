@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Search, X, Tag } from "lucide-react";
 import { PostMetadata } from "@/types/blog";
 import { BlogCard } from "./BlogCard";
+import { CrossIcon, RULE, Rule, SearchIcon, Underline } from "./ink";
 
 interface BlogListClientProps {
   posts: PostMetadata[];
@@ -15,108 +15,115 @@ export const BlogListClient = ({ posts, tags }: BlogListClientProps) => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const filteredPosts = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
     return posts.filter((post) => {
       const matchesSearch =
-        searchQuery.trim() === "" ||
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.tags.some((tag) =>
-          tag.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        query === "" ||
+        post.title.toLowerCase().includes(query) ||
+        post.description.toLowerCase().includes(query) ||
+        post.tags.some((tag) => tag.toLowerCase().includes(query));
 
       const matchesTag =
         !selectedTag ||
-        post.tags.some(
-          (tag) => tag.toLowerCase() === selectedTag.toLowerCase()
-        );
+        post.tags.some((tag) => tag.toLowerCase() === selectedTag.toLowerCase());
 
       return matchesSearch && matchesTag;
     });
   }, [posts, searchQuery, selectedTag]);
 
+  const filtering = searchQuery.trim() !== "" || selectedTag !== null;
+  const reset = () => {
+    setSearchQuery("");
+    setSelectedTag(null);
+  };
+
   return (
-    <div className="blog-list-container">
-      {/* Search & Tag Filter Controls */}
-      <div className="blog-controls">
-        <div className="search-input-wrapper">
-          <Search size={15} className="search-icon" />
+    <div className="bl-index">
+      <div className="bl-controls hero-rise" style={{ "--i": 0 } as React.CSSProperties}>
+        {/* A line to write on, rather than a box: it inks over in yellow on focus. */}
+        <label className="bl-search">
+          <span className="visually-hidden">Search writing</span>
+          <SearchIcon className="bl-search-icon" />
           <input
             type="text"
+            enterKeyHint="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search articles by title, topic, or keyword..."
-            className="search-input"
+            placeholder="Search by title, topic or keyword"
+            className="bl-search-input"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="search-clear-btn"
+              className="bl-search-clear"
               aria-label="Clear search"
             >
-              <X size={14} />
+              <CrossIcon className="bl-search-clear-icon" />
             </button>
           )}
-        </div>
+          <Rule className="bl-search-line">
+            <path className="ink-line bl-search-trace" pathLength={1} vectorEffect="non-scaling-stroke" d={RULE} />
+          </Rule>
+        </label>
 
-        {/* Tag Filters */}
         {tags.length > 0 && (
-          <div className="tags-filter-bar">
+          <div className="bl-tags" role="group" aria-label="Filter by topic">
             <button
               type="button"
               onClick={() => setSelectedTag(null)}
-              className={`tag-filter-btn ${selectedTag === null ? "active" : ""}`}
+              className="bl-tag"
+              aria-pressed={selectedTag === null}
             >
-              All ({posts.length})
+              All
+              <Underline className="bl-tag-underline" />
             </button>
             {tags.map(({ tag, count }) => (
               <button
                 key={tag}
                 type="button"
                 onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-                className={`tag-filter-btn ${selectedTag === tag ? "active" : ""}`}
+                className="bl-tag"
+                aria-pressed={selectedTag === tag}
               >
-                <Tag size={11} className="tag-btn-icon" />
-                <span>{tag}</span>
-                <span className="tag-count">({count})</span>
+                {tag}
+                <sup className="bl-tag-count">
+                  <span className="visually-hidden">, </span>
+                  {count}
+                  <span className="visually-hidden"> {count === 1 ? "piece" : "pieces"}</span>
+                </sup>
+                <Underline className="bl-tag-underline" />
               </button>
             ))}
           </div>
         )}
       </div>
 
-      {/* Article Results Count */}
-      <div className="posts-count-label">
-        <span>
-          Showing {filteredPosts.length} {filteredPosts.length === 1 ? "article" : "articles"}
-          {selectedTag ? ` in "${selectedTag}"` : ""}
-          {searchQuery ? ` matching "${searchQuery}"` : ""}
-        </span>
-      </div>
+      {/* Only speaks up once something is being filtered. */}
+      <p className="bl-count" aria-live="polite">
+        {filtering && filteredPosts.length > 0 && (
+          <>
+            {filteredPosts.length} {filteredPosts.length === 1 ? "piece" : "pieces"}
+            {selectedTag ? ` on ${selectedTag}` : ""}
+            {searchQuery.trim() ? ` matching “${searchQuery.trim()}”` : ""}
+          </>
+        )}
+      </p>
 
-      {/* Posts List */}
       {filteredPosts.length > 0 ? (
-        <div className="blog-posts-grid">
+        <ul className="bl-list">
           {filteredPosts.map((post, index) => (
-            <BlogCard key={post.slug} post={post} index={index} />
+            <BlogCard key={post.slug} post={post} index={index + 1} />
           ))}
-        </div>
+        </ul>
       ) : (
-        <div className="empty-posts-state">
-          <p className="empty-title">No articles found</p>
-          <p className="empty-desc">
-            Try adjusting your search query or removing active tag filters.
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setSearchQuery("");
-              setSelectedTag(null);
-            }}
-            className="btn-secondary"
-            style={{ marginTop: "1rem" }}
-          >
-            Reset Filters
+        <div className="bl-empty">
+          <SearchIcon className="bl-empty-icon" />
+          <p className="bl-empty-title">Nothing written on that yet.</p>
+          <p className="bl-empty-desc">Try another word, or go back to everything.</p>
+          <button type="button" onClick={reset} className="bl-empty-reset">
+            Show all writing
+            <Underline className="bl-empty-underline" />
           </button>
         </div>
       )}

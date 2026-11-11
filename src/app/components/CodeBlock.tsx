@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, Copy } from "lucide-react";
+import { CopyIcon, TickIcon } from "./ink";
 
 interface CodeBlockProps {
   children?: React.ReactNode;
@@ -52,12 +52,12 @@ export const CodeBlock = ({ children, className, filename }: CodeBlockProps) => 
         >
           {copied ? (
             <span className="copy-status copied">
-              <Check size={13} />
-              <span>Copied!</span>
+              <TickIcon className="copy-icon" />
+              <span>Copied</span>
             </span>
           ) : (
             <span className="copy-status">
-              <Copy size={13} />
+              <CopyIcon className="copy-icon" />
               <span>Copy</span>
             </span>
           )}

@@ -4,17 +4,38 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUp, ChevronUp } from "lucide-react";
 import { NAV_ITEMS } from "@/data/nav";
 import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
+import {
+  BulbIcon,
+  ClockIcon,
+  ChevronIcon,
+  EnvelopeIcon,
+  OutArrowIcon,
+  PenBox,
+  PencilIcon,
+  Underline,
+  UpArrowIcon,
+  WaveIcon,
+  } from "./ink";
+
+// The same doodles the margin rail opens its dots into, so the two indexes match.
+const DOODLES: Record<string, (props: { className?: string }) => React.ReactElement> = {
+  hero: WaveIcon,
+  work: BulbIcon,
+  now: ClockIcon,
+  writing: PencilIcon,
+  contact: EnvelopeIcon,
+};
 
 const SHOW_AFTER = 350;
 
 /**
  * The narrow-viewport counterpart to SectionRail: the same index, folded into
- * the floating pill idiom the site already uses for "back to top". It absorbs
- * that button below 1160px so there is only ever one floating element.
+ * a floating pen-drawn button. It absorbs "back to top" below 1200px so there
+ * is only ever one floating element. The button wears the doodle of the
+ * section you are reading, so it doubles as a "you are here" mark.
  */
 export const NavDock = () => {
   // The segment follows the rewritten route, so it is "blog" on the blog host
@@ -23,6 +44,24 @@ export const NavDock = () => {
   const isHome = segment === null;
   const activeSection = useActiveSection(isHome);
   const shouldReduceMotion = useReducedMotion();
+  // On the home page the button carries the current section's doodle; on the
+  // blog it carries the pencil.
+  const CurrentDoodle = isHome
+    ? activeSection
+      ? DOODLES[activeSection]
+      : null
+    : segment === "projects"
+      ? BulbIcon
+      : PencilIcon;
+  // The button names where you are, so it reads as a "you are here" label.
+  // It falls back to "Index" before any section has scrolled into view.
+  const hereLabel = isHome
+    ? NAV_ITEMS.find((item) => item.id === activeSection)?.label ?? "Index"
+    : segment === "blog"
+      ? "Blog"
+      : segment === "projects"
+        ? "Projects"
+        : "Index";
 
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
@@ -119,12 +158,29 @@ export const NavDock = () => {
                   className="nav-dock-panel"
                   {...panelMotion}
                 >
+                  <PenBox tall className="nav-dock-outline" />
                   <ul className="nav-dock-list">
                     {NAV_ITEMS.map((item) => {
                       const isBlog = item.route !== undefined;
                       const current = isBlog
                         ? segment === "blog"
-                        : isHome && activeSection === item.id;
+                        : isHome
+                          ? activeSection === item.id
+                          : segment === "projects" && item.id === "work";
+                      const Doodle = item.id ? DOODLES[item.id] : null;
+                      const label = (
+                        <>
+                          <span className="nav-dock-label">
+                            {item.label}
+                            <Underline className="nav-dock-underline" />
+                          </span>
+                          {isBlog ? (
+                            <OutArrowIcon className="nav-dock-icon" />
+                          ) : (
+                            Doodle && <Doodle className="nav-dock-icon" />
+                          )}
+                        </>
+                      );
 
                       return (
                         <li key={item.label}>
@@ -134,7 +190,7 @@ export const NavDock = () => {
                               onClick={() => close(false)}
                               aria-current={current ? "page" : undefined}
                             >
-                              {item.label}
+                              {label}
                             </Link>
                           ) : (
                             <a
@@ -142,16 +198,22 @@ export const NavDock = () => {
                               onClick={() => close(false)}
                               aria-current={current ? "true" : undefined}
                             >
-                              {item.label}
+                              {label}
                             </a>
                           )}
                         </li>
                       );
                     })}
                     <li className="nav-dock-top">
+                      <svg className="nav-dock-divider" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true">
+                        <path className="ink-line" vectorEffect="non-scaling-stroke" d="M2 2.3c22-1 47 .6 70-.4 9-.3 17 0 26-.3" />
+                      </svg>
                       <button type="button" onClick={scrollToTop}>
-                        <span>Top</span>
-                        <ArrowUp size={13} aria-hidden="true" />
+                        <span className="nav-dock-label">
+                          Back to top
+                          <Underline className="nav-dock-underline" />
+                        </span>
+                        <UpArrowIcon className="nav-dock-icon" />
                       </button>
                     </li>
                   </ul>
@@ -167,12 +229,13 @@ export const NavDock = () => {
               aria-expanded={open}
               aria-controls="nav-dock-panel"
             >
-              <span>Index</span>
-              <ChevronUp
-                size={13}
-                className="nav-dock-chevron"
-                aria-hidden="true"
-              />
+              <PenBox className="nav-dock-outline" />
+              {CurrentDoodle && <CurrentDoodle key={activeSection} className="nav-dock-here" />}
+              <span className="nav-dock-here-label" key={hereLabel}>
+                {hereLabel !== "Index" && <span className="visually-hidden">Index, now at </span>}
+                {hereLabel}
+              </span>
+              <ChevronIcon className="nav-dock-chevron" />
             </button>
           </motion.div>
         )}

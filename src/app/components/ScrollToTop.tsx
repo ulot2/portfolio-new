@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUp } from "lucide-react";
+import { PenBox, UpArrowIcon } from "./ink";
 
 export const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);
@@ -38,12 +38,12 @@ export const ScrollToTop = () => {
           initial={{ opacity: 0, y: 15, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 15, scale: 0.9 }}
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
         >
+          <PenBox className="nav-dock-outline" />
           <span>Top</span>
-          <ArrowUp size={13} className="arrow-icon" />
+          <UpArrowIcon className="arrow-icon" />
         </motion.button>
       )}
     </AnimatePresence>

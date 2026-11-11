@@ -1,52 +1,76 @@
-import { projects } from "@/data/projects";
-import { HookArrowIcon, OutArrowIcon, Underline } from "./ink";
+import { HOME_PROJECT_COUNT, projectCode, projectHref, projectLive, projects } from "@/data/projects";
+import { ArrowIcon, HookArrowIcon, OutArrowIcon, Underline } from "./ink";
+import { ProjectKindIcon } from "./ProjectKindIcon";
 import { SectionHeading } from "./SectionHeading";
 
-// The "what if" each project answered, written from what the project does.
-// Keyed by title; a project without one shows its description instead.
-const WHAT_IF: Record<string, string> = {
-  cowrite: "What if writing had live cursors?",
-  SoloStack: "What if African freelancers had one workspace?",
-  "Dee's Agora": "What if online debate had real structure?",
-  "BAMSSALADS Quiz Club": "What if a quiz club ran on phone buzzers?",
-  gitmop: "What if stale git branches cleaned themselves up?",
-  Readtrail: "What if your browser kept everything you read?",
-  hallway: "What if a first-time user checked your UI wording?",
-  LaseTales: "What if an event videographer had a home for their films?",
-};
-
-const hrefFor = (liveUrl: string, githubUrl: string) =>
-  liveUrl && liveUrl !== "/" ? liveUrl : githubUrl;
-
-/** Each project as the hero line in miniature: the what if, then what's next. */
+/**
+ * Each project as the hero line in miniature: the what if, then what's next.
+ * The home page shows the first few; the rest live on /projects.
+ */
 export const Projects = () => (
   <section className="section" id="work">
     <SectionHeading word="projects" label="Projects" count={projects.length} />
 
     <ul className="wi-list">
-      {projects.map((project) => (
-        <li key={project.id}>
-          <a
-            className="wi-link"
-            href={hrefFor(project.liveUrl, project.githubUrl)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="wi-question">
-              {WHAT_IF[project.title] ?? project.description}
-            </span>
+      {projects.slice(0, HOME_PROJECT_COUNT).map((project) => {
+        const href = projectHref(project);
+        // The name already goes to the code when there is no live site.
+        const code = projectLive(project) ? projectCode(project) : null;
+        const heading = (linked: boolean) => (
+          <>
+            <span className="wi-question">{project.question}</span>
             <span className="wi-answer">
               <HookArrowIcon className="wi-hook" />
               <span className="wi-name">
                 {project.title}
-                <Underline className="wi-underline" />
+                {linked && <Underline className="wi-underline" />}
               </span>
-              <OutArrowIcon className="wi-out" />
+              {linked && <OutArrowIcon className="wi-out" />}
             </span>
-          </a>
-        </li>
-      ))}
+          </>
+        );
+        return (
+          <li key={project.id} className="wi-item">
+            {href ? (
+              <a className="wi-link" href={href} target="_blank" rel="noopener noreferrer">
+                {heading(true)}
+              </a>
+            ) : (
+              <div className="wi-link">{heading(false)}</div>
+            )}
+            <div className="wi-detail">
+              <p className="wi-desc">{project.description}</p>
+              <p className="wi-meta">
+                <span className="wi-kind">
+                  <ProjectKindIcon kind={project.kind} className="wi-kind-icon" />
+                  {project.kind}
+                </span>
+                {project.inProgress && <span className="wi-status">In progress</span>}
+                {code && (
+                  <a
+                    className="wi-code"
+                    href={code}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} source code on GitHub (opens in a new tab)`}
+                  >
+                    Code
+                    <OutArrowIcon className="wi-code-icon" />
+                  </a>
+                )}
+              </p>
+            </div>
+          </li>
+        );
+      })}
     </ul>
+
+    {projects.length > HOME_PROJECT_COUNT && (
+      <a className="wr-all wi-all" href="/projects">
+        All {projects.length} projects
+        <ArrowIcon className="wr-all-icon" />
+      </a>
+    )}
   </section>
 );
 

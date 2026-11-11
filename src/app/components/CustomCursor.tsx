@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 
 // Everything the dot expands over. These must match class names that actually
-// exist in the components. Skills rows are plain text, so they are left out.
+// exist in the components.
 const INTERACTIVE_SELECTOR = [
   "a",
   "button",

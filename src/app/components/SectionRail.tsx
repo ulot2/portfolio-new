@@ -6,7 +6,7 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { NAV_ITEMS } from "@/data/nav";
 import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
-import { BulbIcon, EnvelopeIcon, PencilIcon, Underline, WaveIcon, WrenchIcon } from "./ink";
+import { BulbIcon, ClockIcon, EnvelopeIcon, PencilIcon, Underline, WaveIcon } from "./ink";
 
 const SECTIONS = NAV_ITEMS.filter((item) => item.route === undefined);
 const BLOG = NAV_ITEMS.find((item) => item.route !== undefined);
@@ -15,8 +15,8 @@ const BLOG = NAV_ITEMS.find((item) => item.route !== undefined);
 const DOODLES: Record<string, (props: { className?: string }) => React.ReactElement> = {
   hero: WaveIcon,
   work: BulbIcon,
+  now: ClockIcon,
   writing: PencilIcon,
-  skills: WrenchIcon,
   contact: EnvelopeIcon,
 };
 
@@ -78,7 +78,8 @@ export const SectionRail = () => {
 
       <ol className="section-rail-list" ref={list}>
         {SECTIONS.map((item, index) => {
-          const current = isHome && activeSection === item.id;
+          // On the full projects page, the rail marks Projects as where you are.
+          const current = isHome ? activeSection === item.id : segment === "projects" && item.id === "work";
           const Doodle = DOODLES[item.id!];
           return (
             <li key={item.label} className="section-rail-item" style={{ "--i": index } as React.CSSProperties}>

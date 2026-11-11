@@ -1,9 +1,10 @@
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
+import { NowSection } from "./components/NowSection";
 import { WritingSection } from "./components/WritingSection";
-import { Skills } from "./components/Skills";
 import { Contact } from "./components/Contact";
 import { Header } from "./components/Header";
+import { YearInInk } from "./components/YearInInk";
 
 export default function Home() {
   return (
@@ -12,9 +13,9 @@ export default function Home() {
       <main className="site-container" id="main">
         <Hero />
         <Projects />
+        <NowSection />
         <WritingSection />
-        <Skills />
-        <Contact />
+        <Contact beforeFooter={<YearInInk />} />
       </main>
     </>
   );
