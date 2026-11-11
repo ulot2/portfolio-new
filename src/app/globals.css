@@ -4336,193 +4336,124 @@ p {
 }
 
 /* ═══════════════════════════════════════════════
-   YEAR IN INK  (GitHub contributions as one pen line, above the footer)
+   YEAR IN INK  (a year of GitHub commits as one looping pen line, above the footer)
    ═══════════════════════════════════════════════ */
 
 .yi {
-  margin-top: 3.5rem;
-}
-
-.yi-label {
-  font-size: 0.8125rem;
-  color: var(--muted);
-}
-
-.yi-chart {
-  position: relative;
-  height: clamp(7rem, 22vw, 9.5rem);
-  margin-top: 0.75rem;
-  cursor: crosshair;
-  touch-action: pan-y;
-}
-
-.yi-chart:focus-visible {
-  outline-offset: 6px;
+  margin-top: 3.75rem;
 }
 
 .yi-draw {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: visible;
 }
 
-.yi-base {
-  color: var(--border2);
-  stroke-width: 1;
+.yi-half,
+.yi-span-half {
+  display: none;
 }
 
 .yi-line {
   color: var(--fg);
-  stroke-width: 1.8;
-  /* Drawn in from the left: a clip, because a dash would be measured in
-     screen pixels on a stretched, non-scaling stroke. */
-  clip-path: inset(-20% 100% -20% 0);
-  transition: clip-path 2.2s var(--ease-in-out);
-}
-
-.yi[data-seen] .yi-line {
-  clip-path: inset(-20% -2% -20% 0);
-}
-
-/* Today: a yellow dot at the end of the line, set down once the line arrives. */
-.yi-today,
-.yi-cursor {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  margin: -4.5px 0 0 -4.5px;
-  border-radius: 48% 52% 46% 54%;
-  background: var(--accent);
-  pointer-events: none;
-}
-
-.yi-today {
+  stroke-width: 1.5;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
   opacity: 0;
-  scale: 0.4;
-  transition: opacity 200ms var(--ease-out) 2.1s, scale 320ms var(--ease-spring) 2.1s;
 }
 
-.yi[data-seen] .yi-today {
-  opacity: 1;
-  scale: 1;
-}
-
-.yi-cursor {
-  width: 11px;
-  height: 11px;
-  margin: -5.5px 0 0 -5.5px;
-  background: var(--bg);
-  border: 2px solid var(--accent);
-}
-
-/* The note over the busiest week. */
-.yi-peak {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  translate: -50% calc(-100% - 0.35rem);
-  font-size: 0.75rem;
-  font-style: italic;
-  white-space: nowrap;
+.yi-arrow {
   color: var(--accent);
-  pointer-events: none;
+  stroke-width: 1.8;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
   opacity: 0;
-  transition: opacity 400ms var(--ease-out) 1.6s;
 }
 
-.yi[data-seen] .yi-peak {
-  opacity: 1;
+/* Written in like the headings, only slower: a whole year takes a moment. */
+.yi[data-seen] .yi-line {
+  animation: yi-write 3.2s var(--ease-in-out) both;
 }
 
-.yi-peak-arrow {
-  width: 0.85rem;
-  height: 0.85rem;
-  margin-top: 0.1rem;
+.yi[data-seen] .yi-arrow {
+  animation: yi-write 380ms var(--ease-out) 3.15s both;
 }
 
-.yi-peak-arrow .ink-line {
-  stroke-width: 1.6;
+@keyframes yi-write {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
 }
 
-.yi-months {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1.35rem;
-  height: 1rem;
-  pointer-events: none;
-}
-
-.yi-months span {
-  position: absolute;
-  translate: -50% 0;
-  font-size: 0.6875rem;
+.yi-caption {
+  margin-top: 0.9rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
   color: var(--muted);
 }
 
-.yi-readout {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 0.35rem;
-  min-height: 1.6rem;
-  margin-top: 2.1rem;
-  font-size: 0.875rem;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.yi-readout strong {
-  font-weight: 600;
-  color: var(--fg);
-}
-
-.yi-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  color: var(--muted);
+.yi-caption a {
+  color: var(--muted-subtle);
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
 }
 
-.yi-link:hover {
+.yi-caption a:hover {
   color: var(--fg);
+  text-decoration-color: var(--accent);
 }
 
-.yi-link-icon {
-  width: 0.8rem;
-  height: 0.8rem;
+.yi-caption-icon {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.15rem;
+  vertical-align: -0.05em;
   color: var(--accent);
 }
 
-.yi-link-icon .ink-line {
+.yi-caption-icon .ink-line {
   stroke-width: 2;
 }
 
 @media (max-width: 560px) {
-  /* Every other month label, so they don't run together. */
-  .yi-months span:nth-child(even) {
+  .yi-year,
+  .yi-span-year {
     display: none;
+  }
+
+  .yi-half {
+    display: block;
+  }
+
+  .yi-span-half {
+    display: inline;
+  }
+
+  .yi-caption {
+    font-size: 0.75rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .yi-line,
-  .yi[data-seen] .yi-line {
-    clip-path: none;
-    transition: none;
-  }
-
-  .yi-today,
-  .yi-peak {
+  .yi-arrow,
+  .yi[data-seen] .yi-line,
+  .yi[data-seen] .yi-arrow {
+    animation: none;
+    stroke-dasharray: none;
     opacity: 1;
-    scale: 1;
-    transition: none;
   }
 }
