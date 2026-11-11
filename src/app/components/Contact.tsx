@@ -108,8 +108,8 @@ export const Contact = ({ beforeFooter }: { beforeFooter?: ReactNode }) => {
           <NameMark className="ft-mark" />
           <ul className="ct-links" aria-label="Find me elsewhere">
         <li>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-            Resume
+          <a href="/cv.pdf" target="_blank" rel="noopener noreferrer">
+            CV
             <DownloadIcon className="ct-link-icon" />
           </a>
         </li>

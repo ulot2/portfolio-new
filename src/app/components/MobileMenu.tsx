@@ -58,9 +58,9 @@ export const MobileMenu = ({ links }: { links: { label: string; href: string }[]
             </li>
           ))}
           <li style={{ "--i": links.length } as React.CSSProperties}>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={close}>
+            <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" onClick={close}>
               <span className="mm-label">
-                Resume
+                CV
                 <Underline className="mm-underline" />
               </span>
               <DownloadIcon className="mm-item-icon" />
