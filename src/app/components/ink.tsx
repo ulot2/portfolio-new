@@ -413,3 +413,38 @@ export const DownloadIcon = ({ className }: { className?: string }) => (
     />
   </svg>
 );
+
+/** A magnifying glass: one loose ring and a quick handle. */
+export const SearchIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M10.6 3.9c-3.8-.2-6.9 2.9-6.7 6.7.1 3.6 3.1 6.5 6.8 6.4 3.7-.1 6.5-3.1 6.4-6.8-.1-3.5-3-6.3-6.5-6.3Z" />
+    <path className="ink-line" d="M15.7 15.5c1.5 1.6 3 3.1 4.6 4.7" />
+  </svg>
+);
+
+/** Two crossed pen strokes, for clearing or closing. */
+export const CrossIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M6.2 6.4c3.7 3.8 7.6 7.5 11.5 11.4" />
+    <path className="ink-line" d="M17.8 6.1c-3.9 3.8-7.7 7.7-11.4 11.7" />
+  </svg>
+);
+
+/** A feed mark: a dot sending out two arcs. */
+export const FeedIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path className="ink-line" d="M6 17.4c-.9.1-.9 1.4.1 1.4.9 0 .9-1.5-.1-1.4Z" />
+    <path className="ink-line" d="M5.2 11.3c4.2.2 7.5 3.4 7.7 7.6" />
+    <path className="ink-line" d="M5 5.2c7.7.3 13.6 6.2 13.9 13.8" />
+  </svg>
+);
+
+/** A long pen rule, stretched to the width of whatever it sits under. */
+export const Rule = ({ className, children }: { className?: string; children?: React.ReactNode }) => (
+  <svg className={className} viewBox="0 0 680 8" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path className="ink-line" vectorEffect="non-scaling-stroke" d={RULE} />
+    {children}
+  </svg>
+);
+
+export const RULE = "M2 4.7c92-2.5 164 1.3 251-.5 113-2.3 214 1.5 305-.2 43-.8 82-.4 120-1";

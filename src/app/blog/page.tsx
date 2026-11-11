@@ -1,8 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
 import { getAllPosts, getAllTags } from "@/lib/blog";
 import { BlogListClient } from "../components/BlogListClient";
+import { SectionHeading } from "../components/SectionHeading";
+import { ThemeToggle } from "../components/ThemeToggle";
+import { ArrowIcon, FeedIcon, NameMark, Underline } from "../components/ink";
 import { SITE_URL, BLOG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -24,26 +26,45 @@ export default function BlogIndexPage() {
   const tags = getAllTags();
 
   return (
-    <main className="site-container blog-index-page" id="main">
-      {/* Top back navigation */}
-      <nav className="blog-nav-header fade-up" aria-label="Breadcrumb">
-        <a href={SITE_URL} className="back-link">
-          <ArrowLeft size={15} className="back-arrow-icon" />
-          <span>Back to Portfolio</span>
+    <>
+      {/* The same header as the portfolio, with one way back to it. */}
+      <header className="site-container site-header">
+        <a href={SITE_URL} className="site-logo" aria-label="Toluwalope Adegoke, back to the portfolio">
+          <NameMark className="site-logo-mark" />
         </a>
-      </nav>
-
-      {/* Header */}
-      <header className="blog-index-header fade-up delay-1">
-        <h1 className="blog-page-title">Writing</h1>
-        <p className="blog-page-subtitle">
-          Thoughts, technical deep dives, and architectural lessons from building
-          modern web applications and SaaS products.
-        </p>
+        <nav className="site-nav" aria-label="Main">
+          <a href={SITE_URL} className="site-nav-link bl-back">
+            <ArrowIcon className="bl-back-icon" />
+            Portfolio
+            <Underline className="site-nav-underline" />
+          </a>
+          <ThemeToggle />
+        </nav>
       </header>
 
-      {/* Interactive List with Search and Tag Filters */}
-      <BlogListClient posts={posts} tags={tags} />
-    </main>
+      <main className="site-container bl-page" id="main">
+        <header className="bl-intro">
+          <SectionHeading
+            as="h1"
+            word="writing"
+            label="Writing"
+            count={posts.length}
+            countLabel={posts.length === 1 ? "piece" : "pieces"}
+          />
+          <p className="bl-lede">
+            Thoughts, technical deep dives, and lessons from building for the web.
+          </p>
+        </header>
+
+        <BlogListClient posts={posts} tags={tags} />
+
+        <footer className="bl-foot">
+          <a className="bl-feed" href="/feed.xml">
+            <FeedIcon className="bl-feed-icon" />
+            Follow along by RSS
+          </a>
+        </footer>
+      </main>
+    </>
   );
 }
