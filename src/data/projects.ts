@@ -14,7 +14,7 @@ export const projects: Project[] = [
     title: "cowrite",
     kind: "Web app",
     description:
-      "A shared writing tool with live cursors, comments, and version history.",
+      "Comment, suggest edits and restore any earlier version. It keeps working offline and merges when you reconnect.",
     liveUrl: "https://cowrite.cowrite.workers.dev",
     githubUrl: "https://github.com/ulot2/cowrite",
   },
@@ -30,8 +30,7 @@ export const projects: Project[] = [
     id: 3,
     title: "Dee's Agora",
     kind: "Web app",
-    description:
-      "Better arguments begin with better questions — a community for structured online debate.",
+    description: "Better arguments begin with better questions.",
     liveUrl: "https://www.deesagora.online",
     // Private repo — the live site is the only public entry point.
     githubUrl: "#",
@@ -41,7 +40,7 @@ export const projects: Project[] = [
     title: "BAMSSALADS Quiz Club",
     kind: "Web app",
     description:
-      "A university quiz platform with live stage contests and phone buzzers.",
+      "Built for a university quiz club: the host runs the contest on stage while contestants buzz in from their own phones.",
     liveUrl: "https://bamssalads-quiz.vercel.app",
     // Private repo — the live site is the only public entry point.
     githubUrl: "#",
@@ -51,7 +50,7 @@ export const projects: Project[] = [
     title: "gitmop",
     kind: "Command-line tool",
     description:
-      "A command-line tool that finds and deletes stale local git branches. No dependencies.",
+      "Lists the merged and squash-merged leftovers, then deletes them in one go. No dependencies.",
     liveUrl: "https://www.npmjs.com/package/gitmop",
     githubUrl: "https://github.com/ulot2/gitmop",
   },
@@ -60,7 +59,7 @@ export const projects: Project[] = [
     title: "Readtrail",
     kind: "Chrome extension",
     description:
-      "A Chrome extension that keeps an offline, searchable archive of the pages you read.",
+      "Saves the text of pages you actually read to a local database you can search offline. Nothing leaves your computer.",
     liveUrl: "",
     githubUrl: "https://github.com/ulot2/readtrail",
   },
@@ -69,7 +68,7 @@ export const projects: Project[] = [
     title: "hallway",
     kind: "GitHub Action",
     description:
-      "A GitHub Action that tests whether your UI wording makes sense to a first-time user.",
+      "Checks the wording of changed UI, and fails the build only on checks proven to match human review.",
     liveUrl: "",
     githubUrl: "https://github.com/ulot2/hallway",
   },
