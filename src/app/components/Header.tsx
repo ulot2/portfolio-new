@@ -23,12 +23,12 @@ export const Header = () => (
           </a>
         ))}
         <a
-          href="/resume.pdf"
+          href="/cv.pdf"
           className="site-nav-link"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Resume
+          CV
           <DownloadIcon className="site-header-icon" />
         </a>
       </div>
