@@ -1,6 +1,8 @@
 export interface Project {
   id: number;
   title: string;
+  /** The "what if" the project answers, written from what it does. */
+  question: string;
   /** What sort of thing it is, shown as a small label under the name. */
   kind: "Web app" | "Website" | "Command-line tool" | "Chrome extension" | "GitHub Action";
   description: string;
@@ -14,6 +16,7 @@ export const projects: Project[] = [
   {
     id: 9,
     title: "Museum of Ordinary Things",
+    question: "What if the everyday things you keep had a museum?",
     kind: "Web app",
     description:
       "Photograph an everyday object, write its story, and publish it as an exhibit to share by link or add to the public collection.",
@@ -24,6 +27,7 @@ export const projects: Project[] = [
   {
     id: 10,
     title: "SecondLook",
+    question: "What if someone checked your application before you sent it?",
     kind: "Web app",
     description:
       "Checks scholarship application files against the instructions you give it: format, size, page and word counts, all on your own device.",
@@ -35,6 +39,7 @@ export const projects: Project[] = [
   {
     id: 1,
     title: "cowrite",
+    question: "What if writing had live cursors?",
     kind: "Web app",
     description:
       "Comment, suggest edits and restore any earlier version. It keeps working offline and merges when you reconnect.",
@@ -44,6 +49,7 @@ export const projects: Project[] = [
   {
     id: 2,
     title: "SoloStack",
+    question: "What if African freelancers had one workspace?",
     kind: "Web app",
     description: "An all-in-one workspace for African freelancers.",
     liveUrl: "https://solostack.ng/",
@@ -52,6 +58,7 @@ export const projects: Project[] = [
   {
     id: 3,
     title: "Dee's Agora",
+    question: "What if online debate had real structure?",
     kind: "Web app",
     description: "Better arguments begin with better questions.",
     liveUrl: "https://www.deesagora.online",
@@ -61,6 +68,7 @@ export const projects: Project[] = [
   {
     id: 4,
     title: "BAMSSALADS Quiz Club",
+    question: "What if a quiz club ran on phone buzzers?",
     kind: "Web app",
     description:
       "Built for a university quiz club: the host runs the contest on stage while contestants buzz in from their own phones.",
@@ -71,6 +79,7 @@ export const projects: Project[] = [
   {
     id: 5,
     title: "gitmop",
+    question: "What if stale git branches cleaned themselves up?",
     kind: "Command-line tool",
     description:
       "Lists the merged and squash-merged leftovers, then deletes them in one go. No dependencies.",
@@ -80,6 +89,7 @@ export const projects: Project[] = [
   {
     id: 6,
     title: "Readtrail",
+    question: "What if your browser kept everything you read?",
     kind: "Chrome extension",
     description:
       "Saves the text of pages you actually read to a local database you can search offline. Nothing leaves your computer.",
@@ -89,6 +99,7 @@ export const projects: Project[] = [
   {
     id: 7,
     title: "hallway",
+    question: "What if a first-time user checked your UI wording?",
     kind: "GitHub Action",
     description:
       "Checks the wording of changed UI, and fails the build only on checks proven to match human review.",
@@ -98,9 +109,25 @@ export const projects: Project[] = [
   {
     id: 8,
     title: "LaseTales",
+    question: "What if an event videographer had a home for their films?",
     kind: "Website",
     description: "A portfolio for an event videographer and editor.",
     liveUrl: "https://lasetales.vercel.app/",
     githubUrl: "#",
   },
 ];
+
+/** How many projects the home page shows before "All projects". */
+export const HOME_PROJECT_COUNT = 6;
+
+const isUrl = (url: string) => url.startsWith("http");
+
+/** The live site if there is one, else the code; null when neither is public yet. */
+export const projectHref = (project: Project) =>
+  isUrl(project.liveUrl) ? project.liveUrl : isUrl(project.githubUrl) ? project.githubUrl : null;
+
+/** The public code, when there is some. */
+export const projectCode = (project: Project) => (isUrl(project.githubUrl) ? project.githubUrl : null);
+
+/** The live site, when there is one. */
+export const projectLive = (project: Project) => (isUrl(project.liveUrl) ? project.liveUrl : null);

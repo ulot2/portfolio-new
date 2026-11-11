@@ -3964,3 +3964,288 @@ p {
   height: 14px;
   background-color: var(--border2);
 }
+
+/* ═══════════════════════════════════════════════
+   ALL PROJECTS (/projects)
+   A numbered catalogue, like the list at the back of an exhibition.
+   ═══════════════════════════════════════════════ */
+
+.wi-all {
+  margin-top: 2.25rem;
+}
+
+.pj-page {
+  padding-top: clamp(2.5rem, 8vh, 4.5rem);
+  padding-bottom: 5rem;
+}
+
+.pj-intro {
+  margin-bottom: 2rem;
+}
+
+.pj-filters {
+  margin-bottom: 0.75rem;
+}
+
+.pj-list {
+  list-style: none;
+}
+
+.pj-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 0.5rem 1.75rem;
+  padding: 2.25rem 0 2.5rem;
+}
+
+/* The catalogue number and the kind sit in the margin, like a placard. */
+.pj-margin {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.15rem;
+}
+
+.pj-no {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.pj-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.pj-kind-icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted);
+}
+
+.pj-kind-icon .ink-line {
+  stroke-width: 1.7;
+}
+
+.pj-body {
+  min-width: 0;
+}
+
+.pj-question {
+  max-width: 36ch;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.pj-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+  font-size: clamp(1.6rem, 5.5vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.pj-hook {
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.05em;
+  color: var(--muted);
+  transition:
+    color var(--transition-fast),
+    translate 260ms var(--ease-out);
+}
+
+.pj-hook .ink-line {
+  stroke-width: 1.5;
+}
+
+.pj-name-link {
+  color: inherit;
+}
+
+.pj-name-text {
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.pj-underline {
+  position: absolute;
+  left: -2px;
+  bottom: -0.25rem;
+  width: calc(100% + 4px);
+  height: 7px;
+  color: var(--accent);
+}
+
+.pj-underline .ink-line {
+  stroke-width: 1.8;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition:
+    stroke-dashoffset 420ms var(--ease-out),
+    opacity 120ms var(--ease-out);
+}
+
+.pj-item:has(.pj-name-link:hover) .pj-hook,
+.pj-item:has(.pj-name-link:focus-visible) .pj-hook {
+  color: var(--accent);
+  translate: 3px 0;
+}
+
+.pj-name-link:hover .pj-name-text,
+.pj-name-link:focus-visible .pj-name-text {
+  color: var(--accent);
+}
+
+.pj-name-link:hover .pj-underline .ink-line,
+.pj-name-link:focus-visible .pj-underline .ink-line {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.pj-desc {
+  max-width: 52ch;
+  margin-top: 0.85rem;
+  padding-left: 1.8rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted-subtle);
+}
+
+.pj-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.5rem;
+  margin-top: 0.5rem;
+  padding-left: 1.8rem;
+  font-size: 0.875rem;
+}
+
+.pj-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  font-weight: 600;
+  color: var(--fg);
+  transition: color var(--transition-fast);
+}
+
+.pj-action-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.pj-action-icon .ink-line {
+  stroke-width: 2;
+}
+
+.pj-action:hover {
+  color: var(--accent);
+}
+
+.pj-action:hover .pj-action-icon {
+  translate: 2px -2px;
+}
+
+.pj-private {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+}
+
+.pj-links .wi-status {
+  min-height: 2.75rem;
+}
+
+.pj-rule {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.5rem;
+  overflow: visible;
+  color: var(--border2);
+  pointer-events: none;
+}
+
+.pj-rule .ink-line {
+  stroke-width: 1;
+}
+
+/* The closing invitation. */
+.pj-next {
+  margin-top: 4rem;
+  padding-left: 11.25rem;
+}
+
+.pj-next-title {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.pj-next-copy {
+  max-width: 34rem;
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.pj-next-link {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .pj-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 1.9rem 0 2.1rem;
+  }
+
+  /* The placard folds into one line above the entry. */
+  .pj-margin {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0;
+  }
+
+  .pj-desc,
+  .pj-links {
+    padding-left: 0;
+  }
+
+  .pj-next {
+    padding-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-underline .ink-line,
+  .pj-hook {
+    transition: none;
+  }
+}

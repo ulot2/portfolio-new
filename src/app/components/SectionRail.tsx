@@ -78,7 +78,8 @@ export const SectionRail = () => {
 
       <ol className="section-rail-list" ref={list}>
         {SECTIONS.map((item, index) => {
-          const current = isHome && activeSection === item.id;
+          // On the full projects page, the rail marks Projects as where you are.
+          const current = isHome ? activeSection === item.id : segment === "projects" && item.id === "work";
           const Doodle = DOODLES[item.id!];
           return (
             <li key={item.label} className="section-rail-item" style={{ "--i": index } as React.CSSProperties}>
