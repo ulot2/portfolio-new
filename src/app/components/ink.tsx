@@ -399,23 +399,7 @@ export const ArrowIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-/** A play button, traced with one loose circle and a small pen triangle. */
-export const PlayIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 28 28" fill="none" aria-hidden="true">
-    <path className="ink-line" d="M14.3 2.8C7.8 2.1 2.7 7.2 2.8 13.9c-.1 6.4 4.9 11.3 11.3 11.2 6.6.2 11.3-5.2 11.1-11.4C25 7.4 20.5 2.6 14.3 2.8Z" />
-    <path className="ink-line" d="M11.2 9.3c2.2 1.4 4.8 3 7 4.8-2.3 1.6-4.5 3-6.8 4.5-.3-3.1-.4-6.1-.2-9.3Z" />
-  </svg>
-);
 
-/** The reel's pulse, redrawn by hand. */
-export const PulseIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 40 20" fill="none" aria-hidden="true">
-    <path
-      className="ink-line"
-      d="M2.4 10.3c3.2-.2 6.4.1 9.5-.2.9-1.7 1.8-3.4 2.6-5.1 1 3.5 2 7 3.1 10.4 1-2.5 1.9-4.9 2.9-7.4.7 1.4 1.3 2.8 2 4.2 5.4-.1 10.9-.3 16.4-.1"
-    />
-  </svg>
-);
 
 export const DownloadIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">

@@ -1313,7 +1313,7 @@ p {
 }
 
 .hero-link,
-.hero .reel-trigger {
+.hero-work {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1342,7 +1342,7 @@ p {
   width: 100%;
   height: 100%;
   overflow: visible;
-  color: color-mix(in srgb, var(--muted) 40%, var(--bg));
+  color: var(--accent);
   pointer-events: none;
   z-index: -1;
 }
@@ -1360,7 +1360,7 @@ p {
   animation-delay: 1050ms;
 }
 
-/* Yellow ink runs round the dark box on hover, and runs back off when the pointer leaves. */
+/* On hover a second, heavier coat of yellow runs round the box and the paper inside warms. */
 .hero-button-outline .hero-button-trace {
   stroke: var(--accent);
   stroke-width: 2;
@@ -1375,7 +1375,7 @@ p {
 .hero-link:hover .hero-button-trace,
 .hero-link:focus-visible .hero-button-trace {
   stroke-dashoffset: 0;
-  fill: color-mix(in srgb, var(--accent) 8%, transparent);
+  fill: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1411,20 +1411,30 @@ p {
   }
 }
 
-.hero-play {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--muted);
-  transition: color var(--transition-fast);
+.hero-work {
+  color: var(--muted-subtle);
 }
 
-.hero-play .ink-line {
-  stroke-width: 1.4;
+.hero-work-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  rotate: 90deg;
+  transition: translate var(--transition-fast);
 }
 
-.hero .reel-trigger:hover,
-.hero .reel-trigger:hover .hero-play {
-  color: var(--accent);
+.hero-work-icon .ink-line {
+  stroke-width: 1.6;
+}
+
+.hero-work:hover,
+.hero-work:focus-visible {
+  color: var(--fg);
+}
+
+/* The arrow points down the page and steps toward the projects on hover. */
+.hero-work:hover .hero-work-icon,
+.hero-work:focus-visible .hero-work-icon {
+  translate: 0 3px;
 }
 
 .hero-footnote {
@@ -1507,12 +1517,6 @@ p {
   .hero-links {
     margin-bottom: 2.5rem;
   }
-}
-
-.reel-time {
-  font-weight: 400;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
 }
 
 .hero-status {
@@ -1623,69 +1627,6 @@ p {
     animation: none;
     opacity: 1;
   }
-}
-
-/* Showreel dialog */
-.reel-dialog {
-  /* Also bounded by height, so the credit row stays visible in short windows. */
-  width: min(1100px, calc(100vw - 2rem), calc((100dvh - 6rem) * 16 / 9));
-  max-width: none;
-  /* The global reset zeroes margins; auto is what centres a modal dialog. */
-  margin: auto;
-  padding: 0;
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  background: var(--bg);
-  color: var(--fg);
-  overflow: hidden;
-}
-
-.reel-dialog[open] {
-  animation: fadeIn 0.2s var(--ease-out);
-}
-
-.reel-dialog::backdrop {
-  background: rgba(13, 13, 11, 0.88);
-  backdrop-filter: blur(6px);
-}
-
-.reel-dialog video {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-}
-
-.reel-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--muted);
-}
-
-.reel-meta a {
-  color: inherit;
-}
-
-.reel-close {
-  flex: none;
-  padding: 0.35rem 0.9rem;
-  border: 1px solid var(--border2);
-  border-radius: 999px;
-  background: transparent;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--fg);
-  cursor: pointer;
-}
-
-.reel-close:hover {
-  border-color: var(--accent);
-  color: var(--accent);
 }
 
 /* ═══════════════════════════════════════════════

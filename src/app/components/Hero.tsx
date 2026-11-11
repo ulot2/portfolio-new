@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import ReelButton from "./ReelButton";
 import HeroStatus from "./HeroStatus";
-import { PlayIcon, Signature, WaveIcon } from "./ink";
+import { ArrowIcon, Signature, WaveIcon } from "./ink";
 
 /** Lettered in the same single-stroke hand as the wordmark and signature. */
 const NextLettering = () => (
@@ -60,9 +59,10 @@ export const Hero = () => {
           <WaveIcon className="hero-link-icon" />
           Say hello
         </a>
-        <ReelButton>
-          <PlayIcon className="hero-play" />
-        </ReelButton>
+        <a className="hero-work" href="#work">
+          See my work
+          <ArrowIcon className="hero-work-icon" />
+        </a>
       </div>
       <div className="hero-footnote hero-rise" style={{ "--i": 3 } as React.CSSProperties}>
         <svg className="hero-divider" viewBox="0 0 680 8" preserveAspectRatio="none" fill="none" aria-hidden="true">
