@@ -47,6 +47,13 @@ export const NavDock = () => {
   // On the home page the button carries the current section's doodle; on the
   // blog it carries the pencil.
   const CurrentDoodle = isHome ? (activeSection ? DOODLES[activeSection] : null) : PencilIcon;
+  // The button names where you are, so it reads as a "you are here" label.
+  // It falls back to "Index" before any section has scrolled into view.
+  const hereLabel = isHome
+    ? NAV_ITEMS.find((item) => item.id === activeSection)?.label ?? "Index"
+    : segment === "blog"
+      ? "Blog"
+      : "Index";
 
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
@@ -214,7 +221,10 @@ export const NavDock = () => {
             >
               <PenBox className="nav-dock-outline" />
               {CurrentDoodle && <CurrentDoodle key={activeSection} className="nav-dock-here" />}
-              <span>Index</span>
+              <span className="nav-dock-here-label" key={hereLabel}>
+                {hereLabel !== "Index" && <span className="visually-hidden">Index, now at </span>}
+                {hereLabel}
+              </span>
               <ChevronIcon className="nav-dock-chevron" />
             </button>
           </motion.div>

@@ -892,6 +892,24 @@ header.site-header {
   animation: ink-draw 380ms var(--ease-out) both;
 }
 
+/* The section's name eases in each time it changes. */
+.nav-dock-here-label {
+  animation: nav-dock-label 260ms var(--ease-out) both;
+}
+
+@keyframes nav-dock-label {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-dock-here-label {
+    animation: none;
+  }
+}
+
 .nav-dock-chevron {
   width: 0.95rem;
   height: 0.95rem;
