@@ -4334,3 +4334,195 @@ p {
     rotate: none;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   YEAR IN INK  (GitHub contributions as one pen line, above the footer)
+   ═══════════════════════════════════════════════ */
+
+.yi {
+  margin-top: 3.5rem;
+}
+
+.yi-label {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.yi-chart {
+  position: relative;
+  height: clamp(7rem, 22vw, 9.5rem);
+  margin-top: 0.75rem;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.yi-chart:focus-visible {
+  outline-offset: 6px;
+}
+
+.yi-draw {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.yi-base {
+  color: var(--border2);
+  stroke-width: 1;
+}
+
+.yi-line {
+  color: var(--fg);
+  stroke-width: 1.8;
+  /* Drawn in from the left: a clip, because a dash would be measured in
+     screen pixels on a stretched, non-scaling stroke. */
+  clip-path: inset(-20% 100% -20% 0);
+  transition: clip-path 2.2s var(--ease-in-out);
+}
+
+.yi[data-seen] .yi-line {
+  clip-path: inset(-20% -2% -20% 0);
+}
+
+/* Today: a yellow dot at the end of the line, set down once the line arrives. */
+.yi-today,
+.yi-cursor {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 48% 52% 46% 54%;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+.yi-today {
+  opacity: 0;
+  scale: 0.4;
+  transition: opacity 200ms var(--ease-out) 2.1s, scale 320ms var(--ease-spring) 2.1s;
+}
+
+.yi[data-seen] .yi-today {
+  opacity: 1;
+  scale: 1;
+}
+
+.yi-cursor {
+  width: 11px;
+  height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+
+/* The note over the busiest week. */
+.yi-peak {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  translate: -50% calc(-100% - 0.35rem);
+  font-size: 0.75rem;
+  font-style: italic;
+  white-space: nowrap;
+  color: var(--accent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out) 1.6s;
+}
+
+.yi[data-seen] .yi-peak {
+  opacity: 1;
+}
+
+.yi-peak-arrow {
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-top: 0.1rem;
+}
+
+.yi-peak-arrow .ink-line {
+  stroke-width: 1.6;
+}
+
+.yi-months {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1.35rem;
+  height: 1rem;
+  pointer-events: none;
+}
+
+.yi-months span {
+  position: absolute;
+  translate: -50% 0;
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+.yi-readout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.35rem;
+  min-height: 1.6rem;
+  margin-top: 2.1rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.yi-readout strong {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.yi-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+
+.yi-link:hover {
+  color: var(--fg);
+}
+
+.yi-link-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--accent);
+}
+
+.yi-link-icon .ink-line {
+  stroke-width: 2;
+}
+
+@media (max-width: 560px) {
+  /* Every other month label, so they don't run together. */
+  .yi-months span:nth-child(even) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yi-line,
+  .yi[data-seen] .yi-line {
+    clip-path: none;
+    transition: none;
+  }
+
+  .yi-today,
+  .yi-peak {
+    opacity: 1;
+    scale: 1;
+    transition: none;
+  }
+}

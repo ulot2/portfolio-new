@@ -4,6 +4,7 @@ import { NowSection } from "./components/NowSection";
 import { WritingSection } from "./components/WritingSection";
 import { Contact } from "./components/Contact";
 import { Header } from "./components/Header";
+import { YearInInk } from "./components/YearInInk";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
         <Projects />
         <NowSection />
         <WritingSection />
-        <Contact />
+        <Contact beforeFooter={<YearInInk />} />
       </main>
     </>
   );

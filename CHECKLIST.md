@@ -24,6 +24,14 @@ go, and delete this file once it is all done.
       names the first two entries, so put the ones you most want seen first.
       Keep it current (about once a month) or take the section out; a stale
       "now" looks worse than none.
+- [ ] **GitHub line above the footer.** It reads your public contributions
+      page once a day and hides itself if that fails. I couldn't reach GitHub
+      from my session, so check it shows on the live site after deploying.
+      For a sturdier source, add a `GITHUB_TOKEN` environment variable in
+      Vercel (a fine-grained token with no extra permissions is enough); it
+      then uses GitHub's official API. Turn on "Private contributions" in
+      your GitHub profile settings so private repos count. To work on the
+      design locally without GitHub, run `CONTRIBUTIONS_SAMPLE=1 pnpm dev`.
 - [ ] **Delete the showreel video** from Vercel Blob (store "portfolio-media")
       if you don't want to keep it. The reel was removed from the site.
 
@@ -58,6 +66,9 @@ go, and delete this file once it is all done.
 - [ ] New **Now** section between Projects and Writing, and a "Now: …" line
       under the Spotify line in the hero that jumps to it.
 - [ ] Tools & Skills section removed.
+- [ ] Above the footer: your last year on GitHub as one pen line that draws
+      itself in, with the busiest week marked, a yellow dot for today, and a
+      readout of any week you point at.
 
 ### Navigation
 - [ ] Floating button (narrow screens) is a pen-drawn box showing the name and
