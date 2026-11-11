@@ -76,7 +76,7 @@ export default function HeroStatus() {
       <div className="hero-status-copy">
         <p className="hero-status-time">
           {now ? <>It&rsquo;s <time dateTime={now.toISOString()}>{timeFormat.format(now)}</time> in Lagos.</> : "Local time in Lagos."}{" "}
-          <span className="hero-status-availability">{now ? (around ? "I’m probably around." : "I’m probably recharging.") : "A little note from my corner of the world."}</span>
+          <span className="hero-status-availability">{now ? (around ? "Good time to say hello." : "Probably asleep, or should be.") : "A little note from my corner of the world."}</span>
         </p>
         <p className="hero-status-music">
           <svg className="hero-status-record" viewBox="0 0 20 20" fill="none" aria-hidden="true">

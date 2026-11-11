@@ -44,8 +44,9 @@ Put these in `.env.local`. The home page and the blog work without them.
 ## Hero time and Spotify status
 
 The hero shows the current time in `Africa/Lagos`, updating every 30 seconds.
-The availability message says “probably around” from 8 AM until 10 PM, and
-“probably recharging” overnight; this is a time-based hint, not online presence.
+The availability message says “Good time to say hello.” from 8 AM until 10 PM,
+and “Probably asleep, or should be.” overnight; this is a time-based hint, not
+online presence.
 
 To connect your own Spotify listening activity:
 
