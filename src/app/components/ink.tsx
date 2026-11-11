@@ -77,15 +77,15 @@ export const WORDS: Record<string, Word> = {
       { d: "M34.4 12.8c2.6-.5 5.2-.6 7.8-.3", accent: true },
     ],
   },
-  tools: {
-    viewBox: "0 0 54 34",
+  // n and w borrowed from "writing", o from "projects", in the same hand.
+  now: {
+    viewBox: "0 0 48 34",
     strokes: [
-      { d: "M5.2 3.5c-.4 5-.6 10-.4 15 .1 3 1.3 4.8 3.7 5" },
-      { d: "M19.8 13.6c-1.8-1.7-4.9-1.6-6.4.6-1.6 2.3-1.3 6.1.8 8.3 2 2 5.3 1.4 6.4-1.1 1-2.4.8-5.6-1-7.6" },
-      { d: "M31.8 13.6c-1.8-1.7-4.9-1.6-6.4.6-1.6 2.3-1.3 6.1.8 8.3 2 2 5.3 1.4 6.4-1.1 1-2.4.8-5.6-1-7.6" },
-      { d: "M37.4 2.8c-.5 6.7-.7 13.4-.4 19.4.1 1.4.8 2.2 2 2.1" },
-      { d: "M50.2 14.2c-1.4-1.6-4.2-1.9-5.8-.6-1.6 1.4-.8 3.4 1 4.2 1.8.8 4.4 1.4 4.8 3.4.4 2.2-2 3.6-4.4 3.4-1.6-.1-3-.8-3.8-1.8" },
-      { d: "M2.4 12.8c2.6-.5 5.2-.6 7.8-.3", accent: true },
+      { d: "M2.2 12.8c0 3.7.1 7.4.2 11 .2-3.2 1-6.6 3-8.6 1.8-1.8 4.4-1.4 5.2.8.8 2.4.6 5.2.8 7.8" },
+      { d: "M23.6 13.6c-1.8-1.7-4.9-1.6-6.4.6-1.6 2.3-1.3 6.1.8 8.3 2 2 5.3 1.4 6.4-1.1 1-2.4.8-5.6-1-7.6" },
+      { d: "M28.8 12.6c.8 3.8 1.7 7.5 2.9 11.2 1.3-3.4 2.4-6.9 3.5-10.4 1.1 3.5 2.3 7 3.6 10.4 1.3-3.7 2.3-7.4 3.1-11.2" },
+      // No t to cross, so the yellow goes under the word instead.
+      { d: "M2.6 29.4c12.6-1.3 26.4-1.5 40.2-.5", accent: true },
     ],
   },
   contact: {
@@ -208,20 +208,6 @@ export const BrowserIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-/** Backend: a database. */
-export const DatabaseIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      className="ink-line"
-      d="M5.2 6.6c.2-1.6 3.2-2.6 6.8-2.6 3.6 0 6.6 1 6.8 2.6-.2 1.6-3.2 2.6-6.8 2.6-3.6 0-6.6-1-6.8-2.6z"
-    />
-    <path
-      className="ink-line"
-      d="M5.2 6.6c-.1 3.6-.1 7.2 0 10.8.2 1.6 3.2 2.6 6.8 2.6 3.6 0 6.6-1 6.8-2.6.1-3.6.1-7.2 0-10.8"
-    />
-    <path className="ink-line" d="M5.3 12c.4 1.5 3.3 2.5 6.7 2.5 3.4 0 6.4-1 6.7-2.5" />
-  </svg>
-);
 
 /** Tooling: a wrench. */
 export const WrenchIcon = ({ className }: { className?: string }) => (
@@ -518,3 +504,14 @@ export const PenBox = ({ className, tall = false }: { className?: string; tall?:
     </svg>
   );
 };
+
+/** Now: a clock face with its two hands. */
+export const ClockIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      className="ink-line" pathLength={1}
+      d="M12 3.4C7.2 3 3.2 7.2 3.5 12.1c-.2 4.7 3.9 8.5 8.6 8.3 4.9.1 8.5-3.8 8.4-8.5C20.7 7.1 16.8 3.2 12 3.4Z"
+    />
+    <path className="ink-line" pathLength={1} d="M12 12.1c-.1-2-.1-3.9.1-5.8M12 12.1c1.4.9 2.7 1.8 4 2.8" />
+  </svg>
+);

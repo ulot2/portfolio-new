@@ -9,6 +9,7 @@ import { SITE_URL } from "@/lib/site";
 import { useActiveSection } from "../hooks/useActiveSection";
 import {
   BulbIcon,
+  ClockIcon,
   ChevronIcon,
   EnvelopeIcon,
   OutArrowIcon,
@@ -17,15 +18,14 @@ import {
   Underline,
   UpArrowIcon,
   WaveIcon,
-  WrenchIcon,
-} from "./ink";
+  } from "./ink";
 
 // The same doodles the margin rail opens its dots into, so the two indexes match.
 const DOODLES: Record<string, (props: { className?: string }) => React.ReactElement> = {
   hero: WaveIcon,
   work: BulbIcon,
+  now: ClockIcon,
   writing: PencilIcon,
-  skills: WrenchIcon,
   contact: EnvelopeIcon,
 };
 
@@ -46,7 +46,22 @@ export const NavDock = () => {
   const shouldReduceMotion = useReducedMotion();
   // On the home page the button carries the current section's doodle; on the
   // blog it carries the pencil.
-  const CurrentDoodle = isHome ? (activeSection ? DOODLES[activeSection] : null) : PencilIcon;
+  const CurrentDoodle = isHome
+    ? activeSection
+      ? DOODLES[activeSection]
+      : null
+    : segment === "projects"
+      ? BulbIcon
+      : PencilIcon;
+  // The button names where you are, so it reads as a "you are here" label.
+  // It falls back to "Index" before any section has scrolled into view.
+  const hereLabel = isHome
+    ? NAV_ITEMS.find((item) => item.id === activeSection)?.label ?? "Index"
+    : segment === "blog"
+      ? "Blog"
+      : segment === "projects"
+        ? "Projects"
+        : "Index";
 
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
@@ -149,7 +164,9 @@ export const NavDock = () => {
                       const isBlog = item.route !== undefined;
                       const current = isBlog
                         ? segment === "blog"
-                        : isHome && activeSection === item.id;
+                        : isHome
+                          ? activeSection === item.id
+                          : segment === "projects" && item.id === "work";
                       const Doodle = item.id ? DOODLES[item.id] : null;
                       const label = (
                         <>
@@ -214,7 +231,10 @@ export const NavDock = () => {
             >
               <PenBox className="nav-dock-outline" />
               {CurrentDoodle && <CurrentDoodle key={activeSection} className="nav-dock-here" />}
-              <span>Index</span>
+              <span className="nav-dock-here-label" key={hereLabel}>
+                {hereLabel !== "Index" && <span className="visually-hidden">Index, now at </span>}
+                {hereLabel}
+              </span>
               <ChevronIcon className="nav-dock-chevron" />
             </button>
           </motion.div>

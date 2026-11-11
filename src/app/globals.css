@@ -892,6 +892,24 @@ header.site-header {
   animation: ink-draw 380ms var(--ease-out) both;
 }
 
+/* The section's name eases in each time it changes. */
+.nav-dock-here-label {
+  animation: nav-dock-label 260ms var(--ease-out) both;
+}
+
+@keyframes nav-dock-label {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-dock-here-label {
+    animation: none;
+  }
+}
+
 .nav-dock-chevron {
   width: 0.95rem;
   height: 0.95rem;
@@ -1709,6 +1727,57 @@ p {
   vertical-align: -0.05em;
 }
 
+/* A pointer to the Now note further down the page. */
+.hero-status-now {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  color: var(--muted);
+}
+
+.hero-status-pin {
+  flex: none;
+  align-self: flex-start;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+.hero-status-pin .ink-line,
+.hero-status-down .ink-line {
+  stroke-width: 1.5;
+}
+
+.hero-status-now a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.hero-status-now a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+
+.hero-status-down {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.25rem;
+  vertical-align: -0.05em;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.hero-status-now a:hover .hero-status-down {
+  translate: 0 2px;
+}
+
 .hero-status-ago,
 .hero-status-source {
   white-space: nowrap;
@@ -1954,7 +2023,7 @@ p {
 .wi-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.25rem 3rem;
+  gap: 2.5rem 3rem;
   list-style: none;
 }
 
@@ -2055,114 +2124,106 @@ p {
   opacity: 1;
 }
 
-@media (max-width: 560px) {
-  .wi-list {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.9rem;
-  }
+/* What it actually is, in plain words, set in from the name's hook arrow. */
+.wi-detail {
+  margin-top: 0.55rem;
+  padding-left: 1.45rem;
 }
 
-/* ═══════════════════════════════════════════════
-   SKILLS SECTION — DRAWN ICONS ON RULED ROWS
-   ═══════════════════════════════════════════════ */
-
-#skills.section {
-  border-top: none;
-}
-
-.sk-list {
-  list-style: none;
-}
-
-/* Each row rests on a faint hand-drawn rule, like the lines under the hero note. */
-.sk-row {
-  position: relative;
-  display: grid;
-  grid-template-columns: 9.5rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: 0.5rem 1.5rem;
-  padding: 1rem 0 1.1rem;
-}
-
-.sk-row::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 8px;
-  background-color: var(--border2);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='8' preserveAspectRatio='none'%3E%3Cpath d='M0 4.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
-    0 0 / 100% 100% no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='8' preserveAspectRatio='none'%3E%3Cpath d='M0 4.6c48-.9 96 .6 150 .2 58-.4 108-1.2 168-.3 30 .4 56 .2 82-.4' stroke='black' stroke-width='1' fill='none'/%3E%3C/svg%3E")
-    0 0 / 100% 100% no-repeat;
-}
-
-.sk-row:last-child::after {
-  content: none;
-}
-
-.sk-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 500;
+.wi-desc {
+  max-width: 40ch;
+  font-size: 0.875rem;
+  line-height: 1.55;
   color: var(--muted);
 }
 
-.sk-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  flex: none;
-  color: var(--accent);
-  transition: transform 260ms var(--ease-out);
-}
-
-.sk-icon .ink-line {
-  stroke-width: 1.6;
-}
-
-.sk-row:hover .sk-icon {
-  transform: rotate(-8deg);
-}
-
-.sk-tools {
+.wi-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  row-gap: 0.35rem;
-  list-style: none;
-  font-size: 1.02rem;
-  color: var(--fg);
+  gap: 0 1.1rem;
+  margin-top: 0.3rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
 }
 
-/* A tiny hand-drawn dot between tools. */
-.sk-tools li + li::before {
+.wi-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+}
+
+.wi-kind-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.wi-kind-icon .ink-line {
+  stroke-width: 1.7;
+}
+
+/* Still being built: said in words, with a small pen dot. */
+.wi-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  color: var(--muted-subtle);
+}
+
+.wi-status::before {
   content: "";
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  margin: 0 0.75rem 0.2em;
-  background-color: var(--muted);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5.4 1.2c2.1.3 3.6 2 3.4 4-.2 2.2-2.2 3.8-4.3 3.5C2.4 8.4 1 6.6 1.3 4.6 1.6 2.6 3.4.9 5.4 1.2z'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5.4 1.2c2.1.3 3.6 2 3.4 4-.2 2.2-2.2 3.8-4.3 3.5C2.4 8.4 1 6.6 1.3 4.6 1.6 2.6 3.4.9 5.4 1.2z'/%3E%3C/svg%3E")
-    center / contain no-repeat;
+  width: 6px;
+  height: 6px;
+  border-radius: 46% 54% 50% 50%;
+  background: var(--accent);
+}
+
+.wi-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2.75rem;
+  font-weight: 500;
+  color: var(--fg);
+  transition: color var(--transition-fast);
+}
+
+.wi-code-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.wi-code-icon .ink-line {
+  stroke-width: 2;
+}
+
+.wi-code:hover {
+  color: var(--accent);
+}
+
+.wi-code:hover .wi-code-icon {
+  translate: 2px -2px;
 }
 
 @media (max-width: 560px) {
-  .sk-row {
+  .wi-list {
     grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
   }
 
-  /* Wrapped lines would start with a dot, so phones use plain spacing. */
-  .sk-tools {
-    column-gap: 1rem;
+  /* One column has no neighbour to line up with, so no line is held in reserve. */
+  .wi-question {
+    min-height: 0;
+    max-width: none;
   }
 
-  .sk-tools li + li::before {
-    content: none;
+  .wi-desc {
+    max-width: none;
   }
 }
 
@@ -3849,4 +3910,550 @@ p {
   width: 1px;
   height: 14px;
   background-color: var(--border2);
+}
+
+/* ═══════════════════════════════════════════════
+   ALL PROJECTS (/projects)
+   A numbered catalogue, like the list at the back of an exhibition.
+   ═══════════════════════════════════════════════ */
+
+.wi-all {
+  margin-top: 2.25rem;
+}
+
+.pj-page {
+  padding-top: clamp(2.5rem, 8vh, 4.5rem);
+  padding-bottom: 5rem;
+}
+
+.pj-intro {
+  margin-bottom: 2rem;
+}
+
+.pj-filters {
+  margin-bottom: 0.75rem;
+}
+
+.pj-list {
+  list-style: none;
+}
+
+.pj-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 0.5rem 1.75rem;
+  padding: 2.25rem 0 2.5rem;
+}
+
+/* The catalogue number and the kind sit in the margin, like a placard. */
+.pj-margin {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.15rem;
+}
+
+.pj-no {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.pj-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.pj-kind-icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted);
+}
+
+.pj-kind-icon .ink-line {
+  stroke-width: 1.7;
+}
+
+/* The tools it is built with, one per line, set off by a short pen tick. */
+.pj-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  list-style: none;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--muted-subtle);
+  background:
+    linear-gradient(var(--border2), var(--border2)) 0 0 / 1.5rem 1px no-repeat;
+}
+
+.pj-body {
+  min-width: 0;
+}
+
+.pj-question {
+  max-width: 36ch;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.pj-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+  font-size: clamp(1.6rem, 5.5vw, 2.125rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.pj-hook {
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.05em;
+  color: var(--muted);
+  transition:
+    color var(--transition-fast),
+    translate 260ms var(--ease-out);
+}
+
+.pj-hook .ink-line {
+  stroke-width: 1.5;
+}
+
+.pj-name-link {
+  color: inherit;
+}
+
+.pj-name-text {
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.pj-underline {
+  position: absolute;
+  left: -2px;
+  bottom: -0.25rem;
+  width: calc(100% + 4px);
+  height: 7px;
+  color: var(--accent);
+}
+
+.pj-underline .ink-line {
+  stroke-width: 1.8;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition:
+    stroke-dashoffset 420ms var(--ease-out),
+    opacity 120ms var(--ease-out);
+}
+
+.pj-item:has(.pj-name-link:hover) .pj-hook,
+.pj-item:has(.pj-name-link:focus-visible) .pj-hook {
+  color: var(--accent);
+  translate: 3px 0;
+}
+
+.pj-name-link:hover .pj-name-text,
+.pj-name-link:focus-visible .pj-name-text {
+  color: var(--accent);
+}
+
+.pj-name-link:hover .pj-underline .ink-line,
+.pj-name-link:focus-visible .pj-underline .ink-line {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.pj-desc {
+  max-width: 52ch;
+  margin-top: 0.85rem;
+  padding-left: 1.8rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted-subtle);
+}
+
+.pj-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.5rem;
+  margin-top: 0.5rem;
+  padding-left: 1.8rem;
+  font-size: 0.875rem;
+}
+
+.pj-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  font-weight: 600;
+  color: var(--fg);
+  transition: color var(--transition-fast);
+}
+
+.pj-action-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.pj-action-icon .ink-line {
+  stroke-width: 2;
+}
+
+.pj-action:hover {
+  color: var(--accent);
+}
+
+.pj-action:hover .pj-action-icon {
+  translate: 2px -2px;
+}
+
+.pj-private {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+}
+
+.pj-links .wi-status {
+  min-height: 2.75rem;
+}
+
+.pj-rule {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0.5rem;
+  overflow: visible;
+  color: var(--border2);
+  pointer-events: none;
+}
+
+.pj-rule .ink-line {
+  stroke-width: 1;
+}
+
+/* The closing invitation. */
+.pj-next {
+  margin-top: 4rem;
+  padding-left: 11.25rem;
+}
+
+.pj-next-title {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.pj-next-copy {
+  max-width: 34rem;
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.pj-next-link {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .pj-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 1.9rem 0 2.1rem;
+  }
+
+  /* The placard folds into one line above the entry. */
+  .pj-margin {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem 1rem;
+    padding-top: 0;
+  }
+
+  /* On a phone the stack joins the placard line, as one run of words. */
+  .pj-stack {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2rem 0;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding-top: 0;
+    background: none;
+  }
+
+  .pj-stack li + li::before {
+    content: "·";
+    margin: 0 0.5rem;
+    color: var(--muted);
+  }
+
+  .pj-desc,
+  .pj-links {
+    padding-left: 0;
+  }
+
+  .pj-next {
+    padding-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-underline .ink-line,
+  .pj-hook {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   NOW  (what I'm working on, a note in a pen box)
+   ═══════════════════════════════════════════════ */
+
+.nw-note {
+  position: relative;
+  max-width: 36rem;
+  padding: 1.6rem 1.75rem 1.75rem;
+}
+
+.nw-box {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--border2);
+  pointer-events: none;
+  /* Only the box leans; tilted text would blur. */
+  rotate: -0.6deg;
+}
+
+.nw-box .ink-line {
+  stroke-width: 1.4;
+}
+
+.nw-updated {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.nw-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.1rem;
+  list-style: none;
+}
+
+.nw-item {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted-subtle);
+}
+
+.nw-tick {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.3rem;
+  color: var(--accent);
+}
+
+.nw-tick .ink-line {
+  stroke-width: 1.8;
+}
+
+.nw-title {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.nw-link {
+  transition: color var(--transition-fast);
+}
+
+.nw-link:hover {
+  color: var(--accent);
+}
+
+.nw-out {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.15em;
+  vertical-align: 0;
+  color: var(--accent);
+  transition: translate 220ms var(--ease-out);
+}
+
+.nw-out .ink-line {
+  stroke-width: 2;
+}
+
+.nw-link:hover .nw-out {
+  translate: 2px -2px;
+}
+
+.nw-text {
+  color: var(--muted);
+}
+
+@media (max-width: 560px) {
+  .nw-note {
+    padding: 1.35rem 1.25rem 1.5rem;
+  }
+
+  .nw-box {
+    rotate: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   YEAR IN INK  (a year of GitHub commits as one looping pen line, above the footer)
+   ═══════════════════════════════════════════════ */
+
+.yi {
+  margin-top: 3.75rem;
+}
+
+.yi-draw {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.yi-half,
+.yi-span-half {
+  display: none;
+}
+
+.yi-line {
+  color: var(--fg);
+  stroke-width: 1.5;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+.yi-arrow {
+  color: var(--accent);
+  stroke-width: 1.8;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+/* Written in like the headings, only slower: a whole year takes a moment. */
+.yi[data-seen] .yi-line {
+  animation: yi-write 3.2s var(--ease-in-out) both;
+}
+
+.yi[data-seen] .yi-arrow {
+  animation: yi-write 380ms var(--ease-out) 3.15s both;
+}
+
+@keyframes yi-write {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.yi-caption {
+  margin-top: 0.9rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.yi-caption a {
+  color: var(--muted-subtle);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.yi-caption a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+
+.yi-caption-icon {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.15rem;
+  vertical-align: -0.05em;
+  color: var(--accent);
+}
+
+.yi-caption-icon .ink-line {
+  stroke-width: 2;
+}
+
+@media (max-width: 560px) {
+  .yi-year,
+  .yi-span-year {
+    display: none;
+  }
+
+  .yi-half {
+    display: block;
+  }
+
+  .yi-span-half {
+    display: inline;
+  }
+
+  .yi-caption {
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yi-line,
+  .yi-arrow,
+  .yi[data-seen] .yi-line,
+  .yi[data-seen] .yi-arrow {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 1;
+  }
 }

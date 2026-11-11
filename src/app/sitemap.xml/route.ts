@@ -7,6 +7,7 @@ export async function GET() {
   // date that is always "today" teaches crawlers to ignore it.
   const staticUrls: { url: string; lastMod?: string; changefreq: string; priority: string }[] = [
     { url: SITE_URL, changefreq: "weekly", priority: "1.0" },
+    { url: `${SITE_URL}/projects`, changefreq: "monthly", priority: "0.9" },
     { url: BLOG_URL, lastMod: posts[0]?.date, changefreq: "weekly", priority: "0.9" },
   ];
 
