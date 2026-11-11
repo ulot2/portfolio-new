@@ -1,6 +1,7 @@
 import React from "react";
 import { NOW, NOW_PLACE, NOW_UPDATED } from "@/data/now";
 import { OutArrowIcon } from "./ink";
+import { PenFrame } from "./PenFrame";
 import { SectionHeading } from "./SectionHeading";
 
 const updatedLabel = new Date(NOW_UPDATED).toLocaleDateString("en-GB", {
@@ -19,13 +20,7 @@ export const NowSection = () => (
     <SectionHeading word="now" label="Now" />
 
     <div className="nw-note">
-      <svg className="nw-box" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true">
-        <path
-          className="ink-line"
-          vectorEffect="non-scaling-stroke"
-          d="M5 3.4C30 2.2 66 2.6 95.2 3.3c1.6.1 2.1 1.4 2.2 4 .4 15.8.3 31.4-.2 47.6-.1 2.2-.9 2.9-2.6 3-30.4.8-60.6.9-89.6.1-1.8-.1-2.5-1.1-2.6-3.1-.6-16-.5-32 .2-47.9.1-2.4 1-3.5 2.4-3.6Z"
-        />
-      </svg>
+      <PenFrame className="nw-box" />
 
       <p className="nw-updated">
         Updated <time dateTime={NOW_UPDATED}>{updatedLabel}</time> · {NOW_PLACE}
