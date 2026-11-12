@@ -38,6 +38,25 @@ export const NameMark = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// "what's next." from the hero headline, in pen order. Shared with the link
+// preview image, which draws the same lettering.
+export const NEXT_LETTERING = {
+  viewBox: "0 0 338 83",
+  strokes: [
+    "M5 29c2 10 5 21 9 32 4-9 8-19 11-29 3 9 6 19 10 28 4-11 8-22 10-33",
+    "M55 8c-2 17-3 35-2 53 1-11 5-23 12-30 5-5 12-4 14 3 2 8 0 18 2 27",
+    "M112 32c-4-8-15-9-21-2-6 7-7 20-2 28 5 7 15 6 21-2M114 27c-1 11-1 23 2 34",
+    "M130 10c-2 13-4 27-3 40 0 8 4 13 10 12M119 29c7-2 15-2 22-1",
+    "M150 15c1 5 0 10-4 15",
+    "M174 31c-4-5-12-6-17-2-5 4-3 10 3 13 6 3 14 4 14 11 0 7-7 11-14 10-5 0-9-2-12-5",
+    "M198 29c-1 11-1 22 0 33 1-10 4-21 11-27 5-5 12-4 14 3 2 7 1 16 3 24",
+    "M237 47c8 1 17 1 25-1 1-9-6-16-14-15-9 1-14 11-12 20 1 9 8 14 17 13 6 0 12-4 16-8",
+    "M274 32c7 10 13 20 21 29M296 31c-7 10-14 20-22 29",
+    "M313 12c-2 13-3 27-2 40 0 8 4 12 10 12M301 31c8-2 16-2 23-1",
+    "M332 61l.2 1",
+  ],
+};
+
 type Word = { viewBox: string; strokes: { d: string; accent?: boolean }[] };
 
 // Section headings, written in the same hand as the logo. As in the logo, the
