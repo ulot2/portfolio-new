@@ -51,10 +51,10 @@ go, and delete this file once it is all done.
 - [ ] **Home page shows 6 projects** before "All 10 projects". Change
       `HOME_PROJECT_COUNT` in `src/data/projects.ts` for a different number.
       The order in that file is the order on the site.
-- [ ] **CV:** the header, phone menu and footer now say "CV" and link to
-      `/cv.pdf` (the new file). The old `/resume.pdf` address redirects there,
-      so links you've already shared still work. The CV includes your phone
-      number, so it's public on the site.
+- [ ] **Resume:** the header, phone menu and footer say "Resume" and link to
+      `/resume.pdf`. The `/cv.pdf` address redirects there, so links you've
+      already shared still work. The resume includes your phone number, so
+      it's public on the site.
 - [ ] **Copy I changed:** the blog intro now reads "Thoughts, technical deep
       dives, and lessons from building for the web." The role under your photo
       on articles now says "Software developer", not "Frontend Engineer".
