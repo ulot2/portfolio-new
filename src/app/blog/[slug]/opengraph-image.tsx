@@ -16,5 +16,5 @@ export default async function Image({
 }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  return ogCard(post?.metadata.title ?? "Writing", "Writing");
+  return ogCard(post?.metadata.title ?? "Writing", "writing");
 }

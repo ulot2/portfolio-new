@@ -62,8 +62,12 @@ go, and delete this file once it is all done.
 ## New on the site, to look over
 
 ### Home page
-- [ ] Hero: bigger title on wide screens; "what's next." writes itself in
-      stroke by stroke; the note, buttons and status line rise in after it.
+- [ ] Hero headline: "I turn “what if” into what's next." in type, annotated
+      by the pen. A pencil loop rings "what if", an arrow carries it down, and
+      a yellow box closes round "what's next.", which brightens as it does.
+      Hovering the headline draws the marks again. The rest of the hero follows
+      in one sequence: the note, the signature, the buttons and the status line.
+- [ ] The hero introduction now says "I'm Tolu, a software developer."
 - [ ] Say hello button outlined in yellow; "See my work ↓" replaces the reel.
 - [ ] Projects: description, kind label and a Code link (where the code is
       public) under each name; only the first six show.
@@ -74,6 +78,16 @@ go, and delete this file once it is all done.
       from your GitHub commits (one loop per week; phones show the last six
       months). It writes itself in and ends in the yellow wordmark arrow, with
       a small caption saying what it's made from.
+
+### Link previews (the image shown when a page is shared)
+- [ ] Home: the hero headline as on the site (the pencil loop, arrow and
+      yellow box, drawn by the same code), with the wordmark, your name and the
+      signature, on dot-grid paper.
+- [ ] Blog posts and `/projects` get matching cards: a hand-lettered "writing"
+      or "projects" over the title.
+- [ ] Apps like WhatsApp and LinkedIn keep old previews for a while. To see
+      the new one sooner, paste the link into LinkedIn's Post Inspector, or
+      share it with `?v=2` on the end.
 
 ### Navigation
 - [ ] Floating button (narrow screens) is a pen-drawn box showing the name and
@@ -112,5 +126,5 @@ go, and delete this file once it is all done.
       three.
 - [ ] Feature two or three projects on the home page with a larger card and a
       screenshot.
-- [ ] Share preview images for `/projects` and each project page.
+- [ ] Share preview images for each project page, once those pages exist.
 - [ ] More writing; each project page could start as a "how I built it" post.
