@@ -102,13 +102,13 @@ const PACE = 1.15;
 const PEN = "cubic-bezier(0.55, 0, 0.35, 1)";
 
 /**
- * Diagram. The sentence stays in type and the pen annotates it, like a sketch
- * on a whiteboard. A pencil loop rings "what if", an arrow carries it down,
+ * The hero headline. The sentence stays in type and the pen annotates it, like
+ * a sketch on a whiteboard. A pencil loop rings "what if", an arrow carries it down,
  * and a yellow box closes round "what's next.", which brightens as it does.
  * All three marks are measured to the words, so they meet them exactly at
  * any width, and they draw again when the headline is hovered.
  */
-export const Diagram = () => {
+export const HeroHeadline = () => {
   const root = useRef<HTMLHeadingElement>(null);
   const idea = useRef<HTMLSpanElement>(null);
   const built = useRef<HTMLSpanElement>(null);
@@ -187,11 +187,11 @@ export const Diagram = () => {
       return anim;
     };
 
-    stroke(".pd-loop", { min: 520 });
-    stroke(".pd-arrow", { gap: 60, min: 260 });
-    stroke(".pd-head", { gap: 0, min: 110, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
-    const box = stroke(".pd-box", { gap: 70, min: 520 });
-    stroke(".pd-retrace", { gap: -120, min: 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    stroke(".hero-mark-loop", { min: 520 });
+    stroke(".hero-mark-arrow", { gap: 60, min: 260 });
+    stroke(".hero-mark-head", { gap: 0, min: 110, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    const box = stroke(".hero-mark-box", { gap: 70, min: 520 });
+    stroke(".hero-mark-retrace", { gap: -120, min: 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
     box?.finished.then(() => setState("done")).catch(() => {});
   }, []);
 
@@ -211,16 +211,16 @@ export const Diagram = () => {
   };
 
   return (
-    <h1 className="hero-title pd" id="hero-title" ref={root} data-state={state} onMouseEnter={replay}>
-      <span className="hero-title-line pd-line-one">
+    <h1 className="hero-title" id="hero-title" ref={root} data-state={state} onMouseEnter={replay}>
+      <span className="hero-title-line hero-title-one">
         I turn{" "}
-        <span className="pd-idea" ref={idea}>
+        <span className="hero-idea" ref={idea}>
           &ldquo;what if&rdquo;
         </span>
-      </span>
-      <span className="hero-title-line pd-line-two">
+      </span>{" "}
+      <span className="hero-title-line hero-title-two">
         into{" "}
-        <span className="pd-built" ref={built}>
+        <span className="hero-built" ref={built}>
           what&rsquo;s next.
         </span>
       </span>
@@ -228,18 +228,18 @@ export const Diagram = () => {
       {marks && (
         <svg
           ref={svg}
-          className="pd-marks"
+          className="hero-marks"
           width={marks.w}
           height={marks.h}
           viewBox={`0 0 ${marks.w} ${marks.h}`}
           fill="none"
           aria-hidden="true"
         >
-          <path className="pd-loop" d={marks.loop} />
-          <path className="pd-arrow" d={marks.arrow} />
-          <path className="pd-head" d={marks.head} />
-          <path className="pd-box" d={marks.box} />
-          <path className="pd-retrace" d={marks.retrace} />
+          <path className="hero-mark-loop" d={marks.loop} />
+          <path className="hero-mark-arrow" d={marks.arrow} />
+          <path className="hero-mark-head" d={marks.head} />
+          <path className="hero-mark-box" d={marks.box} />
+          <path className="hero-mark-retrace" d={marks.retrace} />
         </svg>
       )}
     </h1>

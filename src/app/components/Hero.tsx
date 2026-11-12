@@ -2,18 +2,8 @@
 
 import React, { useState } from "react";
 import HeroStatus from "./HeroStatus";
-import { ArrowIcon, NEXT_LETTERING, Signature, WaveIcon } from "./ink";
-
-/** Lettered in the same single-stroke hand as the wordmark and signature. */
-const NextLettering = () => (
-  <svg viewBox={NEXT_LETTERING.viewBox} fill="none" aria-hidden="true">
-    <g className="hero-lettering-strokes">
-      {NEXT_LETTERING.strokes.map((d, i) => (
-        <path key={i} pathLength={1} style={{ "--i": i } as React.CSSProperties} d={d} />
-      ))}
-    </g>
-  </svg>
-);
+import { HeroHeadline } from "./HeroHeadline";
+import { ArrowIcon, Signature, WaveIcon } from "./ink";
 
 /** A simple introduction, with the same pen marks as the rest of the site. */
 export const Hero = () => {
@@ -22,12 +12,7 @@ export const Hero = () => {
 
   return (
     <section className="hero" id="hero" aria-labelledby="hero-title">
-      <h1 className="hero-title" id="hero-title">
-        <span className="hero-title-line">I turn &ldquo;what if&rdquo;</span>
-        <span className="hero-title-line hero-title-finish">
-          into <span className="hero-handwritten"><span className="visually-hidden">what&rsquo;s next.</span><NextLettering /></span>
-        </span>
-      </h1>
+      <HeroHeadline />
 
       <div className="hero-note hero-rise" style={{ "--i": 1 } as React.CSSProperties}>
         <p className="hero-description">
