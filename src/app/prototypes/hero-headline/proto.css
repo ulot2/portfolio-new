@@ -1,0 +1,324 @@
+/* Prototype only: three directions for the hero headline, and the picker.
+   Nothing here is used by the site. Delete with the folder. */
+
+/* ── 1. Pencil to ink ─────────────────────────────────────────── */
+
+.ph-a-row {
+  display: flex;
+  align-items: center;
+  gap: 0.24em;
+}
+
+/* "what if?" as a pencil sketch: thin, grey and dashed. */
+.ph-a-if {
+  display: block;
+  flex: 0 1 5em;
+  min-width: 0;
+  /* The lettering is taller than a line of type; pull the slack back in. */
+  margin-block: -0.22em -0.3em;
+  color: var(--muted);
+  transform: rotate(-2deg) translateY(0.1em);
+  transform-origin: left center;
+}
+
+.ph-a-if svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  /* Sketched in from the left before the ink starts. */
+  animation: ph-sketch 560ms var(--ease-out) 200ms both;
+}
+
+.ph-a-if path {
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Short dashes, close together: broken like pencil, but each letter still reads. */
+  stroke-dasharray: 2.6 3.4;
+}
+
+@keyframes ph-sketch {
+  from {
+    clip-path: inset(-30% 100% -30% -5%);
+  }
+  to {
+    clip-path: inset(-30% -5% -30% -5%);
+  }
+}
+
+/* The ink waits for the sketch. */
+.ph-a .hero-lettering-strokes path {
+  animation-delay: calc(760ms + var(--i) * 85ms);
+}
+
+/* ── 2. Outline to solid ──────────────────────────────────────── */
+
+.hero-title.ph-b {
+  max-width: none;
+  font-size: clamp(2.5rem, 11.5vw, 5.75rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.055em;
+}
+
+/* An idea, not yet real: only its outline. */
+.ph-b-hollow {
+  /* Filled with the page color over a doubled stroke, so the places where a
+     letter's own shapes overlap don't show through the outline. */
+  color: var(--bg);
+  -webkit-text-stroke: 3px var(--muted);
+  paint-order: stroke fill;
+}
+
+.ph-b-solid {
+  position: relative;
+  display: inline-block;
+  margin-left: -0.04em;
+  padding: 0 0.16em 0.05em;
+  /* Dark type on the marker. Before the marker arrives it matches the page,
+     so the swipe is what reveals the words. */
+  color: var(--bg);
+  rotate: -1.2deg;
+  isolation: isolate;
+}
+
+.ph-b-mark {
+  position: absolute;
+  inset: 0.07em 0 0;
+  width: 100%;
+  height: calc(100% - 0.07em);
+  overflow: visible;
+  z-index: -1;
+  fill: var(--accent);
+  animation: ph-swipe 540ms var(--ease-out) 420ms both;
+}
+
+@keyframes ph-swipe {
+  from {
+    clip-path: inset(-5% 100% -5% -2%);
+  }
+  to {
+    clip-path: inset(-5% -2% -5% -2%);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title.ph-b {
+    font-size: clamp(2.4rem, 11.5vw, 3.1rem);
+  }
+
+  /* At phone sizes the outline is thick next to the letters, so they get a little air. */
+  .ph-b-hollow {
+    letter-spacing: -0.025em;
+    -webkit-text-stroke-width: 2.4px;
+  }
+}
+
+/* ── 3. Diagram ───────────────────────────────────────────────── */
+
+.hero-title.ph-c {
+  line-height: 1.46;
+}
+
+.ph-c-idea {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.22em;
+  color: var(--muted-subtle);
+}
+
+/* A loose pencil loop round the rough idea. */
+.ph-c-loop {
+  position: absolute;
+  left: -0.2em;
+  top: 0.06em;
+  width: calc(100% + 0.4em);
+  height: calc(100% - 0.06em);
+  overflow: visible;
+  color: var(--muted);
+}
+
+.ph-c-loop .ink-line {
+  stroke-width: 1.4;
+  animation: ph-draw 640ms var(--ease-out) 250ms both;
+}
+
+/* The arrow leaves the loop and drops toward what it became. */
+.ph-c-arrow {
+  position: absolute;
+  left: calc(100% + 0.26em);
+  top: 54%;
+  width: 0.85em;
+  height: 0.85em;
+  overflow: visible;
+  color: var(--accent);
+}
+
+.ph-c-arrow .ink-line {
+  stroke-width: 2.4;
+}
+
+.ph-c-arrow-line {
+  animation: ph-draw 320ms var(--ease-out) 820ms both;
+}
+
+.ph-c-arrow-head {
+  animation: ph-draw 200ms var(--ease-out) 1090ms both;
+}
+
+.ph-c-built {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.04em;
+  padding: 0 0.24em 0.04em;
+  font-weight: 600;
+}
+
+/* Boxed twice in yellow ink, like the Say hello button: the thing that got built. */
+.ph-c-box {
+  position: absolute;
+  inset: 0.1em 0 0.02em;
+  width: 100%;
+  height: calc(100% - 0.12em);
+  overflow: visible;
+  color: var(--accent);
+}
+
+.ph-c-box .ink-line {
+  stroke-width: 2.2;
+  animation: ph-draw 620ms var(--ease-out) 1250ms both;
+}
+
+.ph-c-box .ph-c-retrace {
+  stroke-width: 1.2;
+  opacity: 0.6;
+  animation-delay: 1700ms;
+}
+
+/* Like ink-draw, but hidden until its turn so a waiting stroke's round tip
+   doesn't show as a dot. The dash is three path-lengths long because these
+   shapes are stretched to fit their words, and a stretched non-scaling stroke
+   measures its dash in screen pixels: one length would stop short. */
+@keyframes ph-draw {
+  0% {
+    stroke-dasharray: 3 3;
+    stroke-dashoffset: 3;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 3 3;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-a-if svg,
+  .ph-b-mark,
+  .ph-c .ink-line {
+    animation: none !important;
+  }
+}
+
+/* ── The picker (harness chrome, fixed by the prototype spec; not a design) ── */
+
+.proto-picker {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.82);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 8px 24px rgba(0, 0, 0, 0.24),
+    0 2px 6px rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.proto-picker-highlight {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  will-change: transform;
+}
+
+/* The slide is enabled only after first paint (data-ready), so load doesn't animate. */
+.proto-picker[data-ready] .proto-picker-highlight {
+  transition:
+    transform 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    width 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-picker[data-ready] .proto-picker-highlight { transition: none; }
+}
+
+.proto-picker-item {
+  position: relative; /* sits above the highlight */
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 150ms ease-out;
+}
+
+.proto-picker-item:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.proto-picker-item:active {
+  transform: scale(0.97);
+}
+
+.proto-picker-item:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+}
+
+.proto-picker-item[data-active] {
+  color: #fff;
+}
+
+.proto-picker-divider {
+  width: 1px;
+  height: 16px;
+  margin: 0 4px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.proto-picker-replay {
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+.proto-picker[data-position="top"] {
+  bottom: auto;
+  top: 24px;
+}
