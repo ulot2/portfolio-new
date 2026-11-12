@@ -65,8 +65,9 @@ go, and delete this file once it is all done.
 - [ ] Hero headline: "I turn “what if” into what's next." in type, annotated
       by the pen. A pencil loop rings "what if", an arrow carries it down, and
       a yellow box closes round "what's next.", which brightens as it does.
-      Hovering the headline draws the marks again. The signature signs once
-      the marks are done.
+      Hovering the headline draws the marks again. The rest of the hero follows
+      in one sequence: the note, the signature, the buttons and the status line.
+- [ ] The hero introduction now says "I'm Tolu, a software developer."
 - [ ] Say hello button outlined in yellow; "See my work ↓" replaces the reel.
 - [ ] Projects: description, kind label and a Code link (where the code is
       public) under each name; only the first six show.

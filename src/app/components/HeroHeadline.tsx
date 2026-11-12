@@ -7,7 +7,7 @@ type Marks = { w: number; h: number; loop: string; arrow: string; head: string; 
 
 // The pen's pace, in px per ms, and the easing of each stroke: a pen speeds
 // up and slows down, so strokes ease in and out rather than only out.
-const PACE = 1.15;
+const PACE = 1.4;
 const PEN = "cubic-bezier(0.55, 0, 0.35, 1)";
 
 /**
@@ -17,7 +17,7 @@ const PEN = "cubic-bezier(0.55, 0, 0.35, 1)";
  * All three marks are measured to the words, so they meet them exactly at
  * any width, and they draw again when the headline is hovered.
  */
-export const HeroHeadline = () => {
+export const HeroHeadline = ({ onDrawn }: { onDrawn?: () => void }) => {
   const root = useRef<HTMLHeadingElement>(null);
   const idea = useRef<HTMLSpanElement>(null);
   const built = useRef<HTMLSpanElement>(null);
@@ -25,6 +25,12 @@ export const HeroHeadline = () => {
   const running = useRef<Animation[]>([]);
   const [marks, setMarks] = useState<Marks | null>(null);
   const [state, setState] = useState<"idle" | "drawing" | "done">("idle");
+  // Told once, the first time the marks are (nearly) drawn; hover replays don't tell it again.
+  const handedOver = useRef(false);
+  const onDrawnRef = useRef(onDrawn);
+  useEffect(() => {
+    onDrawnRef.current = onDrawn;
+  }, [onDrawn]);
 
   const measure = useCallback(() => {
     const h1 = root.current?.getBoundingClientRect();
@@ -60,16 +66,21 @@ export const HeroHeadline = () => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setState("done");
+      if (!handedOver.current) {
+        handedOver.current = true;
+        onDrawnRef.current?.();
+      }
       return;
     }
     setState("drawing");
 
     let t = delay;
-    const stroke = (sel: string, opts: { gap?: number; min?: number; easing?: string } = {}) => {
+    const stroke = (sel: string, opts: { gap?: number; min?: number; max?: number; easing?: string } = {}) => {
       const path = el.querySelector<SVGPathElement>(sel);
       if (!path) return;
       const len = path.getTotalLength();
-      const duration = Math.max(opts.min ?? 120, len / PACE);
+      // Long strokes are capped, so a wide screen doesn't make the intro drag.
+      const duration = Math.min(opts.max ?? Infinity, Math.max(opts.min ?? 120, len / PACE));
       t += opts.gap ?? 0;
       path.style.strokeDasharray = `${len} ${len}`;
       const anim = path.animate(
@@ -87,12 +98,21 @@ export const HeroHeadline = () => {
       return anim;
     };
 
-    stroke(".hero-mark-loop", { min: 520 });
-    stroke(".hero-mark-arrow", { gap: 60, min: 260 });
-    stroke(".hero-mark-head", { gap: 0, min: 110, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
-    const box = stroke(".hero-mark-box", { gap: 70, min: 520 });
-    stroke(".hero-mark-retrace", { gap: -120, min: 260, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    stroke(".hero-mark-loop", { min: 480, max: 640 });
+    stroke(".hero-mark-arrow", { gap: 40, min: 240, max: 320 });
+    stroke(".hero-mark-head", { min: 100, max: 120, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    const box = stroke(".hero-mark-box", { gap: 50, min: 480, max: 620 });
+    stroke(".hero-mark-retrace", { gap: -120, min: 240, max: 300, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
     box?.finished.then(() => setState("done")).catch(() => {});
+
+    // Hand over to the rest of the hero as the box nears closing, so the next
+    // step starts while this one finishes rather than after a pause.
+    if (!handedOver.current && box) {
+      handedOver.current = true;
+      const timing = box.effect?.getComputedTiming();
+      const at = Number(timing?.delay ?? 0) + Number(timing?.duration ?? 0) * 0.8;
+      window.setTimeout(() => onDrawnRef.current?.(), at);
+    }
   }, []);
 
   // Draw on first measure, after the headline has settled in.
@@ -100,7 +120,9 @@ export const HeroHeadline = () => {
   useEffect(() => {
     if (!marks || drawn.current) return;
     drawn.current = true;
-    draw(320);
+    // Start as the headline finishes rising (about 650ms into the page), or at
+    // once if the page took longer than that to get here, so there's no pause.
+    draw(Math.max(0, 650 - performance.now()));
   }, [marks, draw]);
 
   useEffect(() => () => running.current.forEach((a) => a.cancel()), []);

@@ -1330,13 +1330,34 @@ p {
 
 /* ── The headline: type annotated by the pen (HeroHeadline.tsx) ── */
 
+/* The hero plays in one sequence (see Hero.tsx). The headline rises first,
+   then its pen marks draw (HeroHeadline.tsx). When they're nearly done the
+   hero's data-stage turns to "rest" and the steps below follow, each starting
+   as the one before it finishes:
+     note 0ms · signature 240ms · buttons 620ms · outline 740ms · status 900ms */
 .hero-title-one,
 .hero-title-two {
-  animation: hero-rise 520ms var(--ease-out) both;
+  animation: hero-rise 560ms var(--ease-out) both;
 }
 
 .hero-title-two {
-  animation-delay: 90ms;
+  animation-delay: 110ms;
+}
+
+.hero-step {
+  opacity: 0;
+}
+
+.hero[data-stage="rest"] .hero-step {
+  animation: hero-rise 600ms var(--ease-out) both;
+}
+
+.hero[data-stage="rest"] .hero-links {
+  animation-delay: 620ms;
+}
+
+.hero[data-stage="rest"] .hero-footnote {
+  animation-delay: 900ms;
 }
 
 .hero-idea {
@@ -1463,11 +1484,15 @@ p {
 
 .hero-signature .ink-line {
   stroke-width: 1.9;
-  /* Signs once the headline's marks are drawn. */
-  animation: ink-draw 420ms var(--ease-out) calc(2250ms + var(--ink-delay)) both;
+  opacity: 0;
 }
 
-.hero-sign:hover .hero-signature .ink-line {
+/* Signs as the note settles, a little quicker than elsewhere so it doesn't hold up the buttons. */
+.hero[data-stage="rest"] .hero-signature .ink-line {
+  animation: hero-ink 380ms var(--ease-out) calc(240ms + var(--ink-delay) * 0.6) both;
+}
+
+.hero[data-stage="rest"] .hero-sign:hover .hero-signature .ink-line {
   animation-delay: var(--ink-delay);
 }
 
@@ -1518,17 +1543,27 @@ p {
   stroke-width: 1.8;
   fill: transparent;
   transition: fill var(--transition-fast);
-  animation: ink-draw 520ms var(--ease-out) 700ms both;
+  opacity: 0;
+}
+
+/* The Say hello box is drawn as the buttons arrive. */
+.hero[data-stage="rest"] .hero-button-outline .ink-line {
+  animation: hero-ink 520ms var(--ease-out) 740ms both;
 }
 
 .hero-button-outline .hero-button-retrace {
   stroke-width: 1.1;
-  opacity: 0.55;
-  animation-delay: 1050ms;
+  stroke-opacity: 0.55;
+}
+
+.hero[data-stage="rest"] .hero-button-outline .hero-button-retrace {
+  animation-delay: 1020ms;
 }
 
 /* On hover a second, heavier coat of yellow runs round the box and the paper inside warms. */
-.hero-button-outline .hero-button-trace {
+.hero-button-outline .hero-button-trace,
+.hero[data-stage="rest"] .hero-button-outline .hero-button-trace {
+  opacity: 1;
   stroke: var(--accent);
   stroke-width: 2;
   stroke-dasharray: 1 1;
@@ -1828,6 +1863,24 @@ p {
   animation-delay: calc(350ms + var(--i) * 110ms);
 }
 
+/* Like ink-draw, but the stroke stays hidden until its turn, so it can wait
+   its place in the hero's sequence without its round pen tip showing as a dot. */
+@keyframes hero-ink {
+  0% {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
 @keyframes hero-rise {
   from {
     opacity: 0;
@@ -1841,7 +1894,11 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-rise,
-  .fade-up {
+  .fade-up,
+  .hero-step,
+  .hero[data-stage] .hero-step,
+  .hero-signature .ink-line,
+  .hero-button-outline .ink-line {
     animation: none;
     opacity: 1;
   }

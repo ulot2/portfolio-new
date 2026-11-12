@@ -1,22 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeroStatus from "./HeroStatus";
 import { HeroHeadline } from "./HeroHeadline";
 import { ArrowIcon, Signature, WaveIcon } from "./ink";
 
-/** A simple introduction, with the same pen marks as the rest of the site. */
+/**
+ * A simple introduction, with the same pen marks as the rest of the site.
+ *
+ * It plays in one sequence: the headline and its pen marks first, then the
+ * note, the signature, the buttons and the status line, each starting as the
+ * one before it finishes. The headline says when its marks are drawn; the
+ * rest of the timing is in globals.css (.hero[data-stage="rest"]).
+ */
 export const Hero = () => {
   // A new take remounts the signature, so hovering it signs it again.
   const [take, setTake] = useState(0);
+  const [stage, setStage] = useState<"headline" | "rest">("headline");
+
+  // A backstop: if the marks can't be drawn for any reason, the rest still arrives.
+  useEffect(() => {
+    const backstop = window.setTimeout(() => setStage("rest"), 3200);
+    return () => window.clearTimeout(backstop);
+  }, []);
 
   return (
-    <section className="hero" id="hero" aria-labelledby="hero-title">
-      <HeroHeadline />
+    <section className="hero" id="hero" aria-labelledby="hero-title" data-stage={stage}>
+      {/* Without JavaScript nothing would start the sequence, so show it all at once. */}
+      <noscript>
+        <style>{`.hero-step, .hero-signature .ink-line, .hero-button-outline .ink-line { opacity: 1 !important; animation: none !important; } .hero-built { color: inherit !important; }`}</style>
+      </noscript>
+      <HeroHeadline onDrawn={() => setStage("rest")} />
 
-      <div className="hero-note hero-rise" style={{ "--i": 1 } as React.CSSProperties}>
+      <div className="hero-note hero-step">
         <p className="hero-description">
-          <span className="hero-introduction">I&rsquo;m Toluwalope, a software developer.</span>
+          <span className="hero-introduction">I&rsquo;m Tolu, a software developer.</span>
           You have the concept, I have the stack.
           <span className="hero-invitation">Let&rsquo;s build it together.</span>
         </p>
@@ -26,7 +44,7 @@ export const Hero = () => {
         </p>
       </div>
 
-      <div className="hero-links hero-rise" style={{ "--i": 2 } as React.CSSProperties}>
+      <div className="hero-links hero-step">
         <a className="hero-link" href="mailto:tolu.nuell@gmail.com">
           <svg className="hero-button-outline" viewBox="0 0 152 50" preserveAspectRatio="none" aria-hidden="true">
             <path className="ink-line" pathLength={1} vectorEffect="non-scaling-stroke" d="M14 3.8C48 2.3 97 3 138 3.2c7.8.1 10.1 4.7 10.4 20.6.4 15.9-2 22.6-10.2 22.8-37.7.6-88.3 1.2-124.4-.1C6 46.1 3.8 40 4.2 24.3 4.5 9.7 6 4.2 14 3.8Z" />
@@ -41,7 +59,7 @@ export const Hero = () => {
           <ArrowIcon className="hero-work-icon" />
         </a>
       </div>
-      <div className="hero-footnote hero-rise" style={{ "--i": 3 } as React.CSSProperties}>
+      <div className="hero-footnote hero-step">
         <svg className="hero-divider" viewBox="0 0 680 8" preserveAspectRatio="none" fill="none" aria-hidden="true">
           <path d="M2 4.7c92-2.5 164 1.3 251-.5 113-2.3 214 1.5 305-.2 43-.8 82-.4 120-1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
         </svg>
