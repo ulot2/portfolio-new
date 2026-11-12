@@ -1,109 +1,84 @@
-import { ImageResponse } from "next/og";
-import { ogSize } from "@/lib/og";
-import { NAME_STROKES, SIGNATURE } from "./components/ink";
+import { OG, ogImage, ogSize } from "@/lib/og";
+import { penMarks, type Rect } from "@/lib/pen-marks";
 
-export const alt = "Toluwalope Adegoke, software developer: I turn “what if” into “what’s next”.";
+export const alt = "Toluwalope Adegoke, software developer: I turn “what if” into what’s next.";
 export const size = ogSize;
 export const contentType = "image/png";
 
-const INK = "#e8e4dc";
-const ACCENT = "#e8c547";
-const MUTED = "#b0ae9f";
-const RULE = "#2c2c28";
+// The headline at a size that reads as a thumbnail but leaves the card room to breathe.
+const EM = 68;
+const LINE = EM * 1.46;
+const WIDTH = 1040; // the card's inner width
 
-const Strokes = ({
-  strokes,
-  width,
-  viewBox,
-  strokeWidth,
-}: {
-  strokes: { d: string; accent?: boolean }[];
-  width: number;
-  viewBox: string;
-  strokeWidth: number;
-}) => {
-  const [, , w, h] = viewBox.split(" ").map(Number);
-  return (
-    <svg width={width} height={(width * h) / w} viewBox={viewBox} fill="none">
-      {strokes.map((stroke, i) => (
-        <path
-          key={i}
-          d={stroke.d}
-          stroke={stroke.accent ? ACCENT : INK}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      ))}
-    </svg>
-  );
-};
+// Where each phrase sits, measured once in a browser with the same font, size
+// and spacing (the image renderer can't measure text itself). They only need
+// measuring again if the wording, EM or the gaps change.
+const TURN: Rect = { left: 0, top: 6, width: 143, height: 86 };
+const IDEA: Rect = { left: 172.9, top: 6, width: 254.9, height: 86 };
+const INTO: Rect = { left: 0, top: 105.3, width: 115.1, height: 86 };
+const BUILT: Rect = { left: 139.5, top: 105.3, width: 368.9, height: 86 };
 
-/** The home page's link preview: the hand-drawn wordmark and the signed note from the hero. */
+// The marks reach a little past the headline (the loop rises above it), so
+// the drawing gets a margin on every side.
+const BLEED = 40;
+
+const Word = ({ at, line, children, weight = 500, color = OG.ink }: { at: Rect; line: number; children: string; weight?: number; color?: string }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: at.left,
+      top: line * LINE,
+      height: LINE,
+      display: "flex",
+      alignItems: "center",
+      fontWeight: weight,
+      color,
+      whiteSpace: "nowrap",
+    }}
+  >
+    {children}
+  </div>
+);
+
+/**
+ * The home page's link preview: the hero headline as it is on the site. The
+ * sentence in type, a pencil loop round "what if", an arrow carrying it down,
+ * and a yellow box round "what's next.", drawn by the same code as the hero.
+ */
 export default function Image() {
-  const rules = [292, 352, 412, 472];
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
-          padding: "72px 88px",
-          background: "#0d0d0b",
-        }}
+  const marks = penMarks(IDEA, BUILT, EM, WIDTH);
+  const stroke = { strokeLinecap: "round" as const, strokeLinejoin: "round" as const, fill: "none" };
+
+  return ogImage(
+    <div
+      style={{
+        position: "relative",
+        display: "flex",
+        width: WIDTH,
+        height: LINE * 2,
+        marginTop: 6,
+        fontSize: EM,
+        lineHeight: 1.46,
+        letterSpacing: "-0.04em",
+      }}
+    >
+      <Word at={TURN} line={0}>I turn</Word>
+      <Word at={IDEA} line={0} color={OG.muted}>“what if”</Word>
+      <Word at={INTO} line={1}>into</Word>
+      <Word at={BUILT} line={1} weight={600}>what’s next.</Word>
+
+      <svg
+        width={WIDTH + BLEED * 2}
+        height={LINE * 2 + BLEED * 2}
+        viewBox={`${-BLEED} ${-BLEED} ${WIDTH + BLEED * 2} ${LINE * 2 + BLEED * 2}`}
+        style={{ position: "absolute", left: -BLEED, top: -BLEED }}
       >
-        {/* Faint ruled lines, as under the hero note. */}
-        {rules.map((top) => (
-          <div
-            key={top}
-            style={{
-              position: "absolute",
-              left: 88,
-              right: 88,
-              top,
-              height: 1.5,
-              background: RULE,
-            }}
-          />
-        ))}
-
-        <Strokes strokes={NAME_STROKES} viewBox="0 0 131 34" width={330} strokeWidth={2.3} />
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: 86,
-            fontSize: 40,
-            lineHeight: "60px",
-            color: INK,
-          }}
-        >
-          <div style={{ display: "flex", color: MUTED }}>Hi,</div>
-          <div style={{ display: "flex" }}>I turn “what if” into “what’s next”.</div>
-          <div style={{ display: "flex" }}>You have the concept, I have the stack.</div>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            marginTop: "auto",
-          }}
-        >
-          <div style={{ display: "flex", fontSize: 26, color: MUTED }}>
-            Software Developer · tnuell.sbs
-          </div>
-          <div style={{ display: "flex", transform: "rotate(-5deg)" }}>
-            <Strokes strokes={SIGNATURE} viewBox="0 0 104 50" width={250} strokeWidth={2.2} />
-          </div>
-        </div>
-      </div>
-    ),
-    ogSize,
+        <path d={marks.loop} stroke={OG.muted} strokeWidth={1.6} {...stroke} />
+        <path d={marks.arrow} stroke={OG.accent} strokeWidth={2.4} {...stroke} />
+        <path d={marks.head} stroke={OG.accent} strokeWidth={2.4} {...stroke} />
+        <path d={marks.box} stroke={OG.accent} strokeWidth={2.6} {...stroke} />
+        <path d={marks.retrace} stroke={OG.accent} strokeWidth={1.3} strokeOpacity={0.55} {...stroke} />
+      </svg>
+    </div>,
   );
 }
