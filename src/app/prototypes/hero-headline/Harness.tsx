@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import HeroStatus from "../../components/HeroStatus";
 import { ArrowIcon, Signature, WaveIcon } from "../../components/ink";
 import { Diagram } from "./variants/Diagram";
+import { DiagramFirstTake } from "./variants/DiagramFirstTake";
 import { OutlineToSolid } from "./variants/OutlineToSolid";
 import { PencilToInk } from "./variants/PencilToInk";
 
@@ -11,6 +12,7 @@ const VARIANTS = [
   { name: "Pencil to ink", Headline: PencilToInk },
   { name: "Outline to solid", Headline: OutlineToSolid },
   { name: "Diagram", Headline: Diagram },
+  { name: "Diagram, first take", Headline: DiagramFirstTake },
 ];
 
 /**

@@ -216,6 +216,105 @@
   }
 }
 
+/* ── 3. Diagram (measured marks, drawn at a pen's pace) ───────── */
+
+.hero-title.pd {
+  position: relative;
+  line-height: 1.46;
+}
+
+.pd-line-one,
+.pd-line-two {
+  animation: hero-rise 520ms var(--ease-out) both;
+}
+
+.pd-line-two {
+  animation-delay: 90ms;
+}
+
+.pd-idea {
+  /* Room for the loop, so it rings the words without touching "turn". */
+  margin-left: 0.44em;
+  color: var(--muted-subtle);
+}
+
+.pd-built {
+  /* Room for the box, so it doesn't touch "into". */
+  margin-left: 0.36em;
+  font-weight: 600;
+  /* Waits a little dim, and comes up to full ink as its box closes. */
+  color: color-mix(in srgb, var(--fg) 58%, var(--bg));
+  transition: color 420ms var(--ease-out);
+}
+
+.pd[data-state="done"] .pd-built {
+  color: var(--fg);
+}
+
+.pd-marks {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.pd-marks path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Hidden until the pen reaches them; the script draws each one in turn. */
+  opacity: 0;
+}
+
+.pd[data-state="done"] .pd-marks path {
+  opacity: 1;
+}
+
+.pd-loop {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+}
+
+.pd-arrow,
+.pd-head {
+  stroke: var(--accent);
+  stroke-width: 2.1;
+}
+
+.pd-box {
+  stroke: var(--accent);
+  stroke-width: 2.2;
+}
+
+.pd-retrace {
+  stroke: var(--accent);
+  stroke-width: 1.1;
+  stroke-opacity: 0.55;
+}
+
+@media (max-width: 640px) {
+  .pd-loop {
+    stroke-width: 1.3;
+  }
+
+  .pd-arrow,
+  .pd-head,
+  .pd-box {
+    stroke-width: 1.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-line-one,
+  .pd-line-two {
+    animation: none;
+  }
+
+  .pd-built {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ph-a-if svg,
   .ph-b-mark,
