@@ -67,7 +67,7 @@ export const Projects = () => (
 
     {projects.length > HOME_PROJECT_COUNT && (
       <a className="wr-all wi-all" href="/projects">
-        All {projects.length} projects
+        All projects
         <ArrowIcon className="wr-all-icon" />
       </a>
     )}

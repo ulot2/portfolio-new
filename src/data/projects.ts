@@ -16,6 +16,18 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 11,
+    title: "Nnkan Obe",
+    question: "What if Ibadan's foodstuff shop was a tap away?",
+    kind: "Website",
+    description:
+      "Fresh vegetables, proteins, staples and cooking packages in one place. A foodstuff shop made for Ibadan.",
+    stack: ["React", "Vite", "React Router"],
+    liveUrl: "https://inkan-obe.vercel.app",
+    // Private repo — the live site is the only public entry point.
+    githubUrl: "#",
+  },
+  {
     id: 9,
     title: "Museum of Ordinary Things",
     question: "What if the everyday things you keep had a museum?",
@@ -48,7 +60,7 @@ export const projects: Project[] = [
     description:
       "Comment, suggest edits and restore any earlier version. It keeps working offline and merges when you reconnect.",
     stack: ["React Router", "Yjs", "Cloudflare Workers", "Better Auth", "BlockNote"],
-    liveUrl: "https://cowrite.cowrite.workers.dev",
+    liveUrl: "https://cowrite.tnuell.sbs",
     githubUrl: "https://github.com/ulot2/cowrite",
   },
   {
