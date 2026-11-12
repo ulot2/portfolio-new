@@ -79,8 +79,9 @@ go, and delete this file once it is all done.
       a small caption saying what it's made from.
 
 ### Link previews (the image shown when a page is shared)
-- [ ] Home: the hero headline with "what's next." hand-lettered in yellow, the
-      wordmark, your name and the signature, on dot-grid paper.
+- [ ] Home: the hero headline as on the site (the pencil loop, arrow and
+      yellow box, drawn by the same code), with the wordmark, your name and the
+      signature, on dot-grid paper.
 - [ ] Blog posts and `/projects` get matching cards: a hand-lettered "writing"
       or "projects" over the title.
 - [ ] Apps like WhatsApp and LinkedIn keep old previews for a while. To see
