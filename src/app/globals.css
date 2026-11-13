@@ -31,7 +31,11 @@
   --note-green: #b5dba0;
   --note-blue: #a9cdea;
   --note-pink: #f2a7b8;
+  --note-lavender: #cbbcf2;
+  --note-lavender-fold: #ac9be0;
+  --note-rule: rgb(27 26 22 / 0.13);
   --note-ink: #1b1a16;
+  --note-ink-violet: #6a48b0;
   --note-shadow: rgb(0 0 0 / 0.4);
   /* Clear tape on a dark page; beige masking tape on light paper, where clear
      tape would vanish. */
@@ -1495,10 +1499,6 @@ p {
 }
 
 .hero-note {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem;
   max-width: 36rem;
   margin-top: 2rem;
 }
@@ -1519,18 +1519,25 @@ p {
   display: block;
 }
 
+/* Signed at the bottom right of the status note, clear of the folded corner. */
 .hero-sign {
-  flex: none;
-  line-height: 0;
-  margin-bottom: -0.15rem;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.25rem 1.6rem -0.3rem 0;
+  line-height: 1.5rem;
 }
 
 .hero-signature {
-  width: 6rem;
+  width: 4.6rem;
   height: auto;
   overflow: visible;
-  rotate: -6deg;
-  color: var(--fg);
+  rotate: -4deg;
+  color: var(--note-ink);
+}
+
+/* The flourish under the name, in violet ink on the lavender paper. */
+.hero-signature .ink-accent {
+  stroke: var(--note-ink-violet);
 }
 
 .hero-signature .ink-line {
@@ -1690,20 +1697,54 @@ p {
   translate: 0 3px;
 }
 
+/* The status note follows the buttons on narrow screens. On wider ones it
+   sits in its own column beside the intro and buttons. */
 .hero-footnote {
-  position: relative;
-  max-width: 36rem;
-  margin-top: 2.75rem;
-  padding-top: 1.25rem;
+  margin-top: 3.25rem;
+  filter: drop-shadow(0 10px 14px var(--note-shadow));
 }
 
-.hero-divider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0.5rem;
-  color: var(--border2);
+@media (min-width: 768px) {
+  .hero-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    grid-template-rows: auto 1fr;
+    column-gap: 2.5rem;
+  }
+
+  .hero-note,
+  .hero-links {
+    grid-column: 1;
+  }
+
+  .hero-links {
+    align-self: start;
+  }
+
+  .hero-footnote {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    margin-top: 1.5rem;
+    margin-right: -1rem;
+  }
+
+  /* Tilted the other way, taped at its top-left corner. (Scoped to the
+     hero body so these win over the note's base rules further down.) */
+  .hero-body .hero-status {
+    rotate: 2.2deg;
+  }
+
+  .hero-body .hero-status:hover,
+  .hero-body .hero-status:focus-within {
+    rotate: 0deg;
+  }
+
+  .hero-body .hero-status::before {
+    left: 1.4rem;
+    translate: 0 0;
+    rotate: -8deg;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1713,24 +1754,7 @@ p {
   }
 
   .hero-note {
-    position: relative;
-    display: block;
     margin-top: 1.5rem;
-    padding-bottom: 0.25rem;
-  }
-
-  .hero-sign {
-    position: absolute;
-    right: 0;
-    bottom: -0.1rem;
-  }
-
-  .hero-signature {
-    width: 4.25rem;
-  }
-
-  .hero-invitation {
-    padding-right: 4.75rem;
   }
 
   .hero-links {
@@ -1763,42 +1787,99 @@ p {
     font-size: 1.0625rem;
   }
 
+  /* The hero is a flex column here; its parts join it directly. */
+  .hero-body {
+    display: contents;
+  }
+
   .hero-footnote {
     margin-top: auto;
   }
 
   .hero-links {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
 }
 
+/* A lavender notepad sheet: taped at the top, ruled under each line of text,
+   with the bottom-right corner folded up. Like the Now notes, it keeps its
+   paper and dark ink in both themes. */
 .hero-status {
+  --paper: var(--note-lavender);
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  max-width: 100%;
+  width: fit-content;
+  max-width: min(100%, 25rem);
+  padding: 1.55rem 1.6rem 1.4rem 1.2rem;
+  color: var(--note-ink);
+  background:
+    repeating-linear-gradient(
+        to bottom,
+        transparent 0 calc(1.5rem - 1px),
+        var(--note-rule) calc(1.5rem - 1px) 1.5rem
+      )
+      0 1.55rem / 100% calc(100% - 2.95rem) no-repeat,
+    var(--paper);
+  border-radius: 2px;
+  /* Cuts the corner for the fold, and leaves room above for the tape. */
+  clip-path: polygon(0 -2rem, 100% -2rem, 100% calc(100% - 1.4rem), calc(100% - 1.4rem) 100%, 0 100%);
+  rotate: -1.6deg;
+  transition: rotate 380ms var(--ease-out);
+}
+
+.hero-status:hover,
+.hero-status:focus-within {
+  rotate: 0deg;
+}
+
+.hero-status::before {
+  content: "";
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  width: 4rem;
+  height: 1.2rem;
+  translate: -50% 0;
+  rotate: 3deg;
+  background: var(--tape-color);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 2px var(--tape-edge);
+}
+
+.hero-status::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: linear-gradient(to top left, transparent 50%, var(--note-lavender-fold) 50%);
+  box-shadow: -2px -2px 3px rgb(0 0 0 / 0.08);
 }
 
 .hero-status-clock {
   flex: none;
-  width: 2.25rem;
-  height: 2.25rem;
-  margin-top: 0.25rem;
-  color: var(--accent);
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.1rem;
 }
 
 .hero-status-clock .ink-line {
   stroke-width: 2;
 }
 
+/* Every line is 1.5rem tall, so the text sits on the ruled lines. */
 .hero-status-copy {
   min-width: 0;
-  font-size: 0.8125rem;
-  line-height: 1.75;
+  font-size: 0.85rem;
+  line-height: 1.5rem;
 }
 
 .hero-status-time {
-  color: var(--fg);
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .hero-status-time time {
@@ -1806,43 +1887,65 @@ p {
 }
 
 .hero-status-availability {
-  display: inline-block;
-  color: var(--muted);
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--note-ink) 75%, transparent);
 }
 
-.hero-status-music {
+.hero-status-music,
+.hero-status-now {
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
-  margin-top: 0.15rem;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--note-ink) 80%, transparent);
+}
+
+.hero-status-music {
   overflow-wrap: anywhere;
 }
 
-.hero-status-record {
+.hero-status-record,
+.hero-status-pin {
   flex: none;
   align-self: flex-start;
   width: 1rem;
   height: 1rem;
-  margin-top: 0.2rem;
-  color: var(--accent);
+  margin-top: 0.25rem;
 }
 
 .hero-status-record .ink-line,
-.hero-status-arrow .ink-line {
+.hero-status-arrow .ink-line,
+.hero-status-pin .ink-line,
+.hero-status-down .ink-line {
   stroke-width: 1.5;
 }
 
-.hero-status-music a {
-  color: var(--accent);
+.hero-status-music a,
+.hero-status-now a {
+  color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: color var(--transition-fast);
+  text-decoration-color: color-mix(in srgb, var(--note-ink) 40%, transparent);
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
 }
 
-.hero-status-music a:hover {
-  color: var(--fg);
+.hero-status-music a {
+  font-weight: 600;
+  color: var(--note-ink);
+}
+
+.hero-status-music a:hover,
+.hero-status-now a:hover {
+  color: var(--note-ink);
+  text-decoration-color: var(--note-ink-violet);
+}
+
+.hero-status a:focus-visible {
+  outline: 2px solid var(--note-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .hero-status-arrow {
@@ -1853,41 +1956,9 @@ p {
   vertical-align: -0.05em;
 }
 
-/* A pointer to the Now note further down the page. */
-.hero-status-now {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  margin-top: 0.15rem;
-  color: var(--muted);
-}
-
-.hero-status-pin {
-  flex: none;
-  align-self: flex-start;
-  width: 1rem;
-  height: 1rem;
-  margin-top: 0.2rem;
-  color: var(--accent);
-}
-
-.hero-status-pin .ink-line,
-.hero-status-down .ink-line {
-  stroke-width: 1.5;
-}
-
-.hero-status-now a {
-  color: var(--muted);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
-
-.hero-status-now a:hover {
-  color: var(--fg);
-  text-decoration-color: var(--accent);
+/* The last word of the Now pointer stays with its arrow. */
+.hero-status-keep {
+  white-space: nowrap;
 }
 
 .hero-status-down {
@@ -1896,7 +1967,6 @@ p {
   height: 0.75rem;
   margin-left: 0.25rem;
   vertical-align: -0.05em;
-  color: var(--accent);
   transition: translate 220ms var(--ease-out);
 }
 
@@ -1952,6 +2022,10 @@ p {
   .hero-button-outline .ink-line {
     animation: none;
     opacity: 1;
+  }
+
+  .hero-status {
+    transition: none;
   }
 }
 
