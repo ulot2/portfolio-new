@@ -31,11 +31,10 @@
   --note-green: #b5dba0;
   --note-blue: #a9cdea;
   --note-pink: #f2a7b8;
-  --note-lavender: #cbbcf2;
-  --note-lavender-fold: #ac9be0;
+  --note-kraft: #d8c49c;
+  --note-kraft-fold: #bfa676;
   --note-rule: rgb(27 26 22 / 0.13);
   --note-ink: #1b1a16;
-  --note-ink-violet: #6a48b0;
   --note-shadow: rgb(0 0 0 / 0.4);
   /* Clear tape on a dark page; beige masking tape on light paper, where clear
      tape would vanish. */
@@ -1499,6 +1498,10 @@ p {
 }
 
 .hero-note {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
   max-width: 36rem;
   margin-top: 2rem;
 }
@@ -1519,25 +1522,18 @@ p {
   display: block;
 }
 
-/* Signed at the bottom right of the status note, clear of the folded corner. */
 .hero-sign {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0.25rem 1.6rem -0.3rem 0;
-  line-height: 1.5rem;
+  flex: none;
+  line-height: 0;
+  margin-bottom: -0.15rem;
 }
 
 .hero-signature {
-  width: 4.6rem;
+  width: 6rem;
   height: auto;
   overflow: visible;
-  rotate: -4deg;
-  color: var(--note-ink);
-}
-
-/* The flourish under the name, in violet ink on the lavender paper. */
-.hero-signature .ink-accent {
-  stroke: var(--note-ink-violet);
+  rotate: -6deg;
+  color: var(--fg);
 }
 
 .hero-signature .ink-line {
@@ -1697,54 +1693,10 @@ p {
   translate: 0 3px;
 }
 
-/* The status note follows the buttons on narrow screens. On wider ones it
-   sits in its own column beside the intro and buttons. */
+/* The status note, taped under the buttons. */
 .hero-footnote {
   margin-top: 3.25rem;
   filter: drop-shadow(0 10px 14px var(--note-shadow));
-}
-
-@media (min-width: 768px) {
-  .hero-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 20rem;
-    grid-template-rows: auto 1fr;
-    column-gap: 2.5rem;
-  }
-
-  .hero-note,
-  .hero-links {
-    grid-column: 1;
-  }
-
-  .hero-links {
-    align-self: start;
-  }
-
-  .hero-footnote {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    align-self: start;
-    margin-top: 1.5rem;
-    margin-right: -1rem;
-  }
-
-  /* Tilted the other way, taped at its top-left corner. (Scoped to the
-     hero body so these win over the note's base rules further down.) */
-  .hero-body .hero-status {
-    rotate: 2.2deg;
-  }
-
-  .hero-body .hero-status:hover,
-  .hero-body .hero-status:focus-within {
-    rotate: 0deg;
-  }
-
-  .hero-body .hero-status::before {
-    left: 1.4rem;
-    translate: 0 0;
-    rotate: -8deg;
-  }
 }
 
 @media (max-width: 480px) {
@@ -1754,7 +1706,24 @@ p {
   }
 
   .hero-note {
+    position: relative;
+    display: block;
     margin-top: 1.5rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .hero-sign {
+    position: absolute;
+    right: 0;
+    bottom: -0.1rem;
+  }
+
+  .hero-signature {
+    width: 4.25rem;
+  }
+
+  .hero-invitation {
+    padding-right: 4.75rem;
   }
 
   .hero-links {
@@ -1787,11 +1756,6 @@ p {
     font-size: 1.0625rem;
   }
 
-  /* The hero is a flex column here; its parts join it directly. */
-  .hero-body {
-    display: contents;
-  }
-
   .hero-footnote {
     margin-top: auto;
   }
@@ -1801,11 +1765,11 @@ p {
   }
 }
 
-/* A lavender notepad sheet: taped at the top, ruled under each line of text,
+/* A kraft-paper notepad sheet: taped at the top, ruled under each line of text,
    with the bottom-right corner folded up. Like the Now notes, it keeps its
    paper and dark ink in both themes. */
 .hero-status {
-  --paper: var(--note-lavender);
+  --paper: var(--note-kraft);
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -1855,7 +1819,7 @@ p {
   bottom: 0;
   width: 1.4rem;
   height: 1.4rem;
-  background: linear-gradient(to top left, transparent 50%, var(--note-lavender-fold) 50%);
+  background: linear-gradient(to top left, transparent 50%, var(--note-kraft-fold) 50%);
   box-shadow: -2px -2px 3px rgb(0 0 0 / 0.08);
 }
 
@@ -1939,7 +1903,7 @@ p {
 .hero-status-music a:hover,
 .hero-status-now a:hover {
   color: var(--note-ink);
-  text-decoration-color: var(--note-ink-violet);
+  text-decoration-color: var(--note-ink);
 }
 
 .hero-status a:focus-visible {
