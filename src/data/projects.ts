@@ -12,11 +12,16 @@ export interface Project {
   githubUrl: string;
   /** Set while a project is still being built; it then shows without a link if it has none. */
   inProgress?: boolean;
+  /** A 1440×900 picture of the project, in public/projects/. */
+  image: string;
+  /** Set when the picture is drawn from the project's real output, not captured from a live page. */
+  drawn?: boolean;
 }
 
 export const projects: Project[] = [
   {
     id: 11,
+    image: "/projects/nnkan-obe.png",
     title: "Nnkan Obe",
     question: "What if Ibadan's foodstuff shop was a tap away?",
     kind: "Website",
@@ -29,6 +34,7 @@ export const projects: Project[] = [
   },
   {
     id: 9,
+    image: "/projects/museum-of-ordinary-things.png",
     title: "Museum of Ordinary Things",
     question: "What if the everyday things you keep had a museum?",
     kind: "Web app",
@@ -41,6 +47,7 @@ export const projects: Project[] = [
   },
   {
     id: 10,
+    image: "/projects/secondlook.png",
     title: "SecondLook",
     question: "What if someone checked your application before you sent it?",
     kind: "Web app",
@@ -54,6 +61,7 @@ export const projects: Project[] = [
   },
   {
     id: 1,
+    image: "/projects/cowrite.png",
     title: "cowrite",
     question: "What if writing had live cursors?",
     kind: "Web app",
@@ -65,6 +73,7 @@ export const projects: Project[] = [
   },
   {
     id: 2,
+    image: "/projects/solostack.png",
     title: "SoloStack",
     question: "What if African freelancers had one workspace?",
     kind: "Web app",
@@ -75,6 +84,7 @@ export const projects: Project[] = [
   },
   {
     id: 3,
+    image: "/projects/dees-agora.png",
     title: "Dee's Agora",
     question: "What if online debate had real structure?",
     kind: "Web app",
@@ -86,6 +96,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
+    image: "/projects/bamssalads-quiz-club.png",
     title: "BAMSSALADS Quiz Club",
     question: "What if a quiz club ran on phone buzzers?",
     kind: "Web app",
@@ -98,6 +109,8 @@ export const projects: Project[] = [
   },
   {
     id: 5,
+    image: "/projects/gitmop.png",
+    drawn: true,
     title: "gitmop",
     question: "What if stale git branches cleaned themselves up?",
     kind: "Command-line tool",
@@ -109,6 +122,8 @@ export const projects: Project[] = [
   },
   {
     id: 6,
+    image: "/projects/readtrail.png",
+    drawn: true,
     title: "Readtrail",
     question: "What if your browser kept everything you read?",
     kind: "Chrome extension",
@@ -120,6 +135,8 @@ export const projects: Project[] = [
   },
   {
     id: 7,
+    image: "/projects/hallway.png",
+    drawn: true,
     title: "hallway",
     question: "What if a first-time user checked your UI wording?",
     kind: "GitHub Action",
@@ -131,6 +148,7 @@ export const projects: Project[] = [
   },
   {
     id: 8,
+    image: "/projects/lasetales.png",
     title: "LaseTales",
     question: "What if an event videographer had a home for their films?",
     kind: "Website",
