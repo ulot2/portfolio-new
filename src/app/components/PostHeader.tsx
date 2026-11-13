@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { PostMetadata } from "@/types/blog";
 import { CopyIcon, OutArrowIcon, Rule, TickIcon } from "./ink";
+import { TagList } from "./TagList";
 
 interface PostHeaderProps {
   post: PostMetadata;
@@ -53,7 +54,7 @@ export const PostHeader = ({ post }: PostHeaderProps) => {
         {post.tags && post.tags.length > 0 && (
           <p className="ar-tags">
             <span className="visually-hidden">Topics: </span>
-            {post.tags.join(" / ")}
+            <TagList tags={post.tags} />
           </p>
         )}
 

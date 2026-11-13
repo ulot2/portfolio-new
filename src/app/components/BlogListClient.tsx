@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { PostMetadata } from "@/types/blog";
 import { BlogCard } from "./BlogCard";
+import { tagInk } from "@/lib/tag-ink";
 import { CrossIcon, RULE, Rule, SearchIcon, Underline } from "./ink";
 
 interface BlogListClientProps {
@@ -85,6 +86,7 @@ export const BlogListClient = ({ posts, tags }: BlogListClientProps) => {
                 onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
                 className="bl-tag"
                 aria-pressed={selectedTag === tag}
+                style={{ "--tag-ink": tagInk(tag) } as React.CSSProperties}
               >
                 {tag}
                 <sup className="bl-tag-count">
