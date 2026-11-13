@@ -33,6 +33,10 @@
   --note-pink: #f2a7b8;
   --note-ink: #1b1a16;
   --note-shadow: rgb(0 0 0 / 0.4);
+  /* Clear tape on a dark page; beige masking tape on light paper, where clear
+     tape would vanish. */
+  --tape-color: rgb(255 255 255 / 0.32);
+  --tape-edge: rgb(0 0 0 / 0.15);
 
   /* Plus Jakarta Sans is the single display face. --font-serif and --font-mono
      are deliberate aliases of it: the design uses them for tone (headings,
@@ -78,6 +82,8 @@
   --violet: #6a48b0;
   --pink: #a8355e;
   --note-shadow: rgb(60 50 20 / 0.16);
+  --tape-color: rgb(216 203 168 / 0.78);
+  --tape-edge: rgb(110 90 40 / 0.28);
   color-scheme: light;
 }
 
@@ -381,9 +387,9 @@ header.site-header {
   height: 1.15rem;
   translate: -50% 0;
   rotate: -4deg;
-  background: rgb(255 255 255 / 0.28);
+  background: var(--tape-color);
   backdrop-filter: blur(1px);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+  box-shadow: 0 1px 2px var(--tape-edge);
 }
 
 .mm-list {
@@ -4445,9 +4451,9 @@ p {
   height: 1.15rem;
   translate: -50% 0;
   rotate: var(--tape, -4deg);
-  background: rgb(255 255 255 / 0.32);
+  background: var(--tape-color);
   backdrop-filter: blur(1px);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+  box-shadow: 0 1px 2px var(--tape-edge);
 }
 
 .nw-sticky-title,
