@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { type Project, projectCode, projectHref, projectLive } from "@/data/projects";
 import { HookArrowIcon, OutArrowIcon, Rule, Underline } from "./ink";
 import { ProjectKindIcon } from "./ProjectKindIcon";
+import { SketchShot } from "./SketchShot";
 
 // The filters group the kinds a visitor would think in, not the exact labels.
 const GROUPS = [
@@ -101,6 +102,14 @@ export const ProjectsCatalogue = ({ projects }: { projects: Project[] }) => {
                   )}
                 </h2>
                 <p className="pj-desc">{project.description}</p>
+
+                <figure className="pj-shot">
+                  <SketchShot project={project} sizes="(max-width: 640px) 100vw, 500px" i={index} />
+                  <figcaption className="pj-shot-note">
+                    <HookArrowIcon className="pj-shot-hook" />
+                    {project.drawn ? "drawn from its real output" : "the home page, as it is today"}
+                  </figcaption>
+                </figure>
 
                 <p className="pj-links">
                   {project.inProgress && <span className="wi-status">In progress</span>}
