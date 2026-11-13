@@ -16,6 +16,31 @@
   --green: #22c55e;
   --green-glow: rgba(34, 197, 94, 0.4);
 
+  /* More pens beside the yellow, which stays the main accent. Each one marks
+     one kind of thing (a section, a project kind, a blog topic) and is used
+     for marks such as icons, underlines and tags, not for large surfaces. */
+  --coral: #e5674f;
+  --teal: #5ec4a8;
+  --blue: #7fa8e6;
+  --violet: #b79be6;
+  --pink: #e88aa8;
+
+  /* Sticky-note paper. It stays the same colour in both themes, with the same
+     dark ink, like real paper. */
+  --note-yellow: #ecc94b;
+  --note-green: #b5dba0;
+  --note-blue: #a9cdea;
+  --note-pink: #f2a7b8;
+  --note-kraft: #d8c49c;
+  --note-kraft-fold: #bfa676;
+  --note-rule: rgb(27 26 22 / 0.13);
+  --note-ink: #1b1a16;
+  --note-shadow: rgb(0 0 0 / 0.4);
+  /* Clear tape on a dark page; beige masking tape on light paper, where clear
+     tape would vanish. */
+  --tape-color: rgb(255 255 255 / 0.32);
+  --tape-edge: rgb(0 0 0 / 0.15);
+
   /* Plus Jakarta Sans is the single display face. --font-serif and --font-mono
      are deliberate aliases of it: the design uses them for tone (headings,
      labels, meta) rather than to switch typeface. --font-code is the one place
@@ -50,11 +75,41 @@
   --muted: #5c594f;
   --muted-subtle: #3d3b34;
   --subtle: #dcd7c9;
-  --accent: #946c00;
+  --accent: #85610a;
   --border: #e0dbcd;
   --border2: #cfc9b7;
   --green: #15803d;
+  --coral: #b23a22;
+  --teal: #0e7262;
+  --blue: #2c5aa8;
+  --violet: #6a48b0;
+  --pink: #a8355e;
+  --note-shadow: rgb(60 50 20 / 0.16);
+  --tape-color: rgb(216 203 168 / 0.78);
+  --tape-edge: rgb(110 90 40 / 0.28);
   color-scheme: light;
+}
+
+/* Each home-page section writes in its own pen, in the section itself and in
+   the rail and dock entries that point to it. The hero keeps the yellow. */
+#work,
+[data-section="work"] {
+  --ink: var(--blue);
+}
+
+#now,
+[data-section="now"] {
+  --ink: var(--teal);
+}
+
+#writing,
+[data-section="writing"] {
+  --ink: var(--violet);
+}
+
+#contact,
+[data-section="contact"] {
+  --ink: var(--pink);
 }
 
 /* ═══════════════════════════════════════════════
@@ -285,11 +340,10 @@ header.site-header {
   transform: translateX(4px);
 }
 
-/* A yellow sticky note, taped at the top and hung slightly crooked. It stays
-   yellow with dark ink in both themes, so the colors are fixed here. */
+/* A yellow sticky note, taped at the top and hung slightly crooked. Like the
+   Now notes, it keeps its paper and dark ink in both themes. */
 .mm-panel {
-  --note: #ecc94b;
-  --note-ink: #1b1a16;
+  --note: var(--note-yellow);
   position: absolute;
   top: calc(100% + 0.6rem);
   right: -0.2rem;
@@ -336,9 +390,9 @@ header.site-header {
   height: 1.15rem;
   translate: -50% 0;
   rotate: -4deg;
-  background: rgb(255 255 255 / 0.28);
+  background: var(--tape-color);
   backdrop-filter: blur(1px);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+  box-shadow: 0 1px 2px var(--tape-edge);
 }
 
 .mm-list {
@@ -675,7 +729,7 @@ header.site-header {
   bottom: -0.3rem;
   width: calc(100% + 4px);
   height: 6px;
-  color: var(--accent);
+  color: var(--ink, var(--accent));
 }
 
 .section-rail-underline .ink-line {
@@ -726,7 +780,7 @@ header.site-header {
   padding: 0.15rem;
   border-radius: 50%;
   background: var(--bg);
-  color: var(--accent);
+  color: var(--ink, var(--accent));
   overflow: visible;
   animation: doodle-pop 500ms cubic-bezier(0.34, 1.6, 0.64, 1) both;
 }
@@ -976,7 +1030,7 @@ header.site-header {
   bottom: -0.3rem;
   width: calc(100% + 4px);
   height: 6px;
-  color: var(--accent);
+  color: var(--ink, var(--accent));
 }
 
 .nav-dock-underline .ink-line {
@@ -1011,7 +1065,7 @@ header.site-header {
 .nav-dock-list a:hover .nav-dock-icon,
 .nav-dock-list button:hover .nav-dock-icon,
 .nav-dock-list a[aria-current] .nav-dock-icon {
-  color: var(--accent);
+  color: var(--ink, var(--accent));
   opacity: 1;
 }
 
@@ -1639,20 +1693,10 @@ p {
   translate: 0 3px;
 }
 
+/* The status note, taped under the buttons. */
 .hero-footnote {
-  position: relative;
-  max-width: 36rem;
-  margin-top: 2.75rem;
-  padding-top: 1.25rem;
-}
-
-.hero-divider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0.5rem;
-  color: var(--border2);
+  margin-top: 3.25rem;
+  filter: drop-shadow(0 10px 14px var(--note-shadow));
 }
 
 @media (max-width: 480px) {
@@ -1717,37 +1761,89 @@ p {
   }
 
   .hero-links {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
 }
 
+/* A kraft-paper notepad sheet: taped at the top, ruled under each line of text,
+   with the bottom-right corner folded up. Like the Now notes, it keeps its
+   paper and dark ink in both themes. */
 .hero-status {
+  --paper: var(--note-kraft);
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  max-width: 100%;
+  width: fit-content;
+  max-width: min(100%, 25rem);
+  padding: 1.55rem 1.6rem 1.4rem 1.2rem;
+  color: var(--note-ink);
+  background:
+    repeating-linear-gradient(
+        to bottom,
+        transparent 0 calc(1.5rem - 1px),
+        var(--note-rule) calc(1.5rem - 1px) 1.5rem
+      )
+      0 1.55rem / 100% calc(100% - 2.95rem) no-repeat,
+    var(--paper);
+  border-radius: 2px;
+  /* Cuts the corner for the fold, and leaves room above for the tape. */
+  clip-path: polygon(0 -2rem, 100% -2rem, 100% calc(100% - 1.4rem), calc(100% - 1.4rem) 100%, 0 100%);
+  rotate: -1.6deg;
+  transition: rotate 380ms var(--ease-out);
+}
+
+.hero-status:hover,
+.hero-status:focus-within {
+  rotate: 0deg;
+}
+
+.hero-status::before {
+  content: "";
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  width: 4rem;
+  height: 1.2rem;
+  translate: -50% 0;
+  rotate: 3deg;
+  background: var(--tape-color);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 2px var(--tape-edge);
+}
+
+.hero-status::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: linear-gradient(to top left, transparent 50%, var(--note-kraft-fold) 50%);
+  box-shadow: -2px -2px 3px rgb(0 0 0 / 0.08);
 }
 
 .hero-status-clock {
   flex: none;
-  width: 2.25rem;
-  height: 2.25rem;
-  margin-top: 0.25rem;
-  color: var(--accent);
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.1rem;
 }
 
 .hero-status-clock .ink-line {
   stroke-width: 2;
 }
 
+/* Every line is 1.5rem tall, so the text sits on the ruled lines. */
 .hero-status-copy {
   min-width: 0;
-  font-size: 0.8125rem;
-  line-height: 1.75;
+  font-size: 0.85rem;
+  line-height: 1.5rem;
 }
 
 .hero-status-time {
-  color: var(--fg);
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .hero-status-time time {
@@ -1755,43 +1851,65 @@ p {
 }
 
 .hero-status-availability {
-  display: inline-block;
-  color: var(--muted);
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--note-ink) 75%, transparent);
 }
 
-.hero-status-music {
+.hero-status-music,
+.hero-status-now {
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
-  margin-top: 0.15rem;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--note-ink) 80%, transparent);
+}
+
+.hero-status-music {
   overflow-wrap: anywhere;
 }
 
-.hero-status-record {
+.hero-status-record,
+.hero-status-pin {
   flex: none;
   align-self: flex-start;
   width: 1rem;
   height: 1rem;
-  margin-top: 0.2rem;
-  color: var(--accent);
+  margin-top: 0.25rem;
 }
 
 .hero-status-record .ink-line,
-.hero-status-arrow .ink-line {
+.hero-status-arrow .ink-line,
+.hero-status-pin .ink-line,
+.hero-status-down .ink-line {
   stroke-width: 1.5;
 }
 
-.hero-status-music a {
-  color: var(--accent);
+.hero-status-music a,
+.hero-status-now a {
+  color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: color var(--transition-fast);
+  text-decoration-color: color-mix(in srgb, var(--note-ink) 40%, transparent);
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
 }
 
-.hero-status-music a:hover {
-  color: var(--fg);
+.hero-status-music a {
+  font-weight: 600;
+  color: var(--note-ink);
+}
+
+.hero-status-music a:hover,
+.hero-status-now a:hover {
+  color: var(--note-ink);
+  text-decoration-color: var(--note-ink);
+}
+
+.hero-status a:focus-visible {
+  outline: 2px solid var(--note-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .hero-status-arrow {
@@ -1802,41 +1920,9 @@ p {
   vertical-align: -0.05em;
 }
 
-/* A pointer to the Now note further down the page. */
-.hero-status-now {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  margin-top: 0.15rem;
-  color: var(--muted);
-}
-
-.hero-status-pin {
-  flex: none;
-  align-self: flex-start;
-  width: 1rem;
-  height: 1rem;
-  margin-top: 0.2rem;
-  color: var(--accent);
-}
-
-.hero-status-pin .ink-line,
-.hero-status-down .ink-line {
-  stroke-width: 1.5;
-}
-
-.hero-status-now a {
-  color: var(--muted);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
-
-.hero-status-now a:hover {
-  color: var(--fg);
-  text-decoration-color: var(--accent);
+/* The last word of the Now pointer stays with its arrow. */
+.hero-status-keep {
+  white-space: nowrap;
 }
 
 .hero-status-down {
@@ -1845,7 +1931,6 @@ p {
   height: 0.75rem;
   margin-left: 0.25rem;
   vertical-align: -0.05em;
-  color: var(--accent);
   transition: translate 220ms var(--ease-out);
 }
 
@@ -1901,6 +1986,10 @@ p {
   .hero-button-outline .ink-line {
     animation: none;
     opacity: 1;
+  }
+
+  .hero-status {
+    transition: none;
   }
 }
 
@@ -2086,6 +2175,11 @@ p {
   stroke-width: 2;
 }
 
+/* The heading's pen flourish (a crossed t, an underline) takes the section's pen. */
+.hand-heading-word .ink-accent {
+  stroke: var(--ink, var(--accent));
+}
+
 .hand-heading:not([data-seen]) .ink-line {
   opacity: 0;
 }
@@ -2104,7 +2198,7 @@ p {
   height: 1.35rem;
   width: auto;
   overflow: visible;
-  color: var(--accent);
+  color: var(--ink, var(--accent));
 }
 
 .hand-heading-tally-ink .ink-line {
@@ -2259,6 +2353,17 @@ p {
 
 .wi-kind-icon .ink-line {
   stroke-width: 1.7;
+}
+
+/* Things you open in a browser are blue; things you install are teal. */
+.wi-kind-icon.is-web,
+.pj-kind-icon.is-web {
+  color: var(--blue);
+}
+
+.wi-kind-icon.is-tool,
+.pj-kind-icon.is-tool {
+  color: var(--teal);
 }
 
 /* Still being built: said in words, with a small pen dot. */
@@ -3115,7 +3220,7 @@ p {
   bottom: 0.5rem;
   width: calc(100% + 4px);
   height: 6px;
-  color: var(--accent);
+  color: var(--tag-ink, var(--accent));
 }
 
 .bl-tag-underline .ink-line,
@@ -3228,7 +3333,11 @@ p {
 .bl-item-tags {
   font-size: 0.75rem;
   color: var(--muted);
-  opacity: 0.85;
+}
+
+/* Each blog topic keeps its own pen wherever it's listed. */
+.tag-ink {
+  color: var(--tag-ink);
 }
 
 .bl-link:hover .bl-title,
@@ -3745,12 +3854,12 @@ p {
   color: var(--muted);
 }
 
-.callout-warning {
-  --accent: #e5674f;
+.callout-tip {
+  --accent: var(--teal);
 }
 
-:root[data-theme="light"] .callout-warning {
-  --accent: #b23a22;
+.callout-warning {
+  --accent: var(--coral);
 }
 
 .callout-quote .prose-margin-line,
@@ -4522,30 +4631,8 @@ p {
 }
 
 /* ═══════════════════════════════════════════════
-   NOW  (what I'm working on, a note in a pen box)
+   NOW  (what I'm working on, one sticky note per entry)
    ═══════════════════════════════════════════════ */
-
-.nw-note {
-  position: relative;
-  max-width: 36rem;
-  padding: 1.6rem 1.75rem 1.75rem;
-}
-
-.nw-box {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  color: var(--border2);
-  pointer-events: none;
-  /* Only the box leans; tilted text would blur. */
-  rotate: -0.6deg;
-}
-
-.nw-box .ink-line {
-  stroke-width: 1.4;
-}
 
 .nw-updated {
   font-size: 0.8125rem;
@@ -4553,54 +4640,98 @@ p {
   font-variant-numeric: tabular-nums;
 }
 
-.nw-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  margin-top: 1.1rem;
+/* One sticky note per entry, taped to the page at a slight angle. The paper
+   colours stay the same in both themes, so the ink on them is fixed too. */
+.nw-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1.75rem;
+  margin-top: 1.75rem;
   list-style: none;
 }
 
-.nw-item {
-  display: grid;
-  grid-template-columns: 1.1rem minmax(0, 1fr);
-  gap: 0.75rem;
+.nw-sticky {
+  position: relative;
+  padding: 1.5rem 1.25rem 1.6rem;
+  color: var(--note-ink);
+  rotate: var(--tilt, 0deg);
+  filter: drop-shadow(0 8px 12px var(--note-shadow));
+  transition: rotate 380ms var(--ease-out), translate 380ms var(--ease-out);
+}
+
+.nw-sticky:hover,
+.nw-sticky:focus-within {
+  rotate: 0deg;
+  translate: 0 -3px;
+}
+
+.nw-paper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--paper);
+  stroke: none;
+}
+
+.nw-tape {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 3.6rem;
+  height: 1.15rem;
+  translate: -50% 0;
+  rotate: var(--tape, -4deg);
+  background: var(--tape-color);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 2px var(--tape-edge);
+}
+
+.nw-sticky-title,
+.nw-sticky-text {
+  position: relative;
+}
+
+.nw-sticky-title {
+  font-weight: 700;
   font-size: 1rem;
-  line-height: 1.65;
-  color: var(--muted-subtle);
+  line-height: 1.35;
 }
 
-.nw-tick {
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-top: 0.3rem;
-  color: var(--accent);
-}
-
-.nw-tick .ink-line {
-  stroke-width: 1.8;
-}
-
-.nw-title {
-  font-weight: 600;
-  color: var(--fg);
+.nw-sticky-text {
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--note-ink) 80%, transparent);
 }
 
 .nw-link {
-  transition: color var(--transition-fast);
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--note-ink) 35%, transparent);
+  transition: text-decoration-color var(--transition-fast);
 }
 
-.nw-link:hover {
-  color: var(--accent);
+.nw-link:hover,
+.nw-link:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.nw-link:focus-visible {
+  outline: 2px solid var(--note-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .nw-out {
   display: inline-block;
   width: 0.8em;
   height: 0.8em;
-  margin-left: 0.15em;
+  margin-left: 0.2em;
   vertical-align: 0;
-  color: var(--accent);
   transition: translate 220ms var(--ease-out);
 }
 
@@ -4612,17 +4743,21 @@ p {
   translate: 2px -2px;
 }
 
-.nw-text {
-  color: var(--muted);
+@media (max-width: 560px) {
+  .nw-board {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+  }
 }
 
-@media (max-width: 560px) {
-  .nw-note {
-    padding: 1.35rem 1.25rem 1.5rem;
+@media (prefers-reduced-motion: reduce) {
+  .nw-sticky {
+    transition: none;
   }
 
-  .nw-box {
-    rotate: none;
+  .nw-sticky:hover,
+  .nw-sticky:focus-within {
+    translate: none;
   }
 }
 

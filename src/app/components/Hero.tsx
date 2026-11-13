@@ -59,10 +59,8 @@ export const Hero = () => {
           <ArrowIcon className="hero-work-icon" />
         </a>
       </div>
+      {/* The status line is a kraft-paper note taped under the buttons. */}
       <div className="hero-footnote hero-step">
-        <svg className="hero-divider" viewBox="0 0 680 8" preserveAspectRatio="none" fill="none" aria-hidden="true">
-          <path d="M2 4.7c92-2.5 164 1.3 251-.5 113-2.3 214 1.5 305-.2 43-.8 82-.4 120-1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-        </svg>
         <HeroStatus />
       </div>
     </section>
