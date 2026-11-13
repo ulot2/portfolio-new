@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ListeningStatus } from "@/lib/spotify-types";
 import { NOW } from "@/data/now";
 
@@ -29,8 +29,8 @@ function playedAgo(playedAt: string, now: Date) {
 const nowLabel = `Now: ${NOW.slice(0, 2).map((entry) => entry.title).join(", ")}${NOW.length > 2 ? ` and ${NOW.length - 2} more` : ""}`;
 const nowCut = nowLabel.lastIndexOf(" ") + 1;
 
-/** The status note in the hero. `children` (the signature) goes at the bottom. */
-export default function HeroStatus({ children }: { children?: ReactNode }) {
+/** The status note in the hero: local time, music and what I'm working on. */
+export default function HeroStatus() {
   const [now, setNow] = useState<Date | null>(null);
   const [music, setMusic] = useState<ListeningStatus>({ track: null });
 
@@ -118,7 +118,6 @@ export default function HeroStatus({ children }: { children?: ReactNode }) {
             </a>
           </p>
         )}
-        {children}
       </div>
     </div>
   );
