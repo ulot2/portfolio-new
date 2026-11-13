@@ -24,12 +24,6 @@ function playedAgo(playedAt: string, now: Date) {
   return `${Math.floor(minutes / 1_440)}d ago`;
 }
 
-// The pointer to the Now section. Its last word stays with the arrow, so the
-// arrow never wraps onto a line of its own.
-const nowLabel = `Now: ${NOW.slice(0, 2).map((entry) => entry.title).join(", ")}${NOW.length > 2 ? ` and ${NOW.length - 2} more` : ""}`;
-const nowCut = nowLabel.lastIndexOf(" ") + 1;
-
-/** The status note in the hero: local time, music and what I'm working on. */
 export default function HeroStatus() {
   const [now, setNow] = useState<Date | null>(null);
   const [music, setMusic] = useState<ListeningStatus>({ track: null });
@@ -108,13 +102,11 @@ export default function HeroStatus() {
               <path className="ink-line" d="M10 6.6c-1-.1-1.8.8-1.7 1.8.1.9.8 1.6 1.8 1.6.9-.1 1.6-.9 1.5-1.8 0-.9-.7-1.6-1.6-1.6Z" />
             </svg>
             <a href="#now">
-              {nowLabel.slice(0, nowCut)}
-              <span className="hero-status-keep">
-                {nowLabel.slice(nowCut)}
-                <svg className="hero-status-down" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path className="ink-line" d="M8 3.2c-.1 3.2 0 6.4.1 9.6M4.6 9.4c1.2 1.1 2.3 2.3 3.4 3.5 1.1-1.2 2.2-2.4 3.4-3.5" />
-                </svg>
-              </span>
+              Now: {NOW.slice(0, 2).map((entry) => entry.title).join(", ")}
+              {NOW.length > 2 && <> and {NOW.length - 2} more</>}
+              <svg className="hero-status-down" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path className="ink-line" d="M8 3.2c-.1 3.2 0 6.4.1 9.6M4.6 9.4c1.2 1.1 2.3 2.3 3.4 3.5 1.1-1.2 2.2-2.4 3.4-3.5" />
+              </svg>
             </a>
           </p>
         )}

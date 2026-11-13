@@ -31,9 +31,6 @@
   --note-green: #b5dba0;
   --note-blue: #a9cdea;
   --note-pink: #f2a7b8;
-  --note-kraft: #d8c49c;
-  --note-kraft-fold: #bfa676;
-  --note-rule: rgb(27 26 22 / 0.13);
   --note-ink: #1b1a16;
   --note-shadow: rgb(0 0 0 / 0.4);
   /* Clear tape on a dark page; beige masking tape on light paper, where clear
@@ -1693,10 +1690,20 @@ p {
   translate: 0 3px;
 }
 
-/* The status note, taped under the buttons. */
 .hero-footnote {
-  margin-top: 3.25rem;
-  filter: drop-shadow(0 10px 14px var(--note-shadow));
+  position: relative;
+  max-width: 36rem;
+  margin-top: 2.75rem;
+  padding-top: 1.25rem;
+}
+
+.hero-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.5rem;
+  color: var(--border2);
 }
 
 @media (max-width: 480px) {
@@ -1761,89 +1768,37 @@ p {
   }
 
   .hero-links {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
 }
 
-/* A kraft-paper notepad sheet: taped at the top, ruled under each line of text,
-   with the bottom-right corner folded up. Like the Now notes, it keeps its
-   paper and dark ink in both themes. */
 .hero-status {
-  --paper: var(--note-kraft);
-  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  width: fit-content;
-  max-width: min(100%, 25rem);
-  padding: 1.55rem 1.6rem 1.4rem 1.2rem;
-  color: var(--note-ink);
-  background:
-    repeating-linear-gradient(
-        to bottom,
-        transparent 0 calc(1.5rem - 1px),
-        var(--note-rule) calc(1.5rem - 1px) 1.5rem
-      )
-      0 1.55rem / 100% calc(100% - 2.95rem) no-repeat,
-    var(--paper);
-  border-radius: 2px;
-  /* Cuts the corner for the fold, and leaves room above for the tape. */
-  clip-path: polygon(0 -2rem, 100% -2rem, 100% calc(100% - 1.4rem), calc(100% - 1.4rem) 100%, 0 100%);
-  rotate: -1.6deg;
-  transition: rotate 380ms var(--ease-out);
-}
-
-.hero-status:hover,
-.hero-status:focus-within {
-  rotate: 0deg;
-}
-
-.hero-status::before {
-  content: "";
-  position: absolute;
-  top: -0.6rem;
-  left: 50%;
-  width: 4rem;
-  height: 1.2rem;
-  translate: -50% 0;
-  rotate: 3deg;
-  background: var(--tape-color);
-  backdrop-filter: blur(1px);
-  box-shadow: 0 1px 2px var(--tape-edge);
-}
-
-.hero-status::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 1.4rem;
-  height: 1.4rem;
-  background: linear-gradient(to top left, transparent 50%, var(--note-kraft-fold) 50%);
-  box-shadow: -2px -2px 3px rgb(0 0 0 / 0.08);
+  max-width: 100%;
 }
 
 .hero-status-clock {
   flex: none;
-  width: 2rem;
-  height: 2rem;
-  margin-top: 0.1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: 0.25rem;
+  color: var(--accent);
 }
 
 .hero-status-clock .ink-line {
   stroke-width: 2;
 }
 
-/* Every line is 1.5rem tall, so the text sits on the ruled lines. */
 .hero-status-copy {
   min-width: 0;
-  font-size: 0.85rem;
-  line-height: 1.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.75;
 }
 
 .hero-status-time {
-  font-size: 0.95rem;
-  font-weight: 600;
+  color: var(--fg);
 }
 
 .hero-status-time time {
@@ -1851,65 +1806,43 @@ p {
 }
 
 .hero-status-availability {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: color-mix(in srgb, var(--note-ink) 75%, transparent);
-}
-
-.hero-status-music,
-.hero-status-now {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  color: color-mix(in srgb, var(--note-ink) 80%, transparent);
+  display: inline-block;
+  color: var(--muted);
 }
 
 .hero-status-music {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  color: var(--muted);
   overflow-wrap: anywhere;
 }
 
-.hero-status-record,
-.hero-status-pin {
+.hero-status-record {
   flex: none;
   align-self: flex-start;
   width: 1rem;
   height: 1rem;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
 }
 
 .hero-status-record .ink-line,
-.hero-status-arrow .ink-line,
-.hero-status-pin .ink-line,
-.hero-status-down .ink-line {
+.hero-status-arrow .ink-line {
   stroke-width: 1.5;
 }
 
-.hero-status-music a,
-.hero-status-now a {
-  color: inherit;
+.hero-status-music a {
+  color: var(--accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--note-ink) 40%, transparent);
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
-.hero-status-music a {
-  font-weight: 600;
-  color: var(--note-ink);
-}
-
-.hero-status-music a:hover,
-.hero-status-now a:hover {
-  color: var(--note-ink);
-  text-decoration-color: var(--note-ink);
-}
-
-.hero-status a:focus-visible {
-  outline: 2px solid var(--note-ink);
-  outline-offset: 2px;
-  border-radius: 2px;
+.hero-status-music a:hover {
+  color: var(--fg);
 }
 
 .hero-status-arrow {
@@ -1920,9 +1853,41 @@ p {
   vertical-align: -0.05em;
 }
 
-/* The last word of the Now pointer stays with its arrow. */
-.hero-status-keep {
-  white-space: nowrap;
+/* A pointer to the Now note further down the page. */
+.hero-status-now {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  color: var(--muted);
+}
+
+.hero-status-pin {
+  flex: none;
+  align-self: flex-start;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
+}
+
+.hero-status-pin .ink-line,
+.hero-status-down .ink-line {
+  stroke-width: 1.5;
+}
+
+.hero-status-now a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.hero-status-now a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
 }
 
 .hero-status-down {
@@ -1931,6 +1896,7 @@ p {
   height: 0.75rem;
   margin-left: 0.25rem;
   vertical-align: -0.05em;
+  color: var(--accent);
   transition: translate 220ms var(--ease-out);
 }
 
@@ -1986,10 +1952,6 @@ p {
   .hero-button-outline .ink-line {
     animation: none;
     opacity: 1;
-  }
-
-  .hero-status {
-    transition: none;
   }
 }
 
