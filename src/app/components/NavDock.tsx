@@ -183,7 +183,7 @@ export const NavDock = () => {
                       );
 
                       return (
-                        <li key={item.label}>
+                        <li key={item.label} data-section={item.id ?? undefined}>
                           {isBlog ? (
                             <Link
                               href={item.route!}

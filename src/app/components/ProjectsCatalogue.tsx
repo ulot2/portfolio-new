@@ -6,11 +6,12 @@ import { HookArrowIcon, OutArrowIcon, Rule, Underline } from "./ink";
 import { ProjectKindIcon } from "./ProjectKindIcon";
 
 // The filters group the kinds a visitor would think in, not the exact labels.
+// Each one is underlined in the same pen as its kind icons; All keeps the yellow.
 const GROUPS = [
-  { id: "all", label: "All", kinds: null },
-  { id: "apps", label: "Web apps", kinds: ["Web app"] },
-  { id: "tools", label: "Tools", kinds: ["Command-line tool", "Chrome extension", "GitHub Action"] },
-  { id: "sites", label: "Websites", kinds: ["Website"] },
+  { id: "all", label: "All", kinds: null, ink: undefined },
+  { id: "apps", label: "Web apps", kinds: ["Web app"], ink: "var(--blue)" },
+  { id: "tools", label: "Tools", kinds: ["Command-line tool", "Chrome extension", "GitHub Action"], ink: "var(--teal)" },
+  { id: "sites", label: "Websites", kinds: ["Website"], ink: "var(--blue)" },
 ] as const;
 
 type GroupId = (typeof GROUPS)[number]["id"];
@@ -40,6 +41,7 @@ export const ProjectsCatalogue = ({ projects }: { projects: Project[] }) => {
               className="bl-tag"
               aria-pressed={groupId === g.id}
               onClick={() => setGroupId(g.id)}
+              style={{ "--tag-ink": g.ink } as React.CSSProperties}
             >
               {g.label}
               <sup className="bl-tag-count">

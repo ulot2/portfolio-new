@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { PostMetadata } from "@/types/blog";
 import { ArrowIcon, Rule, Underline } from "./ink";
+import { TagList } from "./TagList";
 
 interface BlogCardProps {
   post: PostMetadata;
@@ -39,7 +40,7 @@ export const BlogCard = ({ post, index = 0, base = "" }: BlogCardProps) => {
           {post.tags.length > 0 && (
             <span className="bl-item-tags">
               <span className="visually-hidden">Topics: </span>
-              {post.tags.join(" / ")}
+              <TagList tags={post.tags} />
             </span>
           )}
         </span>

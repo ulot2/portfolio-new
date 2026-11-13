@@ -82,7 +82,12 @@ export const SectionRail = () => {
           const current = isHome ? activeSection === item.id : segment === "projects" && item.id === "work";
           const Doodle = DOODLES[item.id!];
           return (
-            <li key={item.label} className="section-rail-item" style={{ "--i": index } as React.CSSProperties}>
+            <li
+              key={item.label}
+              className="section-rail-item"
+              data-section={item.id!}
+              style={{ "--i": index } as React.CSSProperties}
+            >
               <a href={sectionHref(item.id!)} aria-current={current ? "true" : undefined}>
                 <span className="section-rail-label">
                   {item.label}
