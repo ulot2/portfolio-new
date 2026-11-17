@@ -17,7 +17,7 @@ const PEN = "cubic-bezier(0.55, 0, 0.35, 1)";
  * All three marks are measured to the words, so they meet them exactly at
  * any width, and they draw again when the headline is hovered.
  */
-export const HeroHeadline = ({ onDrawn }: { onDrawn?: () => void }) => {
+export const HeroHeadline = () => {
   const root = useRef<HTMLHeadingElement>(null);
   const idea = useRef<HTMLSpanElement>(null);
   const built = useRef<HTMLSpanElement>(null);
@@ -25,12 +25,6 @@ export const HeroHeadline = ({ onDrawn }: { onDrawn?: () => void }) => {
   const running = useRef<Animation[]>([]);
   const [marks, setMarks] = useState<Marks | null>(null);
   const [state, setState] = useState<"idle" | "drawing" | "done">("idle");
-  // Told once, the first time the marks are (nearly) drawn; hover replays don't tell it again.
-  const handedOver = useRef(false);
-  const onDrawnRef = useRef(onDrawn);
-  useEffect(() => {
-    onDrawnRef.current = onDrawn;
-  }, [onDrawn]);
 
   const measure = useCallback(() => {
     const h1 = root.current?.getBoundingClientRect();
@@ -66,10 +60,6 @@ export const HeroHeadline = ({ onDrawn }: { onDrawn?: () => void }) => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setState("done");
-      if (!handedOver.current) {
-        handedOver.current = true;
-        onDrawnRef.current?.();
-      }
       return;
     }
     setState("drawing");
@@ -98,21 +88,12 @@ export const HeroHeadline = ({ onDrawn }: { onDrawn?: () => void }) => {
       return anim;
     };
 
-    stroke(".hero-mark-loop", { min: 480, max: 640 });
-    stroke(".hero-mark-arrow", { gap: 40, min: 240, max: 320 });
-    stroke(".hero-mark-head", { min: 100, max: 120, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
-    const box = stroke(".hero-mark-box", { gap: 50, min: 480, max: 620 });
-    stroke(".hero-mark-retrace", { gap: -120, min: 240, max: 300, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    stroke(".hero-mark-loop", { min: 320, max: 420 });
+    stroke(".hero-mark-arrow", { gap: 30, min: 160, max: 220 });
+    stroke(".hero-mark-head", { min: 80, max: 100, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
+    const box = stroke(".hero-mark-box", { gap: 40, min: 320, max: 420 });
+    stroke(".hero-mark-retrace", { gap: -90, min: 180, max: 220, easing: "cubic-bezier(0.23, 1, 0.32, 1)" });
     box?.finished.then(() => setState("done")).catch(() => {});
-
-    // Hand over to the rest of the hero as the box nears closing, so the next
-    // step starts while this one finishes rather than after a pause.
-    if (!handedOver.current && box) {
-      handedOver.current = true;
-      const timing = box.effect?.getComputedTiming();
-      const at = Number(timing?.delay ?? 0) + Number(timing?.duration ?? 0) * 0.8;
-      window.setTimeout(() => onDrawnRef.current?.(), at);
-    }
   }, []);
 
   // Draw on first measure, after the headline has settled in.
@@ -120,9 +101,9 @@ export const HeroHeadline = ({ onDrawn }: { onDrawn?: () => void }) => {
   useEffect(() => {
     if (!marks || drawn.current) return;
     drawn.current = true;
-    // Start as the headline finishes rising (about 650ms into the page), or at
+    // Start as the headline finishes rising (about 450ms into the page), or at
     // once if the page took longer than that to get here, so there's no pause.
-    draw(Math.max(0, 650 - performance.now()));
+    draw(Math.max(0, 450 - performance.now()));
   }, [marks, draw]);
 
   useEffect(() => () => running.current.forEach((a) => a.cancel()), []);

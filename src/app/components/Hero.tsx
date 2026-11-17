@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import HeroStatus from "./HeroStatus";
 import { HeroHeadline } from "./HeroHeadline";
 import { ArrowIcon, Signature, WaveIcon } from "./ink";
@@ -8,29 +8,21 @@ import { ArrowIcon, Signature, WaveIcon } from "./ink";
 /**
  * A simple introduction, with the same pen marks as the rest of the site.
  *
- * It plays in one sequence: the headline and its pen marks first, then the
- * note, the signature, the buttons and the status line, each starting as the
- * one before it finishes. The headline says when its marks are drawn; the
- * rest of the timing is in globals.css (.hero[data-stage="rest"]).
+ * The headline rises and its pen marks draw (HeroHeadline.tsx). The note, the
+ * signature, the buttons and the status line don't wait for the marks: they
+ * rise alongside them, on the timing in globals.css (.hero-step).
  */
 export const Hero = () => {
   // A new take remounts the signature, so hovering it signs it again.
   const [take, setTake] = useState(0);
-  const [stage, setStage] = useState<"headline" | "rest">("headline");
-
-  // A backstop: if the marks can't be drawn for any reason, the rest still arrives.
-  useEffect(() => {
-    const backstop = window.setTimeout(() => setStage("rest"), 3200);
-    return () => window.clearTimeout(backstop);
-  }, []);
 
   return (
-    <section className="hero" id="hero" aria-labelledby="hero-title" data-stage={stage}>
-      {/* Without JavaScript nothing would start the sequence, so show it all at once. */}
+    <section className="hero" id="hero" aria-labelledby="hero-title">
+      {/* Without JavaScript the marks never draw, so the dimmed words never come up to full ink. */}
       <noscript>
-        <style>{`.hero-step, .hero-signature .ink-line, .hero-button-outline .ink-line { opacity: 1 !important; animation: none !important; } .hero-built { color: inherit !important; }`}</style>
+        <style>{`.hero-built { color: inherit !important; }`}</style>
       </noscript>
-      <HeroHeadline onDrawn={() => setStage("rest")} />
+      <HeroHeadline />
 
       <div className="hero-note hero-step">
         <p className="hero-description">
