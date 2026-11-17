@@ -106,7 +106,7 @@ function Frame({ children }: { children: React.ReactNode }) {
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Strokes strokes={NAME_STROKES} viewBox="0 0 131 34" width={232} strokeWidth={2.2} />
-        <div style={{ display: "flex", fontSize: 24, color: OG.faint, letterSpacing: "-0.01em" }}>tnuell.sbs</div>
+        <div style={{ display: "flex", fontSize: 24, color: OG.faint, letterSpacing: "-0.01em" }}>tnuell.site</div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "center" }}>{children}</div>

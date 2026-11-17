@@ -4,9 +4,9 @@ The personal site of Toluwalope Adegoke, built with Next.js. One app serves thre
 
 | Host | What it serves |
 |---|---|
-| `tnuell.sbs` | The portfolio home page |
-| `blog.tnuell.sbs` | The blog. Posts are MDX files in `content/posts/`. |
-| `jobs.tnuell.sbs` | A private jobs dashboard. You must log in with a passphrase. |
+| `www.tnuell.site` | The portfolio home page. `tnuell.site` and `tnuell.sbs` redirect here. |
+| `blog.tnuell.site` | The blog. Posts are MDX files in `content/posts/`. |
+| `jobs.tnuell.site` | A private jobs dashboard. You must log in with a passphrase. |
 
 `src/middleware.ts` sends each host to its route tree.
 

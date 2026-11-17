@@ -1,5 +1,5 @@
 /**
- * Types and input checks for the interview prep app at prep.tnuell.sbs.
+ * Types and input checks for the interview prep app at prep.tnuell.site.
  *
  * No imports on purpose, so `node --test` can load this file directly
  * (see prep-validate.test.mjs). Every parser returns the clean value, or a
