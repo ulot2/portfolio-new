@@ -1,5 +1,5 @@
 /**
- * Auth for the private jobs dashboard at jobs.tnuell.sbs.
+ * Auth for the private jobs dashboard at jobs.tnuell.site.
  *
  * Web Crypto only, never node:crypto, so the same functions run in Edge
  * middleware and in Node route handlers. That lets middleware verify the

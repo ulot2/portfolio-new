@@ -13,12 +13,17 @@ export interface NowEntry {
 }
 
 /** The day the note was last updated, as YYYY-MM-DD. */
-export const NOW_UPDATED = "2026-11-11";
+export const NOW_UPDATED = "2026-11-17";
 
 /** Where I am, shown under the note. */
 export const NOW_PLACE = "Lagos, Nigeria";
 
 export const NOW: NowEntry[] = [
+  {
+    title: "Haul",
+    note: "An Android app that saves videos and photos from TikTok, Instagram, X and YouTube straight to your Gallery, from the share sheet.",
+    href: "https://github.com/ulot2/haul",
+  },
   {
     title: "SecondLook",
     note: "The checks on real application files work. Next, it learns to read the requirements straight from the instructions you paste in.",
