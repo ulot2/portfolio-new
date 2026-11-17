@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type React from "react";
-import type { Project } from "@/data/projects";
+import { projectLive, type Project } from "@/data/projects";
 
 const BOX =
   "M12 3.5C60 2 140 2.6 190 3.4c5 .2 6.6 3 6.8 12 .5 30 .2 70-.3 95-.2 8-2.5 10.6-9.3 10.8-55 1.2-120 1.4-172 .3C7 121.3 3.8 118 3.6 110 3 80 3.2 40 3.5 14 3.6 6.5 6 3.8 12 3.5Z";
@@ -28,9 +28,16 @@ export function SketchShot({
   className?: string;
 }) {
   const url = !project.drawn && project.liveUrl.startsWith("http") ? host(project.liveUrl) : null;
+  const live = projectLive(project);
+  // With a live site, the picture opens it. The title or Visit link next to it
+  // already does this for keyboard users, so the picture stays out of the tab order.
+  const Frame = live ? "a" : "div";
+  const link = live
+    ? { href: live, target: "_blank", rel: "noopener noreferrer", tabIndex: -1, "aria-label": `${project.title} live site (opens in a new tab)` }
+    : {};
   return (
     // Without `i`, the stagger comes from the parent's --i.
-    <div className={`sk ${className}`} style={i === undefined ? undefined : ({ "--i": Math.min(i, 6) } as React.CSSProperties)}>
+    <Frame {...link} className={`sk ${className}`} style={i === undefined ? undefined : ({ "--i": Math.min(i, 6) } as React.CSSProperties)}>
       <svg className="sk-box" viewBox="0 0 200 125" preserveAspectRatio="none" aria-hidden="true">
         <path className="ink-line" pathLength={1} d={BOX} />
         <path className="ink-line sk-retrace" pathLength={1} d={RETRACE} />
@@ -42,7 +49,7 @@ export function SketchShot({
         {url && <span>{url}</span>}
       </div>
       <Image src={project.image} alt={shotAlt(project)} width={1440} height={900} sizes={sizes} />
-    </div>
+    </Frame>
   );
 }
 
